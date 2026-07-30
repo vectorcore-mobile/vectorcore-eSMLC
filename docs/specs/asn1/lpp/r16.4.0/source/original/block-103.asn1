@@ -1,0 +1,12 @@
+KlobucharModel2Parameter-r16 ::= SEQUENCE {
+alfa1-r16INTEGER (0..1023),
+alfa2-r16INTEGER (-128..127),
+alfa3-r16INTEGER (0..255),
+alfa4-r16INTEGER (0..255),
+alfa5-r16INTEGER (0..255),
+alfa6-r16INTEGER (-128..127),
+alfa7-r16INTEGER (-128..127),
+alfa8-r16INTEGER (-128..127),
+alfa9-r16INTEGER (-128..127),
+...
+}

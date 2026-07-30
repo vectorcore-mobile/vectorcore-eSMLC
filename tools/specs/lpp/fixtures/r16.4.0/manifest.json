@@ -1,0 +1,294 @@
+{
+  "bit_length_method": "asn1tools.codecs.uper.Encoder pre-octet-padding bit count",
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "dependency_lock_sha256": "14edde65b05875cfb186d6bcce640a761bbfd9bf0d6b6f5e23c4713749db30d8",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "binary_file": "minimal-no-transaction.uper",
+      "bit_length": 5,
+      "decoded_value": {
+        "endTransaction": false
+      },
+      "hex": "00",
+      "name": "minimal-no-transaction",
+      "purpose": "No transaction ID, sequence number, acknowledgement, or body.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "minimal-no-transaction.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 3
+    },
+    {
+      "binary_file": "transaction-location-server-0.uper",
+      "bit_length": 16,
+      "decoded_value": {
+        "endTransaction": false,
+        "transactionID": {
+          "initiator": "locationServer",
+          "transactionNumber": 0
+        }
+      },
+      "hex": "8000",
+      "name": "transaction-location-server-0",
+      "purpose": "Transaction lower bound and locationServer initiator.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "transaction-location-server-0.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 0
+    },
+    {
+      "binary_file": "transaction-target-device-255-end.uper",
+      "bit_length": 16,
+      "decoded_value": {
+        "endTransaction": true,
+        "transactionID": {
+          "initiator": "targetDevice",
+          "transactionNumber": 255
+        }
+      },
+      "hex": "83ff",
+      "name": "transaction-target-device-255-end",
+      "purpose": "Transaction upper bound, targetDevice initiator, terminal message.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "transaction-target-device-255-end.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 0
+    },
+    {
+      "binary_file": "sequence-zero-ack-requested.uper",
+      "bit_length": 15,
+      "decoded_value": {
+        "acknowledgement": {
+          "ackRequested": true
+        },
+        "endTransaction": false,
+        "sequenceNumber": 0
+      },
+      "hex": "6002",
+      "name": "sequence-zero-ack-requested",
+      "purpose": "Optional sequence and acknowledgement request.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "sequence-zero-ack-requested.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 1
+    },
+    {
+      "binary_file": "sequence-255-ack-indicator.uper",
+      "bit_length": 23,
+      "decoded_value": {
+        "acknowledgement": {
+          "ackIndicator": 255,
+          "ackRequested": false
+        },
+        "endTransaction": false,
+        "sequenceNumber": 255
+      },
+      "hex": "67fdfe",
+      "name": "sequence-255-ack-indicator",
+      "purpose": "Optional sequence upper bound and acknowledgement response form.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "sequence-255-ack-indicator.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 1
+    },
+    {
+      "binary_file": "request-capabilities-r9-empty.uper",
+      "bit_length": 19,
+      "decoded_value": {
+        "endTransaction": false,
+        "lpp-MessageBody": [
+          "c1",
+          [
+            "requestCapabilities",
+            {
+              "criticalExtensions": [
+                "c1",
+                [
+                  "requestCapabilities-r9",
+                  {}
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "hex": "100000",
+      "name": "request-capabilities-r9-empty",
+      "purpose": "Minimum R9 RequestCapabilities wrapper; all R9 IE members omitted.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "request-capabilities-r9-empty.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 5
+    },
+    {
+      "binary_file": "provide-capabilities-r9-empty.uper",
+      "bit_length": 19,
+      "decoded_value": {
+        "endTransaction": false,
+        "lpp-MessageBody": [
+          "c1",
+          [
+            "provideCapabilities",
+            {
+              "criticalExtensions": [
+                "c1",
+                [
+                  "provideCapabilities-r9",
+                  {}
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "hex": "104000",
+      "name": "provide-capabilities-r9-empty",
+      "purpose": "Minimum R9 ProvideCapabilities wrapper; all R9 IE members omitted.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "provide-capabilities-r9-empty.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 5
+    },
+    {
+      "binary_file": "request-location-information-r9-empty.uper",
+      "bit_length": 19,
+      "decoded_value": {
+        "endTransaction": false,
+        "lpp-MessageBody": [
+          "c1",
+          [
+            "requestLocationInformation",
+            {
+              "criticalExtensions": [
+                "c1",
+                [
+                  "requestLocationInformation-r9",
+                  {}
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "hex": "110000",
+      "name": "request-location-information-r9-empty",
+      "purpose": "Minimum R9 RequestLocationInformation wrapper; no positioning-method IE supplied.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "request-location-information-r9-empty.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 5
+    },
+    {
+      "binary_file": "provide-location-information-r9-empty.uper",
+      "bit_length": 19,
+      "decoded_value": {
+        "endTransaction": false,
+        "lpp-MessageBody": [
+          "c1",
+          [
+            "provideLocationInformation",
+            {
+              "criticalExtensions": [
+                "c1",
+                [
+                  "provideLocationInformation-r9",
+                  {}
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "hex": "114000",
+      "name": "provide-location-information-r9-empty",
+      "purpose": "Minimum R9 ProvideLocationInformation wrapper; no estimate supplied.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "provide-location-information-r9-empty.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 5
+    },
+    {
+      "binary_file": "abort-r9-empty.uper",
+      "bit_length": 15,
+      "decoded_value": {
+        "endTransaction": true,
+        "lpp-MessageBody": [
+          "c1",
+          [
+            "abort",
+            {
+              "criticalExtensions": [
+                "c1",
+                [
+                  "abort-r9",
+                  {}
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "hex": "1980",
+      "name": "abort-r9-empty",
+      "purpose": "Minimum R9 Abort wrapper.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "abort-r9-empty.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 1
+    },
+    {
+      "binary_file": "error-r9-empty.uper",
+      "bit_length": 13,
+      "decoded_value": {
+        "endTransaction": true,
+        "lpp-MessageBody": [
+          "c1",
+          [
+            "error",
+            [
+              "error-r9",
+              {}
+            ]
+          ]
+        ]
+      },
+      "hex": "19c0",
+      "name": "error-r9-empty",
+      "purpose": "Minimum R9 Error wrapper.",
+      "round_trip": "byte-and-bit-identical",
+      "source_value_file": "error-r9-empty.input.py",
+      "top_level_type": "LPP-Message",
+      "unused_trailing_bits": 3
+    }
+  ],
+  "module": "docs/specs/asn1/lpp/r16.4.0/modules_v2/subsets/minimum-envelope/LPP-PDU-Definitions.asn1",
+  "module_sha256": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724",
+  "negative_cases": [
+    {
+      "error": "LPP-Message.transactionID.transactionNumber: Expected an integer between 0 and 255, but got -1.",
+      "error_type": "ConstraintsError",
+      "name": "transaction-below-range",
+      "rejected": true
+    },
+    {
+      "error": "LPP-Message.transactionID.transactionNumber: Expected an integer between 0 and 255, but got 256.",
+      "error_type": "ConstraintsError",
+      "name": "transaction-above-range",
+      "rejected": true
+    },
+    {
+      "error": "'invalid'",
+      "error_type": "KeyError",
+      "name": "invalid-initiator",
+      "rejected": true
+    },
+    {
+      "error": "LPP-Message.sequenceNumber: Expected an integer between 0 and 255, but got 256.",
+      "error_type": "ConstraintsError",
+      "name": "sequence-above-range",
+      "rejected": true
+    }
+  ],
+  "specification": "3GPP TS 37.355 V16.4.0"
+}

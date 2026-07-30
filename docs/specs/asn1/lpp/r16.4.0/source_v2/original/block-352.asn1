@@ -1,0 +1,13 @@
+NR-Multi-RTT-RequestLocationInformation-r16 ::= SEQUENCE {
+	nr-UE-RxTxTimeDiffMeasurementInfoRequest-r16
+										ENUMERATED { true }					OPTIONAL, -- Need ON
+	nr-RequestedMeasurements-r16		BIT STRING { prsrsrpReq(0)} (SIZE(1..8)),
+	nr-AssistanceAvailability-r16		BOOLEAN,
+	nr-Multi-RTT-ReportConfig-r16		NR-Multi-RTT-ReportConfig-r16,
+	additionalPaths-r16					ENUMERATED { requested }			OPTIONAL, -- Need ON
+	...
+}
+NR-Multi-RTT-ReportConfig-r16 ::= SEQUENCE {
+	maxDL-PRS-RxTxTimeDiffMeasPerTRP-r16 	INTEGER (1..4)					OPTIONAL, -- Need ON
+	timingReportingGranularityFactor-r16 	INTEGER (0..5)					OPTIONAL	-- Need ON
+}

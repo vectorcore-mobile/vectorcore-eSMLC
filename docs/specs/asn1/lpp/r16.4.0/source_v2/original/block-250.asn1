@@ -1,0 +1,4 @@
+GNSS-NetworkID-r15 ::= SEQUENCE {
+	networkID-r15					INTEGER (0..255),
+	...
+}

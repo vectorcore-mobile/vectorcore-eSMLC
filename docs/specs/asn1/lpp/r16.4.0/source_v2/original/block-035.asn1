@@ -1,0 +1,8 @@
+HorizontalWithVerticalVelocityAndUncertainty ::= SEQUENCE {
+	bearing						INTEGER(0..359),
+	horizontalSpeed				INTEGER(0..2047),
+	verticalDirection			ENUMERATED{upward, downward},
+	verticalSpeed				INTEGER(0..255),
+	horizontalUncertaintySpeed	INTEGER(0..255),
+	verticalUncertaintySpeed	INTEGER(0..255)
+}

@@ -1,0 +1,6 @@
+GNSS-TimeModelListReq ::= SEQUENCE (SIZE(1..15)) OF GNSS-TimeModelElementReq
+GNSS-TimeModelElementReq ::= SEQUENCE {
+	gnss-TO-IDsReq	INTEGER (1..15),
+	deltaTreq		BOOLEAN,
+	...
+}

@@ -1,0 +1,22 @@
+{
+  "module": "LPP-PDU-Definitions",
+  "normalized_module_sha256": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724",
+  "path": [
+    "ProvideLocationInformation",
+    "criticalExtensions.c1[0]",
+    "provideLocationInformation-r9[0]",
+    "ProvideLocationInformation-r9-IEs.ecid-ProvideLocationInformation",
+    "ECID-ProvideLocationInformation.ecid-SignalMeasurementInformation",
+    "ECID-SignalMeasurementInformation.measuredResultsList",
+    "MeasuredResultsList",
+    "MeasuredResultsElement"
+  ],
+  "source_lines": {
+    "provide_location_information": 210,
+    "provide_location_information_r9_ies": 219,
+    "ecid_provide_location_information": 3943,
+    "ecid_signal_measurement_information": 3949,
+    "measured_results_list": 3954,
+    "measured_results_element": 3955
+  }
+}

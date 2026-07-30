@@ -1,0 +1,43 @@
+ECID-Measured-Results-Element-Field-Harness DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- Exact local extraction of the normalized Release 16.4.0 declarations used
+-- for analysis only. It is neither a production type nor a full LPP PDU.
+
+ARFCN-ValueEUTRA ::= INTEGER (0..65535)
+ARFCN-ValueEUTRA-v9a0 ::= INTEGER (65536..262143)
+CarrierFreqOffsetNB-r14 ::= ENUMERATED {
+    v-10, v-9, v-8, v-7, v-6, v-5, v-4, v-3, v-2, v-1, v-0dot5,
+    v0, v1, v2, v3, v4, v5, v6, v7, v8, v9
+}
+
+CellGlobalIdEUTRA-AndUTRA ::= SEQUENCE {
+    plmn-Identity SEQUENCE {
+        mcc SEQUENCE (SIZE (3)) OF INTEGER (0..9),
+        mnc SEQUENCE (SIZE (2..3)) OF INTEGER (0..9)
+    },
+    cellIdentity CHOICE {
+        eutra BIT STRING (SIZE (28)),
+        utra BIT STRING (SIZE (32))
+    },
+    ...
+}
+
+MeasuredResultsElement ::= SEQUENCE {
+    physCellId INTEGER (0..503),
+    cellGlobalId CellGlobalIdEUTRA-AndUTRA OPTIONAL,
+    arfcnEUTRA ARFCN-ValueEUTRA,
+    systemFrameNumber BIT STRING (SIZE (10)) OPTIONAL,
+    rsrp-Result INTEGER (0..97) OPTIONAL,
+    rsrq-Result INTEGER (0..34) OPTIONAL,
+    ue-RxTxTimeDiff INTEGER (0..4095) OPTIONAL,
+    ...,
+    [[ arfcnEUTRA-v9a0 ARFCN-ValueEUTRA-v9a0 OPTIONAL ]],
+    [[ nrsrp-Result-r14 INTEGER (0..113) OPTIONAL,
+       nrsrq-Result-r14 INTEGER (0..74) OPTIONAL,
+       carrierFreqOffsetNB-r14 CarrierFreqOffsetNB-r14 OPTIONAL,
+       hyperSFN-r14 BIT STRING (SIZE (10)) OPTIONAL ]],
+    [[ rsrp-Result-v1470 INTEGER (-17..-1) OPTIONAL,
+       rsrq-Result-v1470 INTEGER (-30..46) OPTIONAL ]]
+}
+
+END

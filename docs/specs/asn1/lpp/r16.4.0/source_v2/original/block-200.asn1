@@ -1,0 +1,6 @@
+A-GNSS-ProvideLocationInformation ::= SEQUENCE {
+	gnss-SignalMeasurementInformation	GNSS-SignalMeasurementInformation		OPTIONAL,
+	gnss-LocationInformation			GNSS-LocationInformation				OPTIONAL,
+	gnss-Error							A-GNSS-Error							OPTIONAL,
+	...
+}

@@ -1,0 +1,11 @@
+OTDOA-RequestLocationInformation ::= SEQUENCE {
+assistanceAvailabilityBOOLEAN,
+...,
+[[
+multipathRSTD-r14ENUMERATED { requested }OPTIONAL,-- Need ON
+maxNoOfRSTDmeas-r14INTEGER (1..32)OPTIONAL-- Need ON
+]],
+[[
+motionMeasurements-r15ENUMERATED { requested }OPTIONAL-- Need ON
+]]
+}

@@ -1,0 +1,8 @@
+MBS-AlmanacAssistance-r14 ::= SEQUENCE {
+	transmitterID-r14			INTEGER (0..32767),
+	transmitterLatitude-r14		BIT STRING (SIZE (26)),
+	transmitterLongitude-r14	BIT STRING (SIZE (27)),
+	transmitterAltitude-r14		BIT STRING (SIZE (15)),
+	timeCorrection-r14			INTEGER (0..25)		OPTIONAL,	-- Need ON
+	...
+}

@@ -1,0 +1,18 @@
+{
+  "criticalExtensions": [
+    "c1",
+    [
+      "provideCapabilities-r9",
+      {
+        "ecid-ProvideCapabilities": {
+          "ecid-MeasSupported": [
+            {
+              "hex": "e0"
+            },
+            3
+          ]
+        }
+      }
+    ]
+  ]
+}

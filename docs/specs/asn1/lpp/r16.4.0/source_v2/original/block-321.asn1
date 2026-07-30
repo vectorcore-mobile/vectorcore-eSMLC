@@ -1,0 +1,5 @@
+NR-ECID-Error-r16 ::= CHOICE {
+	locationServerErrorCauses-r16		NR-ECID-LocationServerErrorCauses-r16,
+	targetDeviceErrorCauses-r16			NR-ECID-TargetDeviceErrorCauses-r16,
+	...
+}

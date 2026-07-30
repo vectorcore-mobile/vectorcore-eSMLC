@@ -1,0 +1,1 @@
+NR-DL-PRS-ResourceID-r16 ::= INTEGER (0..nrMaxNumDL-PRS-ResourcesPerSet-1-r16)

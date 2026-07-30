@@ -1,0 +1,21 @@
+GNSS-PeriodicAssistDataReq-r15 ::= SEQUENCE {
+gnss-RTK-PeriodicObservationsReq-r15GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pOSR
+glo-RTK-PeriodicBiasInformationReq-r15GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pCPB
+gnss-RTK-MAC-PeriodicCorrectionDifferencesReq-r15
+GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pMAC
+gnss-RTK-PeriodicResidualsReq-r15GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pRes
+gnss-RTK-FKP-PeriodicGradientsReq-r15GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pFKP
+gnss-SSR-PeriodicOrbitCorrectionsReq-r15
+GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pOC
+gnss-SSR-PeriodicClockCorrectionsReq-r15
+GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pCC
+gnss-SSR-PeriodicCodeBiasReq-r15GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pCB
+...,
+[[
+gnss-SSR-PeriodicURA-Req-r16GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pURA
+gnss-SSR-PeriodicPhaseBiasReq-r16GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pPB
+gnss-SSR-PeriodicSTEC-CorrectionReq-r16GNSS-PeriodicControlParam-r15OPTIONAL, -- Cond pSTEC
+gnss-SSR-PeriodicGriddedCorrectionReq-r16
+GNSS-PeriodicControlParam-r15OPTIONAL  -- Cond pGrid
+]]
+}

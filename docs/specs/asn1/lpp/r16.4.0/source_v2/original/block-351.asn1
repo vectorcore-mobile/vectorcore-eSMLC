@@ -1,0 +1,50 @@
+NR-Multi-RTT-SignalMeasurementInformation-r16 ::= SEQUENCE {
+	nr-Multi-RTT-MeasList-r16		NR-Multi-RTT-MeasList-r16,
+	nr-NTA-Offset-r16				ENUMERATED { nTA1, nTA2, nTA3, nTA4, ... }		OPTIONAL,
+	...
+}
+NR-Multi-RTT-MeasList-r16 ::= SEQUENCE (SIZE(1..nrMaxTRPs-r16)) OF NR-Multi-RTT-MeasElement-r16
+NR-Multi-RTT-MeasElement-r16 ::= SEQUENCE {
+	dl-PRS-ID-r16					INTEGER (0..255),
+	nr-PhysCellID-r16				NR-PhysCellID-r16								OPTIONAL,
+	nr-CellGlobalID-r16				NCGI-r15										OPTIONAL,
+	nr-ARFCN-r16					ARFCN-ValueNR-r15								OPTIONAL,
+	nr-DL-PRS-ResourceID-r16		NR-DL-PRS-ResourceID-r16						OPTIONAL,
+	nr-DL-PRS-ResourceSetID-r16		NR-DL-PRS-ResourceSetID-r16 					OPTIONAL,
+	nr-UE-RxTxTimeDiff-r16			CHOICE {
+			k0-r16						INTEGER (0..1970049),
+			k1-r16						INTEGER (0..985025),
+			k2-r16						INTEGER (0..492513),
+			k3-r16						INTEGER (0..246257),
+			k4-r16						INTEGER (0..123129),
+			k5-r16						INTEGER (0..61565),
+			...
+	},
+	nr-AdditionalPathList-r16		NR-AdditionalPathList-r16						OPTIONAL,
+	nr-TimeStamp-r16				NR-TimeStamp-r16,
+	nr-TimingQuality-r16			NR-TimingQuality-r16,
+	nr-DL-PRS-RSRP-Result-r16		INTEGER (0..126)								OPTIONAL,
+	nr-Multi-RTT-AdditionalMeasurements-r16
+									NR-Multi-RTT-AdditionalMeasurements-r16			OPTIONAL,
+	...
+}
+NR-Multi-RTT-AdditionalMeasurements-r16 ::= SEQUENCE (SIZE (1..3)) OF
+									NR-Multi-RTT-AdditionalMeasurementElement-r16
+NR-Multi-RTT-AdditionalMeasurementElement-r16 ::= SEQUENCE {
+	nr-DL-PRS-ResourceID-r16			NR-DL-PRS-ResourceID-r16					OPTIONAL,
+	nr-DL-PRS-ResourceSetID-r16			NR-DL-PRS-ResourceSetID-r16 				OPTIONAL,
+	nr-DL-PRS-RSRP-ResultDiff-r16		INTEGER (0..61)								OPTIONAL,
+	nr-UE-RxTxTimeDiffAdditional-r16	CHOICE {
+			k0-r16							INTEGER (0..8191),
+			k1-r16							INTEGER (0..4095),
+			k2-r16							INTEGER (0..2047),
+			k3-r16							INTEGER (0..1023),
+			k4-r16							INTEGER (0..511),
+			k5-r16							INTEGER (0..255),
+			...
+	},
+	nr-TimingQuality-r16				NR-TimingQuality-r16,
+	nr-AdditionalPathList-r16			NR-AdditionalPathList-r16					OPTIONAL,
+	nr-TimeStamp-r16					NR-TimeStamp-r16,
+	...
+}

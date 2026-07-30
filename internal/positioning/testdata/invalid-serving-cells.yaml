@@ -1,0 +1,8 @@
+version: invalid
+cells:
+  - ecgi: "00f11000000001"
+    latitude: 91
+    longitude: -90
+    coverage_uncertainty_code: 40
+    source: "operator-survey"
+    updated_at: "2026-07-01T00:00:00Z"

@@ -1,0 +1,6 @@
+HorizontalWithVerticalVelocity ::= SEQUENCE {
+bearingINTEGER(0..359),
+horizontalSpeedINTEGER(0..2047),
+verticalDirectionENUMERATED{upward, downward},
+verticalSpeedINTEGER(0..255)
+}

@@ -1,0 +1,6 @@
+WLAN-ProvideAssistanceData-r14 ::= SEQUENCE {
+wlan-DataSet-r14SEQUENCE (SIZE (1..maxWLAN-DataSets-r14)) OF WLAN-DataSet-r14
+OPTIONAL,-- Need ON
+wlan-Error-r14WLAN-Error-r13OPTIONAL,-- Need ON
+...
+}

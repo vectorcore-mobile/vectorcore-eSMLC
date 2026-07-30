@@ -1,0 +1,9 @@
+Error ::= CHOICE {
+error-r9Error-r9-IEs,
+criticalExtensionsFutureSEQUENCE {}
+}
+Error-r9-IEs ::= SEQUENCE {
+commonIEsErrorCommonIEsErrorOPTIONAL,-- Need ON
+...,
+epdu-ErrorEPDU-SequenceOPTIONAL-- Need ON
+}

@@ -1,0 +1,15 @@
+NR-SSB-Config-r16 ::= SEQUENCE {
+	nr-PhysCellID-r16					NR-PhysCellID-r16,
+	nr-ARFCN-r16						ARFCN-ValueNR-r15,
+	ss-PBCH-BlockPower-r16				INTEGER (-60..50),
+	halfFrameIndex-r16					INTEGER (0..1),
+	ssb-periodicity-r16					ENUMERATED { ms5, ms10, ms20, ms40, ms80, ms160, ...},
+	ssb-PositionsInBurst-r16			CHOICE {
+		shortBitmap-r16						BIT STRING (SIZE (4)),
+		mediumBitmap-r16					BIT STRING (SIZE (8)),
+		longBitmap-r16						BIT STRING (SIZE (64))
+	}																			OPTIONAL, --Need OR
+	ssb-SubcarrierSpacing-r16			ENUMERATED {kHz15, kHz30, kHz60, kHz120, kHz240, ...},
+	sfn-SSB-Offset-r16					INTEGER (0..15),
+	...
+}

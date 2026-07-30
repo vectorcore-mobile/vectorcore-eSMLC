@@ -1,0 +1,39 @@
+RequestLocationInformation ::= SEQUENCE {
+criticalExtensionsCHOICE {
+c1CHOICE {
+requestLocationInformation-r9RequestLocationInformation-r9-IEs,
+spare3 NULL, spare2 NULL, spare1 NULL
+},
+criticalExtensionsFutureSEQUENCE {}
+}
+}
+RequestLocationInformation-r9-IEs ::= SEQUENCE {
+commonIEsRequestLocationInformation
+CommonIEsRequestLocationInformationOPTIONAL,-- Need ON
+a-gnss-RequestLocationInformationA-GNSS-RequestLocationInformationOPTIONAL,-- Need ON
+otdoa-RequestLocationInformationOTDOA-RequestLocationInformationOPTIONAL,-- Need ON
+ecid-RequestLocationInformationECID-RequestLocationInformationOPTIONAL,-- Need ON
+epdu-RequestLocationInformationEPDU-SequenceOPTIONAL,-- Need ON
+...,
+[[
+sensor-RequestLocationInformation-r13
+Sensor-RequestLocationInformation-r13
+OPTIONAL,-- Need ON
+tbs-RequestLocationInformation-r13TBS-RequestLocationInformation-r13OPTIONAL,-- Need ON
+wlan-RequestLocationInformation-r13WLAN-RequestLocationInformation-r13OPTIONAL,-- Need ON
+bt-RequestLocationInformation-r13BT-RequestLocationInformation-r13OPTIONAL-- Need ON
+]],
+[[nr-ECID-RequestLocationInformation-r16
+NR-ECID-RequestLocationInformation-r16
+OPTIONAL,-- Need ON
+nr-Multi-RTT-RequestLocationInformation-r16
+NR-Multi-RTT-RequestLocationInformation-r16
+OPTIONAL,-- Need ON
+nr-DL-AoD-RequestLocationInformation-r16
+NR-DL-AoD-RequestLocationInformation-r16
+OPTIONAL,-- Need ON
+nr-DL-TDOA-RequestLocationInformation-r16
+NR-DL-TDOA-RequestLocationInformation-r16
+OPTIONAL-- Need ON
+]]
+}

@@ -1,0 +1,12 @@
+GNSS-TargetDeviceErrorCauses ::= SEQUENCE {
+	cause		ENUMERATED {	undefined,
+								thereWereNotEnoughSatellitesReceived,
+								assistanceDataMissing,
+								notAllRequestedMeasurementsPossible,
+								...
+							},
+	fineTimeAssistanceMeasurementsNotPossible		NULL		OPTIONAL,
+	adrMeasurementsNotPossible						NULL		OPTIONAL,
+	multiFrequencyMeasurementsNotPossible			NULL		OPTIONAL,
+	...
+}

@@ -1,0 +1,13 @@
+GNSS-ReferenceTime ::= SEQUENCE {
+	gnss-SystemTime				GNSS-SystemTime,
+	referenceTimeUnc			INTEGER (0..127)					OPTIONAL,	-- Cond noFTA
+	gnss-ReferenceTimeForCells	SEQUENCE (SIZE (1..16)) OF
+									GNSS-ReferenceTimeForOneCell	OPTIONAL,	-- Need ON
+	...
+}
+GNSS-ReferenceTimeForOneCell ::= SEQUENCE {	
+	networkTime				NetworkTime,
+	referenceTimeUnc			INTEGER (0..127),
+	bsAlign						ENUMERATED {true}	OPTIONAL,
+	...
+}

@@ -1,0 +1,14 @@
+TBS-ProvideCapabilities-r13 ::= SEQUENCE {
+	tbs-Modes-r13			BIT STRING {	standalone		(0),
+											ue-assisted		(1),
+											ue-based		(2)} (SIZE (1..8)),
+	...,
+	[[	mbs-AssistanceDataSupportList-r14	MBS-AssistanceDataSupportList-r14		OPTIONAL,
+		periodicalReportingSupported-r14	PositioningModes						OPTIONAL,
+		mbs-ConfigSupport-r14	BIT STRING {	tb1		(0),
+												tb2		(1),
+												tb3		(2),
+												tb4		(3)} (SIZE (1..8))			OPTIONAL,
+		mbs-IdleStateForMeasurements-r14		ENUMERATED { required }				OPTIONAL
+	]]
+}

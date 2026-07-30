@@ -1,0 +1,44 @@
+-- Source: 3GPP TS 37.355 V16.4.0 (2021-03), Release 16
+-- Archive: docs/specs/37355-g40.zip, member 37355-g40.docx
+-- Extracted from clause 6.2 LPP PDU Structure; no normalization applied.
+-- This is the bounded outer-definition transcription used by the audit only.
+
+LPP-PDU-Definitions {
+  itu-t (0) identified-organization (4) etsi (0) mobileDomain (0)
+  eps-Access (21) modules (3) lpp (7) version1 (1) lpp-PDU-Definitions (1)
+} DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+LPP-Message ::= SEQUENCE {
+  transactionID LPP-TransactionID OPTIONAL,
+  endTransaction BOOLEAN,
+  sequenceNumber SequenceNumber OPTIONAL,
+  acknowledgement Acknowledgement OPTIONAL,
+  lpp-MessageBody LPP-MessageBody OPTIONAL
+}
+
+SequenceNumber ::= INTEGER (0..255)
+Acknowledgement ::= SEQUENCE { ackRequested BOOLEAN, ackIndicator SequenceNumber OPTIONAL }
+
+LPP-MessageBody ::= CHOICE {
+  c1 CHOICE {
+    requestCapabilities RequestCapabilities,
+    provideCapabilities ProvideCapabilities,
+    requestAssistanceData RequestAssistanceData,
+    provideAssistanceData ProvideAssistanceData,
+    requestLocationInformation RequestLocationInformation,
+    provideLocationInformation ProvideLocationInformation,
+    abort Abort, error Error,
+    spare7 NULL, spare6 NULL, spare5 NULL, spare4 NULL,
+    spare3 NULL, spare2 NULL, spare1 NULL, spare0 NULL
+  },
+  messageClassExtension SEQUENCE {}
+}
+
+LPP-TransactionID ::= SEQUENCE {
+  initiator Initiator,
+  transactionNumber TransactionNumber,
+  ...
+}
+Initiator ::= ENUMERATED { locationServer, targetDevice, ... }
+TransactionNumber ::= INTEGER (0..255)
+END

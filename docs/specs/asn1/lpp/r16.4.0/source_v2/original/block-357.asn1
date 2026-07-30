@@ -1,0 +1,8 @@
+NR-Multi-RTT-LocationServerErrorCauses-r16 ::= SEQUENCE {
+	cause-r16		ENUMERATED	{	undefined,
+									assistanceDataNotSupportedByServer,
+									assistanceDataSupportedButCurrentlyNotAvailableByServer,
+									...
+								},
+	...
+}

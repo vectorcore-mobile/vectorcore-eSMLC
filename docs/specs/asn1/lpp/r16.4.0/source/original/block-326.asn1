@@ -1,0 +1,9 @@
+NR-DL-TDOA-ProvideLocationInformation-r16 ::= SEQUENCE {
+nr-DL-TDOA-SignalMeasurementInformation-r16
+NR-DL-TDOA-SignalMeasurementInformation-r16
+OPTIONAL,
+nr-dl-tdoa-LocationInformation-r16NR-DL-TDOA-LocationInformation-r16
+OPTIONAL, -- Cond UEB
+nr-DL-TDOA-Error-r16NR-DL-TDOA-Error-r16OPTIONAL,
+...
+}

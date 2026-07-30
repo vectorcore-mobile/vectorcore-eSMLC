@@ -1,0 +1,4 @@
+HorizontalVelocity ::= SEQUENCE {
+	bearing						INTEGER(0..359),
+	horizontalSpeed				INTEGER(0..2047)
+}

@@ -1,0 +1,11 @@
+CommonIEsError ::= SEQUENCE {
+errorCauseENUMERATED {
+undefined,
+lppMessageHeaderError,
+lppMessageBodyError,
+epduError,
+incorrectDataValue,
+...,
+lppSegmentationError-v1450
+}
+}

@@ -1,0 +1,4 @@
+GNSS-RTK-AuxiliaryStationDataReq-r15 ::= SEQUENCE {
+master-referenceStationID-r15GNSS-ReferenceStationID-r15OPTIONAL,
+...
+}

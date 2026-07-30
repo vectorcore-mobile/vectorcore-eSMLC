@@ -1,0 +1,10 @@
+GNSS-ID-Bitmap ::= SEQUENCE {
+	gnss-ids			BIT STRING {	gps			(0),	
+										sbas		(1),
+										qzss		(2),
+										galileo		(3),
+										glonass		(4),
+										bds			(5),
+										navic-v1610	(6) } (SIZE (1..16)),
+	...
+}

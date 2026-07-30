@@ -1,0 +1,86 @@
+{
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "bit_length": 9,
+      "hex": "0000",
+      "round_trip": true,
+      "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+      "type": "PhysicalCellID",
+      "value": 0
+    },
+    {
+      "bit_length": 9,
+      "hex": "0080",
+      "round_trip": true,
+      "sha256": "085edad400785fca7e7e90b1fac4beb776fc2beee5aa24352d5f39b5d57efcad",
+      "type": "PhysicalCellID",
+      "value": 1
+    },
+    {
+      "bit_length": 9,
+      "hex": "fb80",
+      "round_trip": true,
+      "sha256": "7b079db958f63b3a50763ff9bdcab5213661c254b714cf750cc1441434bff301",
+      "type": "PhysicalCellID",
+      "value": 503
+    },
+    {
+      "bit_length": 16,
+      "hex": "0000",
+      "round_trip": true,
+      "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+      "type": "EUTRACarrierFrequencyRoot",
+      "value": 0
+    },
+    {
+      "bit_length": 16,
+      "hex": "0064",
+      "round_trip": true,
+      "sha256": "d070dc5b8da9aea7dc0f5ad4c29d89965200059c9a0ceca3abd5da2492dcb71d",
+      "type": "EUTRACarrierFrequencyRoot",
+      "value": 100
+    },
+    {
+      "bit_length": 16,
+      "hex": "ffff",
+      "round_trip": true,
+      "sha256": "ca2fd00fa001190744c15c317643ab092e7048ce086a243e2be9437c898de1bb",
+      "type": "EUTRACarrierFrequencyRoot",
+      "value": 65535
+    },
+    {
+      "bit_length": 18,
+      "hex": "000000",
+      "round_trip": true,
+      "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c",
+      "type": "EUTRACarrierFrequencyV9a0",
+      "value": 65536
+    },
+    {
+      "bit_length": 25,
+      "hex": "00803200",
+      "round_trip": true,
+      "sha256": "a5e660930d7049dd8cd733c40e9f7321a6f4075779fa79a8e9799b90c84a3504",
+      "type": "ScalarPair",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1
+      }
+    },
+    {
+      "bit_length": 25,
+      "hex": "fbffff80",
+      "round_trip": true,
+      "sha256": "3aeac333fdf8d6835280a8424be224f8c3171c78bebafcaddd3a67106a6c4ac2",
+      "type": "ScalarPair",
+      "value": {
+        "arfcnEUTRA": 65535,
+        "physCellId": 503
+      }
+    }
+  ],
+  "harness_sha256": "1a6c1d82eccb19627c8db48770b2ada9b47666130d741cb59aaa61e5d33415bd"
+}

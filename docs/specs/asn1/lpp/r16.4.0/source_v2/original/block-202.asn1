@@ -1,0 +1,58 @@
+MeasurementReferenceTime ::= SEQUENCE {
+	gnss-TOD-msec		INTEGER (0..3599999),
+	gnss-TOD-frac		INTEGER (0..3999)			OPTIONAL,		
+	gnss-TOD-unc		INTEGER (0..127)			OPTIONAL,		
+	gnss-TimeID			GNSS-ID,
+	networkTime			CHOICE {
+		eUTRA	SEQUENCE {
+				physCellId			INTEGER (0..503),
+				cellGlobalId		CellGlobalIdEUTRA-AndUTRA		OPTIONAL,
+				systemFrameNumber	BIT STRING (SIZE (10)),
+				...
+				},
+		uTRA	SEQUENCE {
+				mode					CHOICE {
+										fdd			SEQUENCE {
+													primary-CPICH-Info	INTEGER (0..511),
+													...
+													},
+										tdd			SEQUENCE {
+													cellParameters		INTEGER (0..127),
+													...
+													}
+										},
+				cellGlobalId			CellGlobalIdEUTRA-AndUTRA		OPTIONAL,
+				referenceSystemFrameNumber
+										INTEGER (0..4095),
+				...
+				},
+		gSM		SEQUENCE {
+				bcchCarrier			INTEGER (0..1023),
+				bsic				INTEGER (0..63),
+				cellGlobalId		CellGlobalIdGERAN					OPTIONAL,
+				referenceFrame		SEQUENCE {
+									referenceFN		INTEGER (0..65535),
+									referenceFNMSB		INTEGER (0..63)		OPTIONAL,
+									...
+									},
+				deltaGNSS-TOD		INTEGER (0 .. 127)		OPTIONAL,
+				...
+				},
+		...,
+		nbIoT-r14
+				SEQUENCE {
+				nbPhysCellId-r14	INTEGER (0..503),
+				nbCellGlobalId-r14	ECGI						OPTIONAL,
+				sfn-r14				BIT STRING (SIZE (10)),
+				hyperSFN-r14		BIT STRING (SIZE (10))		OPTIONAL,
+				...
+				},
+		nr-r15	SEQUENCE {
+				nrPhysCellId-r15	INTEGER (0..1007),
+				nrCellGlobalID-r15	NCGI-r15					OPTIONAL,
+				nr-sfn-r15			BIT STRING (SIZE (10)),
+				...
+				}
+		}		OPTIONAL,												
+	...
+}

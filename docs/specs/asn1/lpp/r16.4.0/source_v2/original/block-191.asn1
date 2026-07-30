@@ -1,0 +1,4 @@
+GNSS-SSR-OrbitCorrectionsReq-r15 ::= SEQUENCE {
+	storedNavList-r15				GNSS-NavListInfo-r15				OPTIONAL,
+	...
+}

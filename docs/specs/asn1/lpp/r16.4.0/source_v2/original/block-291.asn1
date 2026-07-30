@@ -1,0 +1,5 @@
+Sensor-ProvideAssistanceData-r14 ::= SEQUENCE {
+	sensor-AssistanceDataList-r14		Sensor-AssistanceDataList-r14		OPTIONAL,	-- Need ON
+	sensor-Error-r14					Sensor-Error-r13					OPTIONAL,	-- Need ON
+	...
+}

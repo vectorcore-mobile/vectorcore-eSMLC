@@ -1,0 +1,37 @@
+{
+  "carrier_frequency": {
+    "extension_behavior": "ARFCN-ValueEUTRA is non-extensible. Higher values use MeasuredResultsElement extension addition arfcnEUTRA-v9a0, not an integer extension.",
+    "extension_group_source_line": 3964,
+    "field": "arfcnEUTRA",
+    "offset_rule": "value - 0",
+    "root_constraint": [0, 65535],
+    "root_width_bits": 16,
+    "source_declaration_line": 280,
+    "source_module": "LPP-PDU-Definitions",
+    "type": "ARFCN-ValueEUTRA",
+    "upper_bound_constant": "maxEARFCN",
+    "upper_bound_constant_line": 5079,
+    "v9a0_constraint": [65536, 262143],
+    "v9a0_type": "ARFCN-ValueEUTRA-v9a0"
+  },
+  "phys_cell_id": {
+    "extension_behavior": "non-extensible direct INTEGER",
+    "field": "physCellId",
+    "offset_rule": "value - 0",
+    "root_constraint": [0, 503],
+    "root_width_bits": 9,
+    "source_declaration_line": 3956,
+    "source_module": "LPP-PDU-Definitions",
+    "type": "INTEGER (0..503)"
+  },
+  "runtime_dependency": {
+    "carrier_frequency_root": "WriteConstrainedWholeNumber(value, 0, 65535) / ReadConstrainedWholeNumber(0, 65535)",
+    "missing_for_root_only": [],
+    "phys_cell_id": "WriteConstrainedWholeNumber(value, 0, 503) / ReadConstrainedWholeNumber(0, 503)",
+    "required_for_v9a0_extension_addition": [
+      "SEQUENCE extension-addition bitmap",
+      "normally-small non-negative whole number",
+      "open type"
+    ]
+  }
+}

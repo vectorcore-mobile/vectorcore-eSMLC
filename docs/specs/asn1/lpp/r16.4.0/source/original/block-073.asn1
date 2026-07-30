@@ -1,0 +1,29 @@
+OTDOA-ReferenceCellInfo ::= SEQUENCE {
+physCellIdINTEGER (0..503),
+cellGlobalIdECGIOPTIONAL,-- Need ON
+earfcnRefARFCN-ValueEUTRAOPTIONAL,-- Cond NotSameAsServ0
+antennaPortConfigENUMERATED {ports1-or-2, ports4, ... }
+OPTIONAL,-- Cond NotSameAsServ1
+cpLengthENUMERATED { normal, extended, ... },
+prsInfoPRS-InfoOPTIONAL,-- Cond PRS
+...,
+[[ earfcnRef-v9a0ARFCN-ValueEUTRA-v9a0OPTIONAL-- Cond NotSameAsServ2
+]],
+[[tpId-r14INTEGER (0..4095)OPTIONAL,-- Need ON
+cpLengthCRS-r14ENUMERATED { normal, extended, ... }
+OPTIONAL,-- Cond CRS
+sameMBSFNconfigRef-r14BOOLEANOPTIONAL,-- Need ON
+dlBandwidth-r14ENUMERATED {n6, n15, n25, n50, n75, n100}
+OPTIONAL,-- Cond NotSameAsServ3
+addPRSconfigRef-r14SEQUENCE (SIZE (1..maxAddPRSconfig-r14)) OF PRS-Info
+OPTIONAL-- Need ON
+]],
+[[
+nr-LTE-SFN-Offset-r15INTEGER (0..1023)OPTIONAL-- Cond NR
+]],
+[[
+tdd-config-v1520TDD-Config-v1520OPTIONAL,-- Need ON
+nr-LTE-fineTiming-Offset-r15INTEGER (0..19)OPTIONAL-- Cond FineOffset
+]]
+}
+maxAddPRSconfig-r14INTEGER ::= 2

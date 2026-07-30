@@ -1,0 +1,24 @@
+GNSS-CommonAssistDataReq ::= SEQUENCE {
+gnss-ReferenceTimeReqGNSS-ReferenceTimeReq
+OPTIONAL, -- Cond RefTimeReq
+gnss-ReferenceLocationReqGNSS-ReferenceLocationReq
+OPTIONAL, -- Cond RefLocReq
+gnss-IonosphericModelReqGNSS-IonosphericModelReq
+OPTIONAL, -- Cond IonoModReq
+gnss-EarthOrientationParametersReqGNSS-EarthOrientationParametersReq
+OPTIONAL, -- Cond EOPReq
+...,
+[[
+gnss-RTK-ReferenceStationInfoReq-r15
+GNSS-RTK-ReferenceStationInfoReq-r15
+OPTIONAL, -- Cond ARPReq
+gnss-RTK-AuxiliaryStationDataReq-r15
+GNSS-RTK-AuxiliaryStationDataReq-r15
+OPTIONAL -- Cond AuxARPReq
+]],
+[[
+gnss-SSR-CorrectionPointsReq-r16
+GNSS-SSR-CorrectionPointsReq-r16
+OPTIONAL -- Cond PointsReq
+]]
+}

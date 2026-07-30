@@ -1,0 +1,148 @@
+{
+  "bit_length_method": "asn1tools Encoder pre-octet-padding",
+  "closure_sha256": "9d44bbe3d8a944cf506b3922d2756df02b3e9a109c42804a64e3ad9401ba38d9",
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "binary_file": "valid/request-empty.uper",
+      "bit_length": 9,
+      "canonical_file": "canonical/request-empty.json",
+      "decoded": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "requestCapabilities-r9",
+            {}
+          ]
+        ]
+      },
+      "hex": "0000",
+      "name": "request-empty",
+      "purpose": "R9 empty request remains valid",
+      "round_trip": "byte-and-bit-identical",
+      "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+      "top_level_type": "RequestCapabilities",
+      "unused_trailing_bits": 7
+    },
+    {
+      "binary_file": "valid/request-ecid-selector.uper",
+      "bit_length": 10,
+      "canonical_file": "canonical/request-ecid-selector.json",
+      "decoded": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "requestCapabilities-r9",
+            {
+              "ecid-RequestCapabilities": {}
+            }
+          ]
+        ]
+      },
+      "hex": "0100",
+      "name": "request-ecid-selector",
+      "purpose": "requests ECID capability group",
+      "round_trip": "byte-and-bit-identical",
+      "sha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254",
+      "top_level_type": "RequestCapabilities",
+      "unused_trailing_bits": 6
+    },
+    {
+      "binary_file": "valid/provide-empty.uper",
+      "bit_length": 9,
+      "canonical_file": "canonical/provide-empty.json",
+      "decoded": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideCapabilities-r9",
+            {}
+          ]
+        ]
+      },
+      "hex": "0000",
+      "name": "provide-empty",
+      "purpose": "R9 empty provide remains valid",
+      "round_trip": "byte-and-bit-identical",
+      "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+      "top_level_type": "ProvideCapabilities",
+      "unused_trailing_bits": 7
+    },
+    {
+      "binary_file": "valid/provide-ecid-rsrp.uper",
+      "bit_length": 14,
+      "canonical_file": "canonical/provide-ecid-rsrp.json",
+      "decoded": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideCapabilities-r9",
+            {
+              "ecid-ProvideCapabilities": {
+                "ecid-MeasSupported": [
+                  {
+                    "hex": "80"
+                  },
+                  1
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "0104",
+      "name": "provide-ecid-rsrp",
+      "purpose": "target supports ECID RSRP",
+      "round_trip": "byte-and-bit-identical",
+      "sha256": "a8d5dd63fba471ebcb1f3e8f7c1e1879b7152a6e7298a91ce119a63400ade7c5",
+      "top_level_type": "ProvideCapabilities",
+      "unused_trailing_bits": 2
+    },
+    {
+      "binary_file": "valid/provide-ecid-rsrp-rsrq-uerxtx.uper",
+      "bit_length": 16,
+      "canonical_file": "canonical/provide-ecid-rsrp-rsrq-uerxtx.json",
+      "decoded": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideCapabilities-r9",
+            {
+              "ecid-ProvideCapabilities": {
+                "ecid-MeasSupported": [
+                  {
+                    "hex": "e0"
+                  },
+                  3
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "0117",
+      "name": "provide-ecid-rsrp-rsrq-uerxtx",
+      "purpose": "target supports three root ECID measurements",
+      "round_trip": "byte-and-bit-identical",
+      "sha256": "5809addc9f6926fc5c4e20cf87958858c4454c21cdfc6b02f377f12c06b35cca",
+      "top_level_type": "ProvideCapabilities",
+      "unused_trailing_bits": 0
+    }
+  ],
+  "module_sha256": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724",
+  "negative_cases": [
+    {
+      "error_type": "ConstraintsError",
+      "name": "ecid-bitstring-empty",
+      "rejected": true
+    },
+    {
+      "error_type": "ConstraintsError",
+      "name": "ecid-bitstring-too-long",
+      "rejected": true
+    }
+  ],
+  "specification": "3GPP TS 37.355 V16.4.0"
+}

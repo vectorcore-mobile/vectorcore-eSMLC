@@ -1,0 +1,11 @@
+BT-MeasurementInformation-r13 ::= SEQUENCE {
+measurementReferenceTime-r13UTCTimeOPTIONAL,
+bt-MeasurementList-r13BT-MeasurementList-r13OPTIONAL,
+...
+}
+BT-MeasurementList-r13 ::= SEQUENCE (SIZE(1..maxBT-Beacon-r13)) OF BT-MeasurementElement-r13
+BT-MeasurementElement-r13 ::= SEQUENCE {
+btAddr-r13BIT STRING (SIZE (48)),
+rssi-r13INTEGER (-128..127)OPTIONAL,
+...
+}

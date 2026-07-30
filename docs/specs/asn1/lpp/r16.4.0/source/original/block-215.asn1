@@ -1,0 +1,72 @@
+GNSS-GenericAssistanceDataSupport ::=
+SEQUENCE (SIZE (1..16)) OF GNSS-GenericAssistDataSupportElement
+GNSS-GenericAssistDataSupportElement ::= SEQUENCE {
+gnss-IDGNSS-ID,
+sbas-IDSBAS-IDOPTIONAL, -- Cond GNSSIDSBAS
+gnss-TimeModelsSupportGNSS-TimeModelListSupport
+OPTIONAL, -- Cond TimeModSup
+gnss-DifferentialCorrectionsSupportGNSS-DifferentialCorrectionsSupport
+OPTIONAL, -- Cond DGNSS-Sup
+gnss-NavigationModelSupportGNSS-NavigationModelSupport
+OPTIONAL, -- Cond NavModSup
+gnss-RealTimeIntegritySupportGNSS-RealTimeIntegritySupport
+OPTIONAL, -- Cond RTISup
+gnss-DataBitAssistanceSupportGNSS-DataBitAssistanceSupport
+OPTIONAL, -- Cond DataBitsSup
+gnss-AcquisitionAssistanceSupportGNSS-AcquisitionAssistanceSupport
+OPTIONAL, -- Cond AcquAssistSup
+gnss-AlmanacSupportGNSS-AlmanacSupport
+OPTIONAL, -- Cond AlmanacSup
+gnss-UTC-ModelSupportGNSS-UTC-ModelSupport
+OPTIONAL, -- Cond UTCModSup
+gnss-AuxiliaryInformationSupportGNSS-AuxiliaryInformationSupport
+OPTIONAL, -- Cond AuxInfoSup
+...,
+[[
+bds-DifferentialCorrectionsSupport-r12
+BDS-DifferentialCorrectionsSupport-r12
+OPTIONAL, -- Cond DBDS-Sup
+bds-GridModelSupport-r12BDS-GridModelSupport-r12
+OPTIONAL-- Cond BDS-GridModSup
+]],
+[[
+gnss-RTK-ObservationsSupport-r15
+GNSS-RTK-ObservationsSupport-r15
+OPTIONAL,-- Cond RTK-OSR-Sup
+glo-RTK-BiasInformationSupport-r15
+GLO-RTK-BiasInformationSupport-r15
+OPTIONAL,-- Cond GLO-CPB-Sup
+gnss-RTK-MAC-CorrectionDifferencesSupport-r15
+GNSS-RTK-MAC-CorrectionDifferencesSupport-r15
+OPTIONAL,-- Cond MAC-Sup
+gnss-RTK-ResidualsSupport-r15GNSS-RTK-ResidualsSupport-r15
+OPTIONAL,-- Cond Res-Sup
+gnss-RTK-FKP-GradientsSupport-r15
+GNSS-RTK-FKP-GradientsSupport-r15
+OPTIONAL,-- Cond FKP-Sup
+gnss-SSR-OrbitCorrectionsSupport-r15
+GNSS-SSR-OrbitCorrectionsSupport-r15
+OPTIONAL, -- Cond OC-Sup
+gnss-SSR-ClockCorrectionsSupport-r15
+GNSS-SSR-ClockCorrectionsSupport-r15
+OPTIONAL, -- Cond CC-Sup
+gnss-SSR-CodeBiasSupport-r15GNSS-SSR-CodeBiasSupport-r15
+OPTIONAL -- Cond CB-Sup
+]],
+[[
+gnss-SSR-URA-Support-r16GNSS-SSR-URA-Support-r16OPTIONAL,-- Cond URA-Sup
+gnss-SSR-PhaseBiasSupport-r16GNSS-SSR-PhaseBiasSupport-r16
+OPTIONAL,-- Cond PB-Sup
+gnss-SSR-STEC-CorrectionSupport-r16
+GNSS-SSR-STEC-CorrectionSupport-r16
+OPTIONAL,-- Cond STEC-Sup
+gnss-SSR-GriddedCorrectionSupport-r16
+GNSS-SSR-GriddedCorrectionSupport-r16
+OPTIONAL,-- Cond Grid-Sup
+navic-DifferentialCorrectionsSupport-r16
+NavIC-DifferentialCorrectionsSupport-r16
+OPTIONAL,-- Cond DNavIC-Sup
+navic-GridModelSupport-r16NavIC-GridModelSupport-r16
+OPTIONAL-- Cond NavIC-GridModSup
+]]
+}

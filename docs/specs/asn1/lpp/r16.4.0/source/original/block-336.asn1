@@ -1,0 +1,9 @@
+NR-DL-AoD-ProvideAssistanceData-r16 ::= SEQUENCE {
+nr-DL-PRS-AssistanceData-r16NR-DL-PRS-AssistanceData-r16OPTIONAL,-- Need ON
+nr-SelectedDL-PRS-IndexList-r16NR-SelectedDL-PRS-IndexList-r16OPTIONAL,-- Need ON
+nr-PositionCalculationAssistance-r16
+NR-PositionCalculationAssistance-r16
+OPTIONAL, -- Cond UEB
+nr-DL-AoD-Error-r16NR-DL-AoD-Error-r16OPTIONAL,-- Need ON
+...
+}

@@ -1,0 +1,17 @@
+WLAN-ProvideCapabilities-r13 ::= SEQUENCE {
+wlan-Modes-r13BIT STRING{standalone(0),
+ue-assisted(1),
+ue-based(2)}(SIZE (1..8)),
+wlan-MeasSupported-r13BIT STRING{
+rssi-r13(0),
+rtt-r13(1)}(SIZE(1..8)),
+...,
+[[wlan-AP-AD-Supported-r14
+BIT STRING {ap-identifier(0),
+ap-location(1)}(SIZE (1..8))
+OPTIONAL,
+periodicalReportingSupported-r14PositioningModesOPTIONAL,
+idleStateForMeasurements-r14
+ENUMERATED {required}OPTIONAL
+]]
+}

@@ -1,0 +1,29 @@
+GNSS-RTK-MAC-CorrectionDifferences-r15 ::= SEQUENCE {
+	networkID-r15						GNSS-NetworkID-r15,
+	subNetworkID-r15					GNSS-SubNetworkID-r15				OPTIONAL,	-- Need ON
+	master-ReferenceStationID-r15		GNSS-ReferenceStationID-r15,
+	l1-r15								GNSS-FrequencyID-r15				OPTIONAL,	-- Need OP
+	l2-r15								GNSS-FrequencyID-r15				OPTIONAL,	-- Need OP
+	rtkCorrectionDifferencesList-r15	RTK-CorrectionDifferencesList-r15,
+	...
+}
+RTK-CorrectionDifferencesList-r15 ::= SEQUENCE (SIZE (1..32)) OF
+											RTK-CorrectionDifferencesElement-r15
+RTK-CorrectionDifferencesElement-r15 ::= SEQUENCE {
+	epochTime-r15							GNSS-SystemTime,
+	auxiliary-referenceStationID-r15		GNSS-ReferenceStationID-r15,
+	geometric-ionospheric-corrections-differences-r15	
+											Geometric-Ionospheric-Corrections-Differences-r15,
+	...
+}
+Geometric-Ionospheric-Corrections-Differences-r15 ::= SEQUENCE (SIZE(1..64)) OF
+									Geometric-Ionospheric-Corrections-Differences-Element-r15
+Geometric-Ionospheric-Corrections-Differences-Element-r15 ::= SEQUENCE {
+	svID-r15										SV-ID,
+	ambiguityStatusFlag-r15							INTEGER (0..3),
+	non-synch-count-r15								INTEGER (0..7),
+	geometricCarrierPhaseCorrectionDifference-r15	INTEGER (-65536..65535),
+	iod-r15											BIT STRING (SIZE(11)),
+	ionosphericCarrierPhaseCorrectionDifference-r15	INTEGER (-65536..65535),
+	...
+}

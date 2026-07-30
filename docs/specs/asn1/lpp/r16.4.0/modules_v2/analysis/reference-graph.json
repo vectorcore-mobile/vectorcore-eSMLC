@@ -1,0 +1,5529 @@
+{
+  "edges": [
+    {
+      "from": "A-GNSS-Error",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-LocationServerErrorCauses"
+    },
+    {
+      "from": "A-GNSS-Error",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-TargetDeviceErrorCauses"
+    },
+    {
+      "from": "A-GNSS-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-CommonAssistData"
+    },
+    {
+      "from": "A-GNSS-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-GenericAssistData"
+    },
+    {
+      "from": "A-GNSS-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-Error"
+    },
+    {
+      "from": "A-GNSS-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-PeriodicAssistData-r15"
+    },
+    {
+      "from": "A-GNSS-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SupportList"
+    },
+    {
+      "from": "A-GNSS-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "AssistanceDataSupportList"
+    },
+    {
+      "from": "A-GNSS-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "LocationCoordinateTypes"
+    },
+    {
+      "from": "A-GNSS-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "VelocityTypes"
+    },
+    {
+      "from": "A-GNSS-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "A-GNSS-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalMeasurementInformation"
+    },
+    {
+      "from": "A-GNSS-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-LocationInformation"
+    },
+    {
+      "from": "A-GNSS-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-Error"
+    },
+    {
+      "from": "A-GNSS-RequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-CommonAssistDataReq"
+    },
+    {
+      "from": "A-GNSS-RequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-GenericAssistDataReq"
+    },
+    {
+      "from": "A-GNSS-RequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-PeriodicAssistDataReq-r15"
+    },
+    {
+      "from": "A-GNSS-RequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-PositioningInstructions"
+    },
+    {
+      "from": "ARFCN-ValueEUTRA",
+      "kind": "local-or-imported-definition",
+      "to": "maxEARFCN"
+    },
+    {
+      "from": "ARFCN-ValueEUTRA-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxEARFCN2"
+    },
+    {
+      "from": "ARFCN-ValueEUTRA-v9a0",
+      "kind": "local-or-imported-definition",
+      "to": "maxEARFCN-Plus1"
+    },
+    {
+      "from": "ARFCN-ValueEUTRA-v9a0",
+      "kind": "local-or-imported-definition",
+      "to": "maxEARFCN2"
+    },
+    {
+      "from": "AUX-ReferenceStationID-Element-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "AUX-ReferenceStationList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "AUX-ReferenceStationID-Element-r15"
+    },
+    {
+      "from": "Abort",
+      "kind": "local-or-imported-definition",
+      "to": "Abort-r9-IEs"
+    },
+    {
+      "from": "Abort-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsAbort"
+    },
+    {
+      "from": "Abort-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "Acknowledgement",
+      "kind": "local-or-imported-definition",
+      "to": "SequenceNumber"
+    },
+    {
+      "from": "Add-PRSconfigNeighbourElement-r14",
+      "kind": "local-or-imported-definition",
+      "to": "PRS-Info"
+    },
+    {
+      "from": "AdditionalPath-r14",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-MeasQuality"
+    },
+    {
+      "from": "AdditionalPathList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxPaths-r14"
+    },
+    {
+      "from": "AdditionalPathList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "AdditionalPath-r14"
+    },
+    {
+      "from": "AlmanacBDS-AlmanacSet-r12",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "AlmanacECEF-SBAS-AlmanacSet",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "AlmanacKeplerianSet",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "AlmanacMidiAlmanacSet",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "AlmanacNAV-KeplerianSet",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "AlmanacNavIC-AlmanacSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "AlmanacReducedKeplerianSet",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "AssistanceDataSIBelement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "CipheringKeyData-r15"
+    },
+    {
+      "from": "AssistanceDataSIBelement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SegmentationInfo-r15"
+    },
+    {
+      "from": "AssistanceDataSupportList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-CommonAssistanceDataSupport"
+    },
+    {
+      "from": "AssistanceDataSupportList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-GenericAssistanceDataSupport"
+    },
+    {
+      "from": "AuxiliaryStationElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "AuxiliaryStationElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "Aux-ARP-Unc-r15"
+    },
+    {
+      "from": "AuxiliaryStationList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "AuxiliaryStationElement-r15"
+    },
+    {
+      "from": "BDS-DifferentialCorrections-r12",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-SgnTypeList-r12"
+    },
+    {
+      "from": "BDS-DifferentialCorrectionsReq-r12",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "BDS-DifferentialCorrectionsSupport-r12",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "BDS-GridModelParameter-r12",
+      "kind": "local-or-imported-definition",
+      "to": "GridIonList-r12"
+    },
+    {
+      "from": "BDS-SgnTypeElement-r12",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "BDS-SgnTypeElement-r12",
+      "kind": "local-or-imported-definition",
+      "to": "DBDS-CorrectionList-r12"
+    },
+    {
+      "from": "BDS-SgnTypeList-r12",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-SgnTypeElement-r12"
+    },
+    {
+      "from": "BT-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "BT-LocationServerErrorCauses-r13"
+    },
+    {
+      "from": "BT-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "BT-TargetDeviceErrorCauses-r13"
+    },
+    {
+      "from": "BT-MeasurementInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "BT-MeasurementList-r13"
+    },
+    {
+      "from": "BT-MeasurementList-r13",
+      "kind": "local-or-imported-definition",
+      "to": "maxBT-Beacon-r13"
+    },
+    {
+      "from": "BT-MeasurementList-r13",
+      "kind": "local-or-imported-definition",
+      "to": "BT-MeasurementElement-r13"
+    },
+    {
+      "from": "BT-ProvideCapabilities-r13",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "BT-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "BT-MeasurementInformation-r13"
+    },
+    {
+      "from": "BT-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "BT-Error-r13"
+    },
+    {
+      "from": "BadSignalElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "BadSignalElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "CarrierFreq-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-r14"
+    },
+    {
+      "from": "CarrierFreq-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreqOffsetNB-r14"
+    },
+    {
+      "from": "CommonIEsProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "SegmentationInfo-r14"
+    },
+    {
+      "from": "CommonIEsProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "PeriodicAssistanceDataControlParameters-r15"
+    },
+    {
+      "from": "CommonIEsProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "SegmentationInfo-r14"
+    },
+    {
+      "from": "CommonIEsProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "LocationCoordinates"
+    },
+    {
+      "from": "CommonIEsProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "Velocity"
+    },
+    {
+      "from": "CommonIEsProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "LocationError"
+    },
+    {
+      "from": "CommonIEsProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "EarlyFixReport-r12"
+    },
+    {
+      "from": "CommonIEsProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "LocationSource-r13"
+    },
+    {
+      "from": "CommonIEsProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "SegmentationInfo-r14"
+    },
+    {
+      "from": "CommonIEsRequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "CommonIEsRequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "SegmentationInfo-r14"
+    },
+    {
+      "from": "CommonIEsRequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "PeriodicAssistanceDataControlParameters-r15"
+    },
+    {
+      "from": "CommonIEsRequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "LocationInformationType"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "TriggeredReportingCriteria"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "PeriodicalReportingCriteria"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "AdditionalInformation"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "QoS"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "Environment"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "LocationCoordinateTypes"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "VelocityTypes"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "MessageSizeLimitNB-r14"
+    },
+    {
+      "from": "CommonIEsRequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "SegmentationInfo-r14"
+    },
+    {
+      "from": "DBDS-CorrectionElement-r12",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "DBDS-CorrectionList-r12",
+      "kind": "local-or-imported-definition",
+      "to": "DBDS-CorrectionElement-r12"
+    },
+    {
+      "from": "DGNSS-CorrectionsElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "DGNSS-SatList",
+      "kind": "local-or-imported-definition",
+      "to": "DGNSS-CorrectionsElement"
+    },
+    {
+      "from": "DGNSS-SgnTypeElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "DGNSS-SgnTypeElement",
+      "kind": "local-or-imported-definition",
+      "to": "DGNSS-SatList"
+    },
+    {
+      "from": "DGNSS-SgnTypeList",
+      "kind": "local-or-imported-definition",
+      "to": "DGNSS-SgnTypeElement"
+    },
+    {
+      "from": "DL-AoD-MeasCapabilityPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "FreqBandIndicatorNR-r16"
+    },
+    {
+      "from": "DL-PRS-BeamInfoResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxResourcesPerSet-r16"
+    },
+    {
+      "from": "DL-PRS-BeamInfoResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-BeamInfoElement-r16"
+    },
+    {
+      "from": "DL-PRS-BeamInfoSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxSetsPerTrp-r16"
+    },
+    {
+      "from": "DL-PRS-BeamInfoSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-BeamInfoResourceSet-r16"
+    },
+    {
+      "from": "DL-PRS-ID-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxResourceIDs-r16"
+    },
+    {
+      "from": "DL-PRS-ID-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "DL-PRS-ID-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "DL-PRS-MutingOption1-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-MutingPattern-r16"
+    },
+    {
+      "from": "DL-PRS-MutingOption2-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-MutingPattern-r16"
+    },
+    {
+      "from": "DL-PRS-QCL-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "DL-PRS-QCL-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "DL-PRS-QCL-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "DL-PRS-QCL-ProcessingCapabilityPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "FreqBandIndicatorNR-r16"
+    },
+    {
+      "from": "DL-PRS-Resource-ARP-Element-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RelativeLocation-r16"
+    },
+    {
+      "from": "DL-PRS-ResourceSets-TRP-Element-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RelativeLocation-r16"
+    },
+    {
+      "from": "DL-PRS-ResourceSets-TRP-Element-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxResourcesPerSet-r16"
+    },
+    {
+      "from": "DL-PRS-ResourceSets-TRP-Element-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-Resource-ARP-Element-r16"
+    },
+    {
+      "from": "DL-PRS-ResourcesBandCombination-r16",
+      "kind": "local-or-imported-definition",
+      "to": "maxSimultaneousBands-r16"
+    },
+    {
+      "from": "DL-PRS-ResourcesBandCombination-r16",
+      "kind": "local-or-imported-definition",
+      "to": "FreqBandIndicatorNR-r16"
+    },
+    {
+      "from": "DL-PRS-ResourcesBandCombinationList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "maxBandComb-r16"
+    },
+    {
+      "from": "DL-PRS-ResourcesBandCombinationList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-ResourcesBandCombination-r16"
+    },
+    {
+      "from": "DL-PRS-ResourcesCapabilityPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "FreqBandIndicatorNR-r16"
+    },
+    {
+      "from": "DL-SelectedPRS-ResourceIndex-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxNumDL-PRS-ResourcesPerSet-1-r16"
+    },
+    {
+      "from": "DL-SelectedPRS-ResourceSetIndex-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxSetsPerTrp-1-r16"
+    },
+    {
+      "from": "DL-SelectedPRS-ResourceSetIndex-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxResourcesPerSet-r16"
+    },
+    {
+      "from": "DL-SelectedPRS-ResourceSetIndex-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-SelectedPRS-ResourceIndex-r16"
+    },
+    {
+      "from": "DisplacementInfoList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "DisplacementInfoListElement-r15"
+    },
+    {
+      "from": "DisplacementInfoListElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "DeltaTime-r15"
+    },
+    {
+      "from": "DisplacementInfoListElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "Displacement-r15"
+    },
+    {
+      "from": "DisplacementTimeStamp-r15",
+      "kind": "local-or-imported-definition",
+      "to": "UTC-Time-r15"
+    },
+    {
+      "from": "DisplacementTimeStamp-r15",
+      "kind": "local-or-imported-definition",
+      "to": "MeasurementReferenceTime"
+    },
+    {
+      "from": "DisplacementTimeStamp-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SFN-r15"
+    },
+    {
+      "from": "ECID-Error",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-LocationServerErrorCauses"
+    },
+    {
+      "from": "ECID-Error",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-TargetDeviceErrorCauses"
+    },
+    {
+      "from": "ECID-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-SignalMeasurementInformation"
+    },
+    {
+      "from": "ECID-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-Error"
+    },
+    {
+      "from": "ECID-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "MeasuredResultsElement"
+    },
+    {
+      "from": "ECID-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "MeasuredResultsList"
+    },
+    {
+      "from": "EPDU",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Identifier"
+    },
+    {
+      "from": "EPDU",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Body"
+    },
+    {
+      "from": "EPDU-Identifier",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-ID"
+    },
+    {
+      "from": "EPDU-Identifier",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Name"
+    },
+    {
+      "from": "EPDU-Sequence",
+      "kind": "local-or-imported-definition",
+      "to": "maxEPDU"
+    },
+    {
+      "from": "EPDU-Sequence",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU"
+    },
+    {
+      "from": "EqualIntegerAmbiguityLevel-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ReferenceStationList-r16"
+    },
+    {
+      "from": "Error",
+      "kind": "local-or-imported-definition",
+      "to": "Error-r9-IEs"
+    },
+    {
+      "from": "Error-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsError"
+    },
+    {
+      "from": "Error-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "FKP-Gradients-Element-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "FKP-Gradients-List-r15",
+      "kind": "local-or-imported-definition",
+      "to": "FKP-Gradients-Element-r15"
+    },
+    {
+      "from": "GLO-RTK-BiasInformation-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GLO-RTK-BiasInformationReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-AcquisitionAssistElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-AcquisitionAssistList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AcquisitionAssistElement"
+    },
+    {
+      "from": "GNSS-AcquisitionAssistance",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "GNSS-AcquisitionAssistance",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AcquisitionAssistList"
+    },
+    {
+      "from": "GNSS-AcquisitionAssistanceReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "GNSS-Almanac",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AlmanacList"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacKeplerianSet"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacNAV-KeplerianSet"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacReducedKeplerianSet"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacMidiAlmanacSet"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacGLONASS-AlmanacSet"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacECEF-SBAS-AlmanacSet"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacBDS-AlmanacSet-r12"
+    },
+    {
+      "from": "GNSS-AlmanacElement",
+      "kind": "local-or-imported-definition",
+      "to": "AlmanacNavIC-AlmanacSet-r16"
+    },
+    {
+      "from": "GNSS-AlmanacList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AlmanacElement"
+    },
+    {
+      "from": "GNSS-AuxiliaryInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-GPS"
+    },
+    {
+      "from": "GNSS-AuxiliaryInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-GLONASS"
+    },
+    {
+      "from": "GNSS-AuxiliaryInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-BDS-r16"
+    },
+    {
+      "from": "GNSS-BadSignalList",
+      "kind": "local-or-imported-definition",
+      "to": "BadSignalElement"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "StandardClockModelList"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "NAV-ClockModel"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "CNAV-ClockModel"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "GLONASS-ClockModel"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "SBAS-ClockModel"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-ClockModel-r12"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-ClockModel2-r16"
+    },
+    {
+      "from": "GNSS-ClockModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-ClockModel-r16"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceTime"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceLocation"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-IonosphericModel"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-EarthOrientationParameters"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-ReferenceStationInfo-r15"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-CommonObservationInfo-r15"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-AuxiliaryStationData-r15"
+    },
+    {
+      "from": "GNSS-CommonAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-CorrectionPoints-r16"
+    },
+    {
+      "from": "GNSS-CommonAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceTimeReq"
+    },
+    {
+      "from": "GNSS-CommonAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceLocationReq"
+    },
+    {
+      "from": "GNSS-CommonAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-IonosphericModelReq"
+    },
+    {
+      "from": "GNSS-CommonAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-EarthOrientationParametersReq"
+    },
+    {
+      "from": "GNSS-CommonAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-ReferenceStationInfoReq-r15"
+    },
+    {
+      "from": "GNSS-CommonAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-AuxiliaryStationDataReq-r15"
+    },
+    {
+      "from": "GNSS-CommonAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-CorrectionPointsReq-r16"
+    },
+    {
+      "from": "GNSS-CommonAssistanceDataSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceTimeSupport"
+    },
+    {
+      "from": "GNSS-CommonAssistanceDataSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceLocationSupport"
+    },
+    {
+      "from": "GNSS-CommonAssistanceDataSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-IonosphericModelSupport"
+    },
+    {
+      "from": "GNSS-CommonAssistanceDataSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-EarthOrientationParametersSupport"
+    },
+    {
+      "from": "GNSS-CommonAssistanceDataSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-ReferenceStationInfoSupport-r15"
+    },
+    {
+      "from": "GNSS-CommonAssistanceDataSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-AuxiliaryStationDataSupport-r15"
+    },
+    {
+      "from": "GNSS-DataBitAssistance",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitsSatList"
+    },
+    {
+      "from": "GNSS-DataBitAssistanceReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-DataBitAssistanceReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitsReqSatList"
+    },
+    {
+      "from": "GNSS-DataBitsReqSatElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-DataBitsReqSatList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitsReqSatElement"
+    },
+    {
+      "from": "GNSS-DataBitsSatElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-DataBitsSatElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitsSgnList"
+    },
+    {
+      "from": "GNSS-DataBitsSatList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitsSatElement"
+    },
+    {
+      "from": "GNSS-DataBitsSgnElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "GNSS-DataBitsSgnList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitsSgnElement"
+    },
+    {
+      "from": "GNSS-DifferentialCorrections",
+      "kind": "local-or-imported-definition",
+      "to": "DGNSS-SgnTypeList"
+    },
+    {
+      "from": "GNSS-DifferentialCorrectionsReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-DifferentialCorrectionsSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-GenericAssistData",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-GenericAssistDataElement"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "SBAS-ID"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-TimeModelList"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DifferentialCorrections"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavigationModel"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RealTimeIntegrity"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitAssistance"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AcquisitionAssistance"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Almanac"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-UTC-Model"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AuxiliaryInformation"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-DifferentialCorrections-r12"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-GridModelParameter-r12"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-Observations-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GLO-RTK-BiasInformation-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-MAC-CorrectionDifferences-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-Residuals-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-FKP-Gradients-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-OrbitCorrections-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-ClockCorrections-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-CodeBias-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-URA-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-PhaseBias-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-STEC-Correction-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-GriddedCorrection-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-DifferentialCorrections-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-GridModelParameter-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-GenericAssistDataReqElement"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "SBAS-ID"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-TimeModelListReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DifferentialCorrectionsReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavigationModelReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RealTimeIntegrityReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitAssistanceReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AcquisitionAssistanceReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AlmanacReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-UTC-ModelReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AuxiliaryInformationReq"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-DifferentialCorrectionsReq-r12"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-GridModelReq-r12"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-ObservationsReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GLO-RTK-BiasInformationReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-MAC-CorrectionDifferencesReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-ResidualsReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-FKP-GradientsReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-OrbitCorrectionsReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-ClockCorrectionsReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-CodeBiasReq-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-URA-Req-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-PhaseBiasReq-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-STEC-CorrectionReq-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-GriddedCorrectionReq-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-DifferentialCorrectionsReq-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataReqElement",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-GridModelReq-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "SBAS-ID"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-TimeModelListSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DifferentialCorrectionsSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavigationModelSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RealTimeIntegritySupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-DataBitAssistanceSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AcquisitionAssistanceSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AlmanacSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-UTC-ModelSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-AuxiliaryInformationSupport"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-DifferentialCorrectionsSupport-r12"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "BDS-GridModelSupport-r12"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-ObservationsSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GLO-RTK-BiasInformationSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-MAC-CorrectionDifferencesSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-ResidualsSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-FKP-GradientsSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-OrbitCorrectionsSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-ClockCorrectionsSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-CodeBiasSupport-r15"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-URA-Support-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-PhaseBiasSupport-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-STEC-CorrectionSupport-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-GriddedCorrectionSupport-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-DifferentialCorrectionsSupport-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistDataSupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-GridModelSupport-r16"
+    },
+    {
+      "from": "GNSS-GenericAssistanceDataSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-GenericAssistDataSupportElement"
+    },
+    {
+      "from": "GNSS-ID-BDS-SatElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-ID-BDS-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-BDS-SatElement-r16"
+    },
+    {
+      "from": "GNSS-ID-GLONASS",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-GLONASS-SatElement"
+    },
+    {
+      "from": "GNSS-ID-GLONASS-SatElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-ID-GLONASS-SatElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-ID-GPS",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-GPS-SatElement"
+    },
+    {
+      "from": "GNSS-ID-GPS-SatElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-ID-GPS-SatElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-IonosphericModel",
+      "kind": "local-or-imported-definition",
+      "to": "KlobucharModelParameter"
+    },
+    {
+      "from": "GNSS-IonosphericModel",
+      "kind": "local-or-imported-definition",
+      "to": "NeQuickModelParameter"
+    },
+    {
+      "from": "GNSS-IonosphericModel",
+      "kind": "local-or-imported-definition",
+      "to": "KlobucharModel2Parameter-r16"
+    },
+    {
+      "from": "GNSS-Link-Combinations-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-FrequencyID-r15"
+    },
+    {
+      "from": "GNSS-Link-CombinationsList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Link-Combinations-r15"
+    },
+    {
+      "from": "GNSS-LocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "MeasurementReferenceTime"
+    },
+    {
+      "from": "GNSS-LocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-Bitmap"
+    },
+    {
+      "from": "GNSS-MeasurementForOneGNSS",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "GNSS-MeasurementForOneGNSS",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SgnMeasList"
+    },
+    {
+      "from": "GNSS-MeasurementList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-MeasurementForOneGNSS"
+    },
+    {
+      "from": "GNSS-NavListInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SatListElement-r15"
+    },
+    {
+      "from": "GNSS-NavModelSatelliteElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-NavModelSatelliteElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ClockModel"
+    },
+    {
+      "from": "GNSS-NavModelSatelliteElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-OrbitModel"
+    },
+    {
+      "from": "GNSS-NavModelSatelliteList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavModelSatelliteElement"
+    },
+    {
+      "from": "GNSS-NavigationModel",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavModelSatelliteList"
+    },
+    {
+      "from": "GNSS-NavigationModelReq",
+      "kind": "local-or-imported-definition",
+      "to": "StoredNavListInfo"
+    },
+    {
+      "from": "GNSS-NavigationModelReq",
+      "kind": "local-or-imported-definition",
+      "to": "ReqNavListInfo"
+    },
+    {
+      "from": "GNSS-ObservationList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-SatelliteDataElement-r15"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModelKeplerianSet"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModelNAV-KeplerianSet"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModelCNAV-KeplerianSet"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModel-GLONASS-ECEF"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModel-SBAS-ECEF"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModel-BDS-KeplerianSet-r12"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModel-BDS-KeplerianSet2-r16"
+    },
+    {
+      "from": "GNSS-OrbitModel",
+      "kind": "local-or-imported-definition",
+      "to": "NavModel-NavIC-KeplerianSet-r16"
+    },
+    {
+      "from": "GNSS-PeriodicAssistData-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-PeriodicControlParam-r15"
+    },
+    {
+      "from": "GNSS-PeriodicAssistDataReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-PeriodicControlParam-r15"
+    },
+    {
+      "from": "GNSS-PositioningInstructions",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-Bitmap"
+    },
+    {
+      "from": "GNSS-RTK-AuxiliaryStationData-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NetworkID-r15"
+    },
+    {
+      "from": "GNSS-RTK-AuxiliaryStationData-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SubNetworkID-r15"
+    },
+    {
+      "from": "GNSS-RTK-AuxiliaryStationData-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-AuxiliaryStationData-r15",
+      "kind": "local-or-imported-definition",
+      "to": "AuxiliaryStationList-r15"
+    },
+    {
+      "from": "GNSS-RTK-AuxiliaryStationDataReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-CommonObservationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-FKP-Gradients-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-FKP-Gradients-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-RTK-FKP-Gradients-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-FrequencyID-r15"
+    },
+    {
+      "from": "GNSS-RTK-FKP-Gradients-r15",
+      "kind": "local-or-imported-definition",
+      "to": "FKP-Gradients-List-r15"
+    },
+    {
+      "from": "GNSS-RTK-FKP-GradientsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-FKP-GradientsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Link-CombinationsList-r15"
+    },
+    {
+      "from": "GNSS-RTK-FKP-GradientsSupport-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Link-CombinationsList-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferences-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NetworkID-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferences-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SubNetworkID-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferences-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferences-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-FrequencyID-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferences-r15",
+      "kind": "local-or-imported-definition",
+      "to": "RTK-CorrectionDifferencesList-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferencesReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferencesReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "AUX-ReferenceStationList-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferencesReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Link-CombinationsList-r15"
+    },
+    {
+      "from": "GNSS-RTK-MAC-CorrectionDifferencesSupport-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Link-CombinationsList-r15"
+    },
+    {
+      "from": "GNSS-RTK-Observations-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-RTK-Observations-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ObservationList-r15"
+    },
+    {
+      "from": "GNSS-RTK-ObservationsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-RTK-ObservationsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-ObservationsSupport-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-RTK-ReferenceStationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-ReferenceStationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "AntennaDescription-r15"
+    },
+    {
+      "from": "GNSS-RTK-ReferenceStationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "AntennaReferencePointUnc-r15"
+    },
+    {
+      "from": "GNSS-RTK-ReferenceStationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "PhysicalReferenceStationInfo-r15"
+    },
+    {
+      "from": "GNSS-RTK-ReferenceStationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "EqualIntegerAmbiguityLevel-r16"
+    },
+    {
+      "from": "GNSS-RTK-ReferenceStationInfoReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-Residuals-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-RTK-Residuals-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-Residuals-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-FrequencyID-r15"
+    },
+    {
+      "from": "GNSS-RTK-Residuals-r15",
+      "kind": "local-or-imported-definition",
+      "to": "RTK-Residuals-List-r15"
+    },
+    {
+      "from": "GNSS-RTK-ResidualsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "GNSS-RTK-ResidualsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Link-CombinationsList-r15"
+    },
+    {
+      "from": "GNSS-RTK-ResidualsSupport-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-Link-CombinationsList-r15"
+    },
+    {
+      "from": "GNSS-RTK-SatelliteDataElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-RTK-SatelliteDataElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-SatelliteSignalDataList-r15"
+    },
+    {
+      "from": "GNSS-RTK-SatelliteSignalDataElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "GNSS-RTK-SatelliteSignalDataList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-RTK-SatelliteSignalDataElement-r15"
+    },
+    {
+      "from": "GNSS-RealTimeIntegrity",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-BadSignalList"
+    },
+    {
+      "from": "GNSS-ReferenceLocation",
+      "kind": "local-or-imported-definition",
+      "to": "EllipsoidPointWithAltitudeAndUncertaintyEllipsoid"
+    },
+    {
+      "from": "GNSS-ReferenceTime",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-ReferenceTime",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceTimeForOneCell"
+    },
+    {
+      "from": "GNSS-ReferenceTimeForOneCell",
+      "kind": "local-or-imported-definition",
+      "to": "NetworkTime"
+    },
+    {
+      "from": "GNSS-ReferenceTimeReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "GNSS-ReferenceTimeSupport",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID-Bitmap"
+    },
+    {
+      "from": "GNSS-ReferenceTimeSupport",
+      "kind": "local-or-imported-definition",
+      "to": "AccessTypes"
+    },
+    {
+      "from": "GNSS-SSR-ClockCorrections-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-SSR-ClockCorrections-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-ClockCorrectionList-r15"
+    },
+    {
+      "from": "GNSS-SSR-ClockCorrectionsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavListInfo-r15"
+    },
+    {
+      "from": "GNSS-SSR-CodeBias-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-SSR-CodeBias-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-CodeBiasSatList-r15"
+    },
+    {
+      "from": "GNSS-SSR-CodeBiasReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-SSR-CodeBiasReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavListInfo-r15"
+    },
+    {
+      "from": "GNSS-SSR-CodeBiasSupport-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-SSR-CorrectionPoints-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-ListOfCorrectionPoints-r16"
+    },
+    {
+      "from": "GNSS-SSR-CorrectionPoints-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SSR-ArrayOfCorrectionPoints-r16"
+    },
+    {
+      "from": "GNSS-SSR-GriddedCorrection-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-SSR-GriddedCorrection-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GridList-r16"
+    },
+    {
+      "from": "GNSS-SSR-ListOfCorrectionPoints-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RelativeLocationElement-r16"
+    },
+    {
+      "from": "GNSS-SSR-OrbitCorrections-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-SSR-OrbitCorrections-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-OrbitCorrectionList-r15"
+    },
+    {
+      "from": "GNSS-SSR-OrbitCorrectionsReq-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavListInfo-r15"
+    },
+    {
+      "from": "GNSS-SSR-PhaseBias-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-SSR-PhaseBias-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-PhaseBiasSatList-r16"
+    },
+    {
+      "from": "GNSS-SSR-PhaseBiasReq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-SSR-PhaseBiasReq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-NavListInfo-r15"
+    },
+    {
+      "from": "GNSS-SSR-PhaseBiasSupport-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-SSR-STEC-Correction-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-SSR-STEC-Correction-r16",
+      "kind": "local-or-imported-definition",
+      "to": "STEC-SatList-r16"
+    },
+    {
+      "from": "GNSS-SSR-URA-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "GNSS-SSR-URA-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-URA-SatList-r16"
+    },
+    {
+      "from": "GNSS-SatMeasElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "GNSS-SatMeasList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SatMeasElement"
+    },
+    {
+      "from": "GNSS-SgnMeasElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "GNSS-SgnMeasElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SatMeasList"
+    },
+    {
+      "from": "GNSS-SgnMeasList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SgnMeasElement"
+    },
+    {
+      "from": "GNSS-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "MeasurementReferenceTime"
+    },
+    {
+      "from": "GNSS-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-MeasurementList"
+    },
+    {
+      "from": "GNSS-SupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "GNSS-SupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "SBAS-IDs"
+    },
+    {
+      "from": "GNSS-SupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "GNSS-SupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "GNSS-SupportElement",
+      "kind": "local-or-imported-definition",
+      "to": "AccessTypes"
+    },
+    {
+      "from": "GNSS-SupportList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SupportElement"
+    },
+    {
+      "from": "GNSS-SystemTime",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "GNSS-SystemTime",
+      "kind": "local-or-imported-definition",
+      "to": "GPS-TOW-Assist"
+    },
+    {
+      "from": "GNSS-TimeModelList",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-TimeModelElement"
+    },
+    {
+      "from": "GNSS-TimeModelListReq",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-TimeModelElementReq"
+    },
+    {
+      "from": "GNSS-UTC-Model",
+      "kind": "local-or-imported-definition",
+      "to": "UTC-ModelSet1"
+    },
+    {
+      "from": "GNSS-UTC-Model",
+      "kind": "local-or-imported-definition",
+      "to": "UTC-ModelSet2"
+    },
+    {
+      "from": "GNSS-UTC-Model",
+      "kind": "local-or-imported-definition",
+      "to": "UTC-ModelSet3"
+    },
+    {
+      "from": "GNSS-UTC-Model",
+      "kind": "local-or-imported-definition",
+      "to": "UTC-ModelSet4"
+    },
+    {
+      "from": "GNSS-UTC-Model",
+      "kind": "local-or-imported-definition",
+      "to": "UTC-ModelSet5-r12"
+    },
+    {
+      "from": "GPS-TOW-Assist",
+      "kind": "local-or-imported-definition",
+      "to": "GPS-TOW-AssistElement"
+    },
+    {
+      "from": "Geometric-Ionospheric-Corrections-Differences-Element-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "Geometric-Ionospheric-Corrections-Differences-r15",
+      "kind": "local-or-imported-definition",
+      "to": "Geometric-Ionospheric-Corrections-Differences-Element-r15"
+    },
+    {
+      "from": "GridElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "TropospericDelayCorrection-r16"
+    },
+    {
+      "from": "GridElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "STEC-ResidualSatList-r16"
+    },
+    {
+      "from": "GridIonList-r12",
+      "kind": "local-or-imported-definition",
+      "to": "GridIonElement-r12"
+    },
+    {
+      "from": "GridList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GridElement-r16"
+    },
+    {
+      "from": "LPP-Message",
+      "kind": "local-or-imported-definition",
+      "to": "LPP-TransactionID"
+    },
+    {
+      "from": "LPP-Message",
+      "kind": "local-or-imported-definition",
+      "to": "SequenceNumber"
+    },
+    {
+      "from": "LPP-Message",
+      "kind": "local-or-imported-definition",
+      "to": "Acknowledgement"
+    },
+    {
+      "from": "LPP-Message",
+      "kind": "local-or-imported-definition",
+      "to": "LPP-MessageBody"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "RequestCapabilities"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "ProvideCapabilities"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "RequestAssistanceData"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "ProvideAssistanceData"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "RequestLocationInformation"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "ProvideLocationInformation"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "Abort"
+    },
+    {
+      "from": "LPP-MessageBody",
+      "kind": "local-or-imported-definition",
+      "to": "Error"
+    },
+    {
+      "from": "LPP-TransactionID",
+      "kind": "local-or-imported-definition",
+      "to": "Initiator"
+    },
+    {
+      "from": "LPP-TransactionID",
+      "kind": "local-or-imported-definition",
+      "to": "TransactionNumber"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "Ellipsoid-Point"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "Ellipsoid-PointWithUncertaintyCircle"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "EllipsoidPointWithUncertaintyEllipse"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "Polygon"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "EllipsoidPointWithAltitude"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "EllipsoidPointWithAltitudeAndUncertaintyEllipsoid"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "EllipsoidArc"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "HighAccuracyEllipsoidPointWithUncertaintyEllipse-r15"
+    },
+    {
+      "from": "LocationCoordinates",
+      "kind": "local-or-imported-definition",
+      "to": "HighAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-r15"
+    },
+    {
+      "from": "LocationError",
+      "kind": "local-or-imported-definition",
+      "to": "LocationFailureCause"
+    },
+    {
+      "from": "MBS-AssistanceDataElement-r14",
+      "kind": "local-or-imported-definition",
+      "to": "MBS-AlmanacAssistance-r14"
+    },
+    {
+      "from": "MBS-AssistanceDataElement-r14",
+      "kind": "local-or-imported-definition",
+      "to": "MBS-AcquisitionAssistance-r14"
+    },
+    {
+      "from": "MBS-AssistanceDataList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxMBS-r14"
+    },
+    {
+      "from": "MBS-AssistanceDataList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "MBS-AssistanceDataElement-r14"
+    },
+    {
+      "from": "MBS-BeaconMeasList-r13",
+      "kind": "local-or-imported-definition",
+      "to": "MBS-BeaconMeasElement-r13"
+    },
+    {
+      "from": "MeasuredResultsElement",
+      "kind": "local-or-imported-definition",
+      "to": "CellGlobalIdEUTRA-AndUTRA"
+    },
+    {
+      "from": "MeasuredResultsElement",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA"
+    },
+    {
+      "from": "MeasuredResultsElement",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-v9a0"
+    },
+    {
+      "from": "MeasuredResultsElement",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreqOffsetNB-r14"
+    },
+    {
+      "from": "MeasuredResultsList",
+      "kind": "local-or-imported-definition",
+      "to": "MeasuredResultsElement"
+    },
+    {
+      "from": "MeasurementReferenceTime",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ID"
+    },
+    {
+      "from": "MeasurementReferenceTime",
+      "kind": "local-or-imported-definition",
+      "to": "CellGlobalIdEUTRA-AndUTRA"
+    },
+    {
+      "from": "MeasurementReferenceTime",
+      "kind": "local-or-imported-definition",
+      "to": "CellGlobalIdGERAN"
+    },
+    {
+      "from": "MeasurementReferenceTime",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "MeasurementReferenceTime",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NPRS-Info-r14",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreq-NB-r14"
+    },
+    {
+      "from": "NR-AdditionalPath-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimingQuality-r16"
+    },
+    {
+      "from": "NR-AdditionalPathList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-AdditionalPath-r16"
+    },
+    {
+      "from": "NR-DL-AoD-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "NR-DL-AoD-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "NR-DL-AoD-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-DL-AoD-AdditionalMeasurements-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-AdditionalMeasurementElement-r16"
+    },
+    {
+      "from": "NR-DL-AoD-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-LocationServerErrorCauses-r16"
+    },
+    {
+      "from": "NR-DL-AoD-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-TargetDeviceErrorCauses-r16"
+    },
+    {
+      "from": "NR-DL-AoD-LocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NR-DL-AoD-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-DL-AoD-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-AdditionalMeasurements-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPs-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-MeasElement-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasurementCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxBands-r16"
+    },
+    {
+      "from": "NR-DL-AoD-MeasurementCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-AoD-MeasCapabilityPerBand-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-AssistanceData-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-SelectedDL-PRS-IndexList-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PositionCalculationAssistance-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-Error-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourcesCapability-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-MeasurementCapability-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-QCL-ProcessingCapability-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ProcessingCapability-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-SignalMeasurementInformation-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-LocationInformation-r16"
+    },
+    {
+      "from": "NR-DL-AoD-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-Error-r16"
+    },
+    {
+      "from": "NR-DL-AoD-RequestAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-DL-AoD-RequestLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-ReportConfig-r16"
+    },
+    {
+      "from": "NR-DL-AoD-SignalMeasurementInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-MeasList-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-ID-Info-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxFreqLayers-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-AssistanceDataPerFreq-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPs-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-SSB-Config-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerFreq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-PositioningFrequencyLayer-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerFreq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPsPerFreq-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerFreq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-AssistanceDataPerTRP-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-SFN0-Offset-r16"
+    },
+    {
+      "from": "NR-DL-PRS-AssistanceDataPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-Info-r16"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfo-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxFreqLayers-r16"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfo-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-BeamInfoPerFreqLayer-r16"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfoPerFreqLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPsPerFreq-r16"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfoPerFreqLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-BeamInfoPerTRP-r16"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfoPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfoPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfoPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfoPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "LCS-GCS-TranslationParameter-r16"
+    },
+    {
+      "from": "NR-DL-PRS-BeamInfoPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-BeamInfoSet-r16"
+    },
+    {
+      "from": "NR-DL-PRS-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxSetsPerTrp-r16"
+    },
+    {
+      "from": "NR-DL-PRS-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSet-r16"
+    },
+    {
+      "from": "NR-DL-PRS-PositioningFrequencyLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-DL-PRS-ProcessingCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxBands-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ProcessingCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "PRS-ProcessingCapabilityPerBand-r16"
+    },
+    {
+      "from": "NR-DL-PRS-QCL-ProcessingCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxBands-r16"
+    },
+    {
+      "from": "NR-DL-PRS-QCL-ProcessingCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-QCL-ProcessingCapabilityPerBand-r16"
+    },
+    {
+      "from": "NR-DL-PRS-Resource-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "NR-DL-PRS-Resource-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxResourceOffsetValue-1-r16"
+    },
+    {
+      "from": "NR-DL-PRS-Resource-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-QCL-Info-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceID-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxNumDL-PRS-ResourcesPerSet-1-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-Periodicity-and-ResourceSetSlotOffset-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-MutingOption1-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-MutingOption2-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxResourcesPerSet-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceSet-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-Resource-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourceSetID-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxNumDL-PRS-ResourceSetsPerTRP-1-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourcesCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxBands-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourcesCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-ResourcesCapabilityPerBand-r16"
+    },
+    {
+      "from": "NR-DL-PRS-ResourcesCapability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-ResourcesBandCombinationList-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimingQuality-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-AdditionalPathList-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-AdditionalMeasurements-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-AdditionalMeasurementElement-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-LocationServerErrorCauses-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-TargetDeviceErrorCauses-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-LocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-AdditionalPathList-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimingQuality-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-AdditionalMeasurements-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPs-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-MeasList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-MeasElement-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-AssistanceData-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-SelectedDL-PRS-IndexList-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PositionCalculationAssistance-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-Error-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourcesCapability-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-MeasurementCapability-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-QCL-ProcessingCapability-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ProcessingCapability-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-SignalMeasurementInformation-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-LocationInformation-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-Error-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-RequestAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-RequestLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-ReportConfig-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-SignalMeasurementInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-ID-Info-r16"
+    },
+    {
+      "from": "NR-DL-TDOA-SignalMeasurementInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-MeasList-r16"
+    },
+    {
+      "from": "NR-ECID-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-LocationServerErrorCauses-r16"
+    },
+    {
+      "from": "NR-ECID-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-TargetDeviceErrorCauses-r16"
+    },
+    {
+      "from": "NR-ECID-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-SignalMeasurementInformation-r16"
+    },
+    {
+      "from": "NR-ECID-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-Error-r16"
+    },
+    {
+      "from": "NR-ECID-SignalMeasurementInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-MeasuredResultsElement-r16"
+    },
+    {
+      "from": "NR-ECID-SignalMeasurementInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-MeasuredResultsList-r16"
+    },
+    {
+      "from": "NR-MeasuredResultsElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-MeasuredResultsElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-MeasuredResultsElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NR-MeasuredResultsElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "MeasQuantityResults-r16"
+    },
+    {
+      "from": "NR-MeasuredResultsElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ResultsPerSSB-IndexList-r16"
+    },
+    {
+      "from": "NR-MeasuredResultsElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ResultsPerCSI-RS-IndexList-r16"
+    },
+    {
+      "from": "NR-MeasuredResultsList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-MeasuredResultsElement-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimingQuality-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-AdditionalPathList-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-AdditionalMeasurementElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-AdditionalMeasurements-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-AdditionalMeasurementElement-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-LocationServerErrorCauses-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-Error-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-TargetDeviceErrorCauses-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceID-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourceSetID-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-AdditionalPathList-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimeStamp-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimingQuality-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-AdditionalMeasurements-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPs-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-MeasList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-MeasElement-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-AssistanceData-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-SelectedDL-PRS-IndexList-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-Error-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ResourcesCapability-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-MeasurementCapability-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-QCL-ProcessingCapability-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-ProcessingCapability-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-UL-SRS-Capability-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-SignalMeasurementInformation-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-ProvideLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-Error-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-RequestAssistanceData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-RequestLocationInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-ReportConfig-r16"
+    },
+    {
+      "from": "NR-Multi-RTT-SignalMeasurementInformation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-MeasList-r16"
+    },
+    {
+      "from": "NR-PositionCalculationAssistance-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TRP-LocationInfo-r16"
+    },
+    {
+      "from": "NR-PositionCalculationAssistance-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-BeamInfo-r16"
+    },
+    {
+      "from": "NR-PositionCalculationAssistance-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-RTD-Info-r16"
+    },
+    {
+      "from": "NR-RTD-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ReferenceTRP-RTD-Info-r16"
+    },
+    {
+      "from": "NR-RTD-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RTD-InfoList-r16"
+    },
+    {
+      "from": "NR-SSB-Config-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-SSB-Config-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-IndexList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxFreqLayers-r16"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-IndexList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-SelectedDL-PRS-PerFreq-r16"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-IndexPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPsPerFreq-1-r16"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-IndexPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxSetsPerTrp-r16"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-IndexPerTRP-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-SelectedPRS-ResourceSetIndex-r16"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-PerFreq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxFreqLayers-1-r16"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-PerFreq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPsPerFreq-r16"
+    },
+    {
+      "from": "NR-SelectedDL-PRS-PerFreq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-SelectedDL-PRS-IndexPerTRP-r16"
+    },
+    {
+      "from": "NR-TRP-LocationInfo-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxFreqLayers-r16"
+    },
+    {
+      "from": "NR-TRP-LocationInfo-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TRP-LocationInfoPerFreqLayer-r16"
+    },
+    {
+      "from": "NR-TRP-LocationInfoPerFreqLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ReferencePoint-r16"
+    },
+    {
+      "from": "NR-TRP-LocationInfoPerFreqLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPsPerFreq-r16"
+    },
+    {
+      "from": "NR-TRP-LocationInfoPerFreqLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "TRP-LocationInfoElement-r16"
+    },
+    {
+      "from": "NR-TimeStamp-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "NR-TimeStamp-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NR-TimeStamp-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "NR-UEB-TRP-LocationData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TRP-LocationInfo-r16"
+    },
+    {
+      "from": "NR-UEB-TRP-LocationData-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-PRS-BeamInfo-r16"
+    },
+    {
+      "from": "NR-UEB-TRP-RTD-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-RTD-Info-r16"
+    },
+    {
+      "from": "NR-UL-ProvideCapabilities-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-UL-SRS-Capability-r16"
+    },
+    {
+      "from": "NR-UL-SRS-Capability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxBands-r16"
+    },
+    {
+      "from": "NR-UL-SRS-Capability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SRS-CapabilityPerBand-r16"
+    },
+    {
+      "from": "NR-UL-SRS-Capability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxConfiguredBands-r16"
+    },
+    {
+      "from": "NR-UL-SRS-Capability-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SRS-PosResourcesPerBand-r16"
+    },
+    {
+      "from": "NavIC-CorrectionElementAutoNav-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "NavIC-CorrectionElementAutoNav-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-EDC-r16"
+    },
+    {
+      "from": "NavIC-CorrectionElementAutoNav-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-CDC-r16"
+    },
+    {
+      "from": "NavIC-CorrectionListAutoNav-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-CorrectionElementAutoNav-r16"
+    },
+    {
+      "from": "NavIC-DifferentialCorrections-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NavIC-CorrectionListAutoNav-r16"
+    },
+    {
+      "from": "NavIC-DifferentialCorrectionsReq-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "NavIC-DifferentialCorrectionsSupport-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalIDs"
+    },
+    {
+      "from": "NavIC-GridModelParameter-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RegionIgpList-r16"
+    },
+    {
+      "from": "NeighbourMeasurementElement",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "NeighbourMeasurementElement",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA"
+    },
+    {
+      "from": "NeighbourMeasurementElement",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-MeasQuality"
+    },
+    {
+      "from": "NeighbourMeasurementElement",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-v9a0"
+    },
+    {
+      "from": "NeighbourMeasurementElement",
+      "kind": "local-or-imported-definition",
+      "to": "AdditionalPathList-r14"
+    },
+    {
+      "from": "NeighbourMeasurementElement",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreqOffsetNB-r14"
+    },
+    {
+      "from": "NeighbourMeasurementElement-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "NeighbourMeasurementElement-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-r14"
+    },
+    {
+      "from": "NeighbourMeasurementElement-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-MeasQuality"
+    },
+    {
+      "from": "NeighbourMeasurementElement-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "AdditionalPathList-r14"
+    },
+    {
+      "from": "NeighbourMeasurementElement-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreqOffsetNB-r14"
+    },
+    {
+      "from": "NeighbourMeasurementList",
+      "kind": "local-or-imported-definition",
+      "to": "NeighbourMeasurementElement"
+    },
+    {
+      "from": "NeighbourMeasurementList-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "NeighbourMeasurementElement-NB-r14"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "CellGlobalIdEUTRA-AndUTRA"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-v9a0"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueUTRA"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "CellGlobalIdGERAN"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreq-NB-r14"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "NetworkTime",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "OTDOA-Error",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-LocationServerErrorCauses"
+    },
+    {
+      "from": "OTDOA-Error",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-TargetDeviceErrorCauses"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoElement",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoElement",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoElement",
+      "kind": "local-or-imported-definition",
+      "to": "PRS-Info"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoElement",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-v9a0"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoElement",
+      "kind": "local-or-imported-definition",
+      "to": "maxAddPRSconfig-r14"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoElement",
+      "kind": "local-or-imported-definition",
+      "to": "Add-PRSconfigNeighbourElement-r14"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoElement",
+      "kind": "local-or-imported-definition",
+      "to": "TDD-Config-v1520"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoList",
+      "kind": "local-or-imported-definition",
+      "to": "maxFreqLayers"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoList",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-NeighbourFreqInfo"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoListNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxCells-r14"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoListNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-NeighbourCellInfoNB-r14"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreq-NB-r14"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-r14"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "PRS-Info-NB-r14"
+    },
+    {
+      "from": "OTDOA-NeighbourCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "TDD-Config-v1520"
+    },
+    {
+      "from": "OTDOA-NeighbourFreqInfo",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-NeighbourCellInfoElement"
+    },
+    {
+      "from": "OTDOA-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-ReferenceCellInfo"
+    },
+    {
+      "from": "OTDOA-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-NeighbourCellInfoList"
+    },
+    {
+      "from": "OTDOA-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-Error"
+    },
+    {
+      "from": "OTDOA-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-ReferenceCellInfoNB-r14"
+    },
+    {
+      "from": "OTDOA-ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-NeighbourCellInfoListNB-r14"
+    },
+    {
+      "from": "OTDOA-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "maxBands"
+    },
+    {
+      "from": "OTDOA-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "SupportedBandEUTRA"
+    },
+    {
+      "from": "OTDOA-ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "SupportedBandEUTRA-v9a0"
+    },
+    {
+      "from": "OTDOA-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-SignalMeasurementInformation"
+    },
+    {
+      "from": "OTDOA-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-Error"
+    },
+    {
+      "from": "OTDOA-ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-SignalMeasurementInformation-NB-r14"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfo",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfo",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfo",
+      "kind": "local-or-imported-definition",
+      "to": "PRS-Info"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfo",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-v9a0"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfo",
+      "kind": "local-or-imported-definition",
+      "to": "maxAddPRSconfig-r14"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfo",
+      "kind": "local-or-imported-definition",
+      "to": "TDD-Config-v1520"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreq-NB-r14"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-r14"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "PRS-Info-NB-r14"
+    },
+    {
+      "from": "OTDOA-ReferenceCellInfoNB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "TDD-Config-v1520"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-MeasQuality"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "NeighbourMeasurementList"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-v9a0"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "AdditionalPathList-r14"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreqOffsetNB-r14"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation",
+      "kind": "local-or-imported-definition",
+      "to": "MotionTimeSource-r15"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ECGI"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueEUTRA-r14"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-MeasQuality"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "NeighbourMeasurementList-NB-r14"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "AdditionalPathList-r14"
+    },
+    {
+      "from": "OTDOA-SignalMeasurementInformation-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "CarrierFreqOffsetNB-r14"
+    },
+    {
+      "from": "OTDOA-UE-Assisted-r15",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-ReferenceCellInfo"
+    },
+    {
+      "from": "OTDOA-UE-Assisted-r15",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-NeighbourCellInfoList"
+    },
+    {
+      "from": "PRS-Info",
+      "kind": "local-or-imported-definition",
+      "to": "maxAvailNarrowBands-Minus1-r14"
+    },
+    {
+      "from": "PRS-Info-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxCarrier-r14"
+    },
+    {
+      "from": "PRS-Info-NB-r14",
+      "kind": "local-or-imported-definition",
+      "to": "NPRS-Info-r14"
+    },
+    {
+      "from": "PRS-ProcessingCapabilityPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "FreqBandIndicatorNR-r16"
+    },
+    {
+      "from": "PeriodicAssistanceDataControlParameters-r15",
+      "kind": "local-or-imported-definition",
+      "to": "PeriodicSessionID-r15"
+    },
+    {
+      "from": "PeriodicAssistanceDataControlParameters-r15",
+      "kind": "local-or-imported-definition",
+      "to": "UpdateCapabilities-r15"
+    },
+    {
+      "from": "PhysicalReferenceStationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "PhysicalReferenceStationInfo-r15",
+      "kind": "local-or-imported-definition",
+      "to": "AntennaReferencePointUnc-r15"
+    },
+    {
+      "from": "Polygon",
+      "kind": "local-or-imported-definition",
+      "to": "PolygonPoints"
+    },
+    {
+      "from": "PressureValidityArea-v1520",
+      "kind": "local-or-imported-definition",
+      "to": "Ellipsoid-Point"
+    },
+    {
+      "from": "PressureValidityPeriod-v1520",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "ProvideAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "ProvideAssistanceData-r9-IEs"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsProvideAssistanceData"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-ProvideAssistanceData"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-ProvideAssistanceData"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-ProvideAssistanceData-r14"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-ProvideAssistanceData-r14"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-ProvideAssistanceData-r14"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-ProvideAssistanceData-r16"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-ProvideAssistanceData-r16"
+    },
+    {
+      "from": "ProvideAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-ProvideAssistanceData-r16"
+    },
+    {
+      "from": "ProvideCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "ProvideCapabilities-r9-IEs"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsProvideCapabilities"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-ProvideCapabilities"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-ProvideCapabilities"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-ProvideCapabilities"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-ProvideCapabilities-r13"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-ProvideCapabilities-r13"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-ProvideCapabilities-r13"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "BT-ProvideCapabilities-r13"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-ProvideCapabilities-r16"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-ProvideCapabilities-r16"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-ProvideCapabilities-r16"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-ProvideCapabilities-r16"
+    },
+    {
+      "from": "ProvideCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-UL-ProvideCapabilities-r16"
+    },
+    {
+      "from": "ProvideLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "ProvideLocationInformation-r9-IEs"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsProvideLocationInformation"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-ProvideLocationInformation"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-ProvideLocationInformation"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-ProvideLocationInformation"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-ProvideLocationInformation-r13"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-ProvideLocationInformation-r13"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-ProvideLocationInformation-r13"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "BT-ProvideLocationInformation-r13"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-ProvideLocationInformation-r16"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-ProvideLocationInformation-r16"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-ProvideLocationInformation-r16"
+    },
+    {
+      "from": "ProvideLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-ProvideLocationInformation-r16"
+    },
+    {
+      "from": "QoS",
+      "kind": "local-or-imported-definition",
+      "to": "HorizontalAccuracy"
+    },
+    {
+      "from": "QoS",
+      "kind": "local-or-imported-definition",
+      "to": "VerticalAccuracy"
+    },
+    {
+      "from": "QoS",
+      "kind": "local-or-imported-definition",
+      "to": "ResponseTime"
+    },
+    {
+      "from": "QoS",
+      "kind": "local-or-imported-definition",
+      "to": "ResponseTimeNB-r14"
+    },
+    {
+      "from": "QoS",
+      "kind": "local-or-imported-definition",
+      "to": "HorizontalAccuracyExt-r15"
+    },
+    {
+      "from": "QoS",
+      "kind": "local-or-imported-definition",
+      "to": "VerticalAccuracyExt-r15"
+    },
+    {
+      "from": "RTD-InfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "RTD-InfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "RTD-InfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "RTD-InfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimingQuality-r16"
+    },
+    {
+      "from": "RTD-InfoList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxFreqLayers-r16"
+    },
+    {
+      "from": "RTD-InfoList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RTD-InfoListPerFreqLayer-r16"
+    },
+    {
+      "from": "RTD-InfoListPerFreqLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxTRPsPerFreq-r16"
+    },
+    {
+      "from": "RTD-InfoListPerFreqLayer-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RTD-InfoElement-r16"
+    },
+    {
+      "from": "RTK-CorrectionDifferencesElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SystemTime"
+    },
+    {
+      "from": "RTK-CorrectionDifferencesElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "RTK-CorrectionDifferencesElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "Geometric-Ionospheric-Corrections-Differences-r15"
+    },
+    {
+      "from": "RTK-CorrectionDifferencesList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "RTK-CorrectionDifferencesElement-r15"
+    },
+    {
+      "from": "RTK-Residuals-Element-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "RTK-Residuals-List-r15",
+      "kind": "local-or-imported-definition",
+      "to": "RTK-Residuals-Element-r15"
+    },
+    {
+      "from": "ReferencePoint-r16",
+      "kind": "local-or-imported-definition",
+      "to": "EllipsoidPointWithAltitudeAndUncertaintyEllipsoid"
+    },
+    {
+      "from": "ReferencePoint-r16",
+      "kind": "local-or-imported-definition",
+      "to": "HighAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-r15"
+    },
+    {
+      "from": "ReferenceStationList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-ReferenceStationID-r15"
+    },
+    {
+      "from": "ReferenceTRP-RTD-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "ReferenceTRP-RTD-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "ReferenceTRP-RTD-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "ReferenceTRP-RTD-Info-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-TimingQuality-r16"
+    },
+    {
+      "from": "RegionIgpList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RegionIgpElement-r16"
+    },
+    {
+      "from": "RelativeLocation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "Delta-Latitude-r16"
+    },
+    {
+      "from": "RelativeLocation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "Delta-Longitude-r16"
+    },
+    {
+      "from": "RelativeLocation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "Delta-Height-r16"
+    },
+    {
+      "from": "RelativeLocation-r16",
+      "kind": "local-or-imported-definition",
+      "to": "LocationUncertainty-r16"
+    },
+    {
+      "from": "RequestAssistanceData",
+      "kind": "local-or-imported-definition",
+      "to": "RequestAssistanceData-r9-IEs"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsRequestAssistanceData"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-RequestAssistanceData"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-RequestAssistanceData"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-RequestAssistanceData-r14"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-RequestAssistanceData-r14"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-RequestAssistanceData-r14"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-RequestAssistanceData-r16"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-RequestAssistanceData-r16"
+    },
+    {
+      "from": "RequestAssistanceData-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-RequestAssistanceData-r16"
+    },
+    {
+      "from": "RequestCapabilities",
+      "kind": "local-or-imported-definition",
+      "to": "RequestCapabilities-r9-IEs"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsRequestCapabilities"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-RequestCapabilities"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-RequestCapabilities"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-RequestCapabilities"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-RequestCapabilities-r13"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-RequestCapabilities-r13"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-RequestCapabilities-r13"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "BT-RequestCapabilities-r13"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-RequestCapabilities-r16"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-RequestCapabilities-r16"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-RequestCapabilities-r16"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-RequestCapabilities-r16"
+    },
+    {
+      "from": "RequestCapabilities-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-UL-RequestCapabilities-r16"
+    },
+    {
+      "from": "RequestLocationInformation",
+      "kind": "local-or-imported-definition",
+      "to": "RequestLocationInformation-r9-IEs"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "CommonIEsRequestLocationInformation"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "A-GNSS-RequestLocationInformation"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "OTDOA-RequestLocationInformation"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "ECID-RequestLocationInformation"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "EPDU-Sequence"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-RequestLocationInformation-r13"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-RequestLocationInformation-r13"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-RequestLocationInformation-r13"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "BT-RequestLocationInformation-r13"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-ECID-RequestLocationInformation-r16"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-Multi-RTT-RequestLocationInformation-r16"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-AoD-RequestLocationInformation-r16"
+    },
+    {
+      "from": "RequestLocationInformation-r9-IEs",
+      "kind": "local-or-imported-definition",
+      "to": "NR-DL-TDOA-RequestLocationInformation-r16"
+    },
+    {
+      "from": "ResultsPerCSI-RS-Index-r16",
+      "kind": "local-or-imported-definition",
+      "to": "MeasQuantityResults-r16"
+    },
+    {
+      "from": "ResultsPerCSI-RS-IndexList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ResultsPerCSI-RS-Index-r16"
+    },
+    {
+      "from": "ResultsPerSSB-Index-r16",
+      "kind": "local-or-imported-definition",
+      "to": "MeasQuantityResults-r16"
+    },
+    {
+      "from": "ResultsPerSSB-IndexList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ResultsPerSSB-Index-r16"
+    },
+    {
+      "from": "SRS-CapabilityPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "FreqBandIndicatorNR-r16"
+    },
+    {
+      "from": "SRS-CapabilityPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "OLPC-SRS-Pos-r16"
+    },
+    {
+      "from": "SRS-CapabilityPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SpatialRelationsSRS-Pos-r16"
+    },
+    {
+      "from": "SRS-PosResourcesPerBand-r16",
+      "kind": "local-or-imported-definition",
+      "to": "FreqBandIndicatorNR-r16"
+    },
+    {
+      "from": "SSR-ClockCorrectionList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-ClockCorrectionSatelliteElement-r15"
+    },
+    {
+      "from": "SSR-ClockCorrectionSatelliteElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "SSR-CodeBiasSatElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "SSR-CodeBiasSatElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-CodeBiasSignalList-r15"
+    },
+    {
+      "from": "SSR-CodeBiasSatList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-CodeBiasSatElement-r15"
+    },
+    {
+      "from": "SSR-CodeBiasSignalElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "SSR-CodeBiasSignalList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-CodeBiasSignalElement-r15"
+    },
+    {
+      "from": "SSR-OrbitCorrectionList-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-OrbitCorrectionSatelliteElement-r15"
+    },
+    {
+      "from": "SSR-OrbitCorrectionSatelliteElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "SSR-PhaseBiasSatElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "SSR-PhaseBiasSatElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-PhaseBiasSignalList-r16"
+    },
+    {
+      "from": "SSR-PhaseBiasSatList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-PhaseBiasSatElement-r16"
+    },
+    {
+      "from": "SSR-PhaseBiasSignalElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "GNSS-SignalID"
+    },
+    {
+      "from": "SSR-PhaseBiasSignalList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-PhaseBiasSignalElement-r16"
+    },
+    {
+      "from": "SSR-URA-SatElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "SSR-URA-SatList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SSR-URA-SatElement-r16"
+    },
+    {
+      "from": "STEC-ResidualSatElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "STEC-ResidualSatList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "STEC-ResidualSatElement-r16"
+    },
+    {
+      "from": "STEC-SatElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "STEC-SatList-r16",
+      "kind": "local-or-imported-definition",
+      "to": "STEC-SatElement-r16"
+    },
+    {
+      "from": "SatListElement-r15",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "SatListRelatedDataElement",
+      "kind": "local-or-imported-definition",
+      "to": "SV-ID"
+    },
+    {
+      "from": "SatListRelatedDataList",
+      "kind": "local-or-imported-definition",
+      "to": "SatListRelatedDataElement"
+    },
+    {
+      "from": "Sensor-AssistanceDataList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "EllipsoidPointWithAltitudeAndUncertaintyEllipsoid"
+    },
+    {
+      "from": "Sensor-AssistanceDataList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "PressureValidityPeriod-v1520"
+    },
+    {
+      "from": "Sensor-AssistanceDataList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "PressureValidityArea-v1520"
+    },
+    {
+      "from": "Sensor-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-LocationServerErrorCauses-r13"
+    },
+    {
+      "from": "Sensor-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-TargetDeviceErrorCauses-r13"
+    },
+    {
+      "from": "Sensor-MotionInformation-r15",
+      "kind": "local-or-imported-definition",
+      "to": "DisplacementTimeStamp-r15"
+    },
+    {
+      "from": "Sensor-MotionInformation-r15",
+      "kind": "local-or-imported-definition",
+      "to": "DisplacementInfoList-r15"
+    },
+    {
+      "from": "Sensor-ProvideAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-AssistanceDataList-r14"
+    },
+    {
+      "from": "Sensor-ProvideAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-Error-r13"
+    },
+    {
+      "from": "Sensor-ProvideCapabilities-r13",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-AssistanceDataSupportList-r14"
+    },
+    {
+      "from": "Sensor-ProvideCapabilities-r13",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "Sensor-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-MeasurementInformation-r13"
+    },
+    {
+      "from": "Sensor-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-Error-r13"
+    },
+    {
+      "from": "Sensor-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "Sensor-MotionInformation-r15"
+    },
+    {
+      "from": "StandardClockModelList",
+      "kind": "local-or-imported-definition",
+      "to": "StandardClockModelElement"
+    },
+    {
+      "from": "StoredNavListInfo",
+      "kind": "local-or-imported-definition",
+      "to": "SatListRelatedDataList"
+    },
+    {
+      "from": "SupportedBandEUTRA",
+      "kind": "local-or-imported-definition",
+      "to": "maxFBI"
+    },
+    {
+      "from": "SupportedBandEUTRA-v9a0",
+      "kind": "local-or-imported-definition",
+      "to": "maxFBI-Plus1"
+    },
+    {
+      "from": "SupportedBandEUTRA-v9a0",
+      "kind": "local-or-imported-definition",
+      "to": "maxFBI2"
+    },
+    {
+      "from": "TBS-AssistanceDataList-r14",
+      "kind": "local-or-imported-definition",
+      "to": "MBS-AssistanceDataList-r14"
+    },
+    {
+      "from": "TBS-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-LocationServerErrorCauses-r13"
+    },
+    {
+      "from": "TBS-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-TargetDeviceErrorCauses-r13"
+    },
+    {
+      "from": "TBS-MeasurementInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "MBS-BeaconMeasList-r13"
+    },
+    {
+      "from": "TBS-ProvideAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-AssistanceDataList-r14"
+    },
+    {
+      "from": "TBS-ProvideAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-Error-r13"
+    },
+    {
+      "from": "TBS-ProvideCapabilities-r13",
+      "kind": "local-or-imported-definition",
+      "to": "MBS-AssistanceDataSupportList-r14"
+    },
+    {
+      "from": "TBS-ProvideCapabilities-r13",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "TBS-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-MeasurementInformation-r13"
+    },
+    {
+      "from": "TBS-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "TBS-Error-r13"
+    },
+    {
+      "from": "TRP-LocationInfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NR-PhysCellID-r16"
+    },
+    {
+      "from": "TRP-LocationInfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "NCGI-r15"
+    },
+    {
+      "from": "TRP-LocationInfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "ARFCN-ValueNR-r15"
+    },
+    {
+      "from": "TRP-LocationInfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "RelativeLocation-r16"
+    },
+    {
+      "from": "TRP-LocationInfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "nrMaxSetsPerTrp-r16"
+    },
+    {
+      "from": "TRP-LocationInfoElement-r16",
+      "kind": "local-or-imported-definition",
+      "to": "DL-PRS-ResourceSets-TRP-Element-r16"
+    },
+    {
+      "from": "TriggeredReportingCriteria",
+      "kind": "local-or-imported-definition",
+      "to": "ReportingDuration"
+    },
+    {
+      "from": "Velocity",
+      "kind": "local-or-imported-definition",
+      "to": "HorizontalVelocity"
+    },
+    {
+      "from": "Velocity",
+      "kind": "local-or-imported-definition",
+      "to": "HorizontalWithVerticalVelocity"
+    },
+    {
+      "from": "Velocity",
+      "kind": "local-or-imported-definition",
+      "to": "HorizontalVelocityWithUncertainty"
+    },
+    {
+      "from": "Velocity",
+      "kind": "local-or-imported-definition",
+      "to": "HorizontalWithVerticalVelocityAndUncertainty"
+    },
+    {
+      "from": "WLAN-AP-Data-r14",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-AP-Identifier-r13"
+    },
+    {
+      "from": "WLAN-AP-Data-r14",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-AP-Location-r14"
+    },
+    {
+      "from": "WLAN-AP-Location-r14",
+      "kind": "local-or-imported-definition",
+      "to": "LocationDataLCI-r14"
+    },
+    {
+      "from": "WLAN-DataSet-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxWLAN-AP-r14"
+    },
+    {
+      "from": "WLAN-DataSet-r14",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-AP-Data-r14"
+    },
+    {
+      "from": "WLAN-DataSet-r14",
+      "kind": "local-or-imported-definition",
+      "to": "SupportedChannels-11a-r14"
+    },
+    {
+      "from": "WLAN-DataSet-r14",
+      "kind": "local-or-imported-definition",
+      "to": "SupportedChannels-11bg-r14"
+    },
+    {
+      "from": "WLAN-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-LocationServerErrorCauses-r13"
+    },
+    {
+      "from": "WLAN-Error-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-TargetDeviceErrorCauses-r13"
+    },
+    {
+      "from": "WLAN-MeasurementElement-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-AP-Identifier-r13"
+    },
+    {
+      "from": "WLAN-MeasurementElement-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-RTT-r13"
+    },
+    {
+      "from": "WLAN-MeasurementInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-MeasurementList-r13"
+    },
+    {
+      "from": "WLAN-MeasurementList-r13",
+      "kind": "local-or-imported-definition",
+      "to": "maxWLAN-AP-r13"
+    },
+    {
+      "from": "WLAN-MeasurementList-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-MeasurementElement-r13"
+    },
+    {
+      "from": "WLAN-ProvideAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxWLAN-DataSets-r14"
+    },
+    {
+      "from": "WLAN-ProvideAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-DataSet-r14"
+    },
+    {
+      "from": "WLAN-ProvideAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-Error-r13"
+    },
+    {
+      "from": "WLAN-ProvideCapabilities-r13",
+      "kind": "local-or-imported-definition",
+      "to": "PositioningModes"
+    },
+    {
+      "from": "WLAN-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-MeasurementInformation-r13"
+    },
+    {
+      "from": "WLAN-ProvideLocationInformation-r13",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-Error-r13"
+    },
+    {
+      "from": "WLAN-RequestAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxVisibleAPs-r14"
+    },
+    {
+      "from": "WLAN-RequestAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "WLAN-AP-Identifier-r13"
+    },
+    {
+      "from": "WLAN-RequestAssistanceData-r14",
+      "kind": "local-or-imported-definition",
+      "to": "maxKnownAPs-r14"
+    }
+  ],
+  "nodes": [
+    "A-GNSS-Error",
+    "A-GNSS-ProvideAssistanceData",
+    "A-GNSS-ProvideCapabilities",
+    "A-GNSS-ProvideLocationInformation",
+    "A-GNSS-RequestAssistanceData",
+    "A-GNSS-RequestCapabilities",
+    "A-GNSS-RequestLocationInformation",
+    "ARFCN-ValueEUTRA",
+    "ARFCN-ValueEUTRA-r14",
+    "ARFCN-ValueEUTRA-v9a0",
+    "ARFCN-ValueNR-r15",
+    "ARFCN-ValueUTRA",
+    "AUX-ReferenceStationID-Element-r15",
+    "AUX-ReferenceStationList-r15",
+    "Abort",
+    "Abort-r9-IEs",
+    "AccessTypes",
+    "Acknowledgement",
+    "Add-PRSconfigNeighbourElement-r14",
+    "AdditionalInformation",
+    "AdditionalPath-r14",
+    "AdditionalPathList-r14",
+    "AlmanacBDS-AlmanacSet-r12",
+    "AlmanacECEF-SBAS-AlmanacSet",
+    "AlmanacGLONASS-AlmanacSet",
+    "AlmanacKeplerianSet",
+    "AlmanacMidiAlmanacSet",
+    "AlmanacNAV-KeplerianSet",
+    "AlmanacNavIC-AlmanacSet-r16",
+    "AlmanacReducedKeplerianSet",
+    "AntennaDescription-r15",
+    "AntennaReferencePointUnc-r15",
+    "AssistanceDataSIBelement-r15",
+    "AssistanceDataSupportList",
+    "Aux-ARP-Unc-r15",
+    "AuxiliaryStationElement-r15",
+    "AuxiliaryStationList-r15",
+    "BDS-ClockModel-r12",
+    "BDS-ClockModel2-r16",
+    "BDS-DifferentialCorrections-r12",
+    "BDS-DifferentialCorrectionsReq-r12",
+    "BDS-DifferentialCorrectionsSupport-r12",
+    "BDS-GridModelParameter-r12",
+    "BDS-GridModelReq-r12",
+    "BDS-GridModelSupport-r12",
+    "BDS-SgnTypeElement-r12",
+    "BDS-SgnTypeList-r12",
+    "BT-Error-r13",
+    "BT-LocationServerErrorCauses-r13",
+    "BT-MeasurementElement-r13",
+    "BT-MeasurementInformation-r13",
+    "BT-MeasurementList-r13",
+    "BT-ProvideCapabilities-r13",
+    "BT-ProvideLocationInformation-r13",
+    "BT-RequestCapabilities-r13",
+    "BT-RequestLocationInformation-r13",
+    "BT-TargetDeviceErrorCauses-r13",
+    "BadSignalElement",
+    "CNAV-ClockModel",
+    "CarrierFreq-NB-r14",
+    "CarrierFreqOffsetNB-r14",
+    "CellGlobalIdEUTRA-AndUTRA",
+    "CellGlobalIdGERAN",
+    "CipheringKeyData-r15",
+    "CommonIEsAbort",
+    "CommonIEsError",
+    "CommonIEsProvideAssistanceData",
+    "CommonIEsProvideCapabilities",
+    "CommonIEsProvideLocationInformation",
+    "CommonIEsRequestAssistanceData",
+    "CommonIEsRequestCapabilities",
+    "CommonIEsRequestLocationInformation",
+    "DBDS-CorrectionElement-r12",
+    "DBDS-CorrectionList-r12",
+    "DGNSS-CorrectionsElement",
+    "DGNSS-SatList",
+    "DGNSS-SgnTypeElement",
+    "DGNSS-SgnTypeList",
+    "DL-AoD-MeasCapabilityPerBand-r16",
+    "DL-PRS-BeamInfoElement-r16",
+    "DL-PRS-BeamInfoResourceSet-r16",
+    "DL-PRS-BeamInfoSet-r16",
+    "DL-PRS-ID-Info-r16",
+    "DL-PRS-MutingOption1-r16",
+    "DL-PRS-MutingOption2-r16",
+    "DL-PRS-QCL-Info-r16",
+    "DL-PRS-QCL-ProcessingCapabilityPerBand-r16",
+    "DL-PRS-Resource-ARP-Element-r16",
+    "DL-PRS-ResourceSets-TRP-Element-r16",
+    "DL-PRS-ResourcesBandCombination-r16",
+    "DL-PRS-ResourcesBandCombinationList-r16",
+    "DL-PRS-ResourcesCapabilityPerBand-r16",
+    "DL-SelectedPRS-ResourceIndex-r16",
+    "DL-SelectedPRS-ResourceSetIndex-r16",
+    "Delta-Height-r16",
+    "Delta-Latitude-r16",
+    "Delta-Longitude-r16",
+    "DeltaTime-r15",
+    "Displacement-r15",
+    "DisplacementInfoList-r15",
+    "DisplacementInfoListElement-r15",
+    "DisplacementTimeStamp-r15",
+    "ECGI",
+    "ECID-Error",
+    "ECID-LocationServerErrorCauses",
+    "ECID-ProvideCapabilities",
+    "ECID-ProvideLocationInformation",
+    "ECID-RequestCapabilities",
+    "ECID-RequestLocationInformation",
+    "ECID-SignalMeasurementInformation",
+    "ECID-TargetDeviceErrorCauses",
+    "EPDU",
+    "EPDU-Body",
+    "EPDU-ID",
+    "EPDU-Identifier",
+    "EPDU-Name",
+    "EPDU-Sequence",
+    "EarlyFixReport-r12",
+    "Ellipsoid-Point",
+    "Ellipsoid-PointWithUncertaintyCircle",
+    "EllipsoidArc",
+    "EllipsoidPointWithAltitude",
+    "EllipsoidPointWithAltitudeAndUncertaintyEllipsoid",
+    "EllipsoidPointWithUncertaintyEllipse",
+    "Environment",
+    "EqualIntegerAmbiguityLevel-r16",
+    "Error",
+    "Error-r9-IEs",
+    "FKP-Gradients-Element-r15",
+    "FKP-Gradients-List-r15",
+    "FreqBandIndicatorNR-r16",
+    "GLO-RTK-BiasInformation-r15",
+    "GLO-RTK-BiasInformationReq-r15",
+    "GLO-RTK-BiasInformationSupport-r15",
+    "GLONASS-ClockModel",
+    "GNSS-AcquisitionAssistElement",
+    "GNSS-AcquisitionAssistList",
+    "GNSS-AcquisitionAssistance",
+    "GNSS-AcquisitionAssistanceReq",
+    "GNSS-AcquisitionAssistanceSupport",
+    "GNSS-Almanac",
+    "GNSS-AlmanacElement",
+    "GNSS-AlmanacList",
+    "GNSS-AlmanacReq",
+    "GNSS-AlmanacSupport",
+    "GNSS-AuxiliaryInformation",
+    "GNSS-AuxiliaryInformationReq",
+    "GNSS-AuxiliaryInformationSupport",
+    "GNSS-BadSignalList",
+    "GNSS-ClockModel",
+    "GNSS-CommonAssistData",
+    "GNSS-CommonAssistDataReq",
+    "GNSS-CommonAssistanceDataSupport",
+    "GNSS-DataBitAssistance",
+    "GNSS-DataBitAssistanceReq",
+    "GNSS-DataBitAssistanceSupport",
+    "GNSS-DataBitsReqSatElement",
+    "GNSS-DataBitsReqSatList",
+    "GNSS-DataBitsSatElement",
+    "GNSS-DataBitsSatList",
+    "GNSS-DataBitsSgnElement",
+    "GNSS-DataBitsSgnList",
+    "GNSS-DifferentialCorrections",
+    "GNSS-DifferentialCorrectionsReq",
+    "GNSS-DifferentialCorrectionsSupport",
+    "GNSS-EarthOrientationParameters",
+    "GNSS-EarthOrientationParametersReq",
+    "GNSS-EarthOrientationParametersSupport",
+    "GNSS-FrequencyID-r15",
+    "GNSS-GenericAssistData",
+    "GNSS-GenericAssistDataElement",
+    "GNSS-GenericAssistDataReq",
+    "GNSS-GenericAssistDataReqElement",
+    "GNSS-GenericAssistDataSupportElement",
+    "GNSS-GenericAssistanceDataSupport",
+    "GNSS-ID",
+    "GNSS-ID-BDS-SatElement-r16",
+    "GNSS-ID-BDS-r16",
+    "GNSS-ID-Bitmap",
+    "GNSS-ID-GLONASS",
+    "GNSS-ID-GLONASS-SatElement",
+    "GNSS-ID-GPS",
+    "GNSS-ID-GPS-SatElement",
+    "GNSS-IonosphericModel",
+    "GNSS-IonosphericModelReq",
+    "GNSS-IonosphericModelSupport",
+    "GNSS-Link-Combinations-r15",
+    "GNSS-Link-CombinationsList-r15",
+    "GNSS-LocationInformation",
+    "GNSS-LocationServerErrorCauses",
+    "GNSS-MeasurementForOneGNSS",
+    "GNSS-MeasurementList",
+    "GNSS-NavListInfo-r15",
+    "GNSS-NavModelSatelliteElement",
+    "GNSS-NavModelSatelliteList",
+    "GNSS-NavigationModel",
+    "GNSS-NavigationModelReq",
+    "GNSS-NavigationModelSupport",
+    "GNSS-NetworkID-r15",
+    "GNSS-ObservationList-r15",
+    "GNSS-OrbitModel",
+    "GNSS-PeriodicAssistData-r15",
+    "GNSS-PeriodicAssistDataReq-r15",
+    "GNSS-PeriodicControlParam-r15",
+    "GNSS-PositioningInstructions",
+    "GNSS-RTK-AuxiliaryStationData-r15",
+    "GNSS-RTK-AuxiliaryStationDataReq-r15",
+    "GNSS-RTK-AuxiliaryStationDataSupport-r15",
+    "GNSS-RTK-CommonObservationInfo-r15",
+    "GNSS-RTK-FKP-Gradients-r15",
+    "GNSS-RTK-FKP-GradientsReq-r15",
+    "GNSS-RTK-FKP-GradientsSupport-r15",
+    "GNSS-RTK-MAC-CorrectionDifferences-r15",
+    "GNSS-RTK-MAC-CorrectionDifferencesReq-r15",
+    "GNSS-RTK-MAC-CorrectionDifferencesSupport-r15",
+    "GNSS-RTK-Observations-r15",
+    "GNSS-RTK-ObservationsReq-r15",
+    "GNSS-RTK-ObservationsSupport-r15",
+    "GNSS-RTK-ReferenceStationInfo-r15",
+    "GNSS-RTK-ReferenceStationInfoReq-r15",
+    "GNSS-RTK-ReferenceStationInfoSupport-r15",
+    "GNSS-RTK-Residuals-r15",
+    "GNSS-RTK-ResidualsReq-r15",
+    "GNSS-RTK-ResidualsSupport-r15",
+    "GNSS-RTK-SatelliteDataElement-r15",
+    "GNSS-RTK-SatelliteSignalDataElement-r15",
+    "GNSS-RTK-SatelliteSignalDataList-r15",
+    "GNSS-RealTimeIntegrity",
+    "GNSS-RealTimeIntegrityReq",
+    "GNSS-RealTimeIntegritySupport",
+    "GNSS-ReferenceLocation",
+    "GNSS-ReferenceLocationReq",
+    "GNSS-ReferenceLocationSupport",
+    "GNSS-ReferenceStationID-r15",
+    "GNSS-ReferenceTime",
+    "GNSS-ReferenceTimeForOneCell",
+    "GNSS-ReferenceTimeReq",
+    "GNSS-ReferenceTimeSupport",
+    "GNSS-SSR-ArrayOfCorrectionPoints-r16",
+    "GNSS-SSR-ClockCorrections-r15",
+    "GNSS-SSR-ClockCorrectionsReq-r15",
+    "GNSS-SSR-ClockCorrectionsSupport-r15",
+    "GNSS-SSR-CodeBias-r15",
+    "GNSS-SSR-CodeBiasReq-r15",
+    "GNSS-SSR-CodeBiasSupport-r15",
+    "GNSS-SSR-CorrectionPoints-r16",
+    "GNSS-SSR-CorrectionPointsReq-r16",
+    "GNSS-SSR-GriddedCorrection-r16",
+    "GNSS-SSR-GriddedCorrectionReq-r16",
+    "GNSS-SSR-GriddedCorrectionSupport-r16",
+    "GNSS-SSR-ListOfCorrectionPoints-r16",
+    "GNSS-SSR-OrbitCorrections-r15",
+    "GNSS-SSR-OrbitCorrectionsReq-r15",
+    "GNSS-SSR-OrbitCorrectionsSupport-r15",
+    "GNSS-SSR-PhaseBias-r16",
+    "GNSS-SSR-PhaseBiasReq-r16",
+    "GNSS-SSR-PhaseBiasSupport-r16",
+    "GNSS-SSR-STEC-Correction-r16",
+    "GNSS-SSR-STEC-CorrectionReq-r16",
+    "GNSS-SSR-STEC-CorrectionSupport-r16",
+    "GNSS-SSR-URA-Req-r16",
+    "GNSS-SSR-URA-Support-r16",
+    "GNSS-SSR-URA-r16",
+    "GNSS-SatMeasElement",
+    "GNSS-SatMeasList",
+    "GNSS-SgnMeasElement",
+    "GNSS-SgnMeasList",
+    "GNSS-SignalID",
+    "GNSS-SignalIDs",
+    "GNSS-SignalMeasurementInformation",
+    "GNSS-SubNetworkID-r15",
+    "GNSS-SupportElement",
+    "GNSS-SupportList",
+    "GNSS-SystemTime",
+    "GNSS-TargetDeviceErrorCauses",
+    "GNSS-TimeModelElement",
+    "GNSS-TimeModelElementReq",
+    "GNSS-TimeModelList",
+    "GNSS-TimeModelListReq",
+    "GNSS-TimeModelListSupport",
+    "GNSS-UTC-Model",
+    "GNSS-UTC-ModelReq",
+    "GNSS-UTC-ModelSupport",
+    "GPS-TOW-Assist",
+    "GPS-TOW-AssistElement",
+    "Geometric-Ionospheric-Corrections-Differences-Element-r15",
+    "Geometric-Ionospheric-Corrections-Differences-r15",
+    "GridElement-r16",
+    "GridIonElement-r12",
+    "GridIonList-r12",
+    "GridList-r16",
+    "HighAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-r15",
+    "HighAccuracyEllipsoidPointWithUncertaintyEllipse-r15",
+    "HorizontalAccuracy",
+    "HorizontalAccuracyExt-r15",
+    "HorizontalVelocity",
+    "HorizontalVelocityWithUncertainty",
+    "HorizontalWithVerticalVelocity",
+    "HorizontalWithVerticalVelocityAndUncertainty",
+    "Initiator",
+    "KlobucharModel2Parameter-r16",
+    "KlobucharModelParameter",
+    "LCS-GCS-TranslationParameter-r16",
+    "LPP-Message",
+    "LPP-MessageBody",
+    "LPP-TransactionID",
+    "LocationCoordinateTypes",
+    "LocationCoordinates",
+    "LocationDataLCI-r14",
+    "LocationError",
+    "LocationFailureCause",
+    "LocationInformationType",
+    "LocationSource-r13",
+    "LocationUncertainty-r16",
+    "MBS-AcquisitionAssistance-r14",
+    "MBS-AlmanacAssistance-r14",
+    "MBS-AssistanceDataElement-r14",
+    "MBS-AssistanceDataList-r14",
+    "MBS-AssistanceDataSupportList-r14",
+    "MBS-BeaconMeasElement-r13",
+    "MBS-BeaconMeasList-r13",
+    "MeasQuantityResults-r16",
+    "MeasuredResultsElement",
+    "MeasuredResultsList",
+    "MeasurementReferenceTime",
+    "MessageSizeLimitNB-r14",
+    "MotionTimeSource-r15",
+    "NAV-ClockModel",
+    "NCGI-r15",
+    "NPRS-Info-r14",
+    "NR-AdditionalPath-r16",
+    "NR-AdditionalPathList-r16",
+    "NR-DL-AoD-AdditionalMeasurementElement-r16",
+    "NR-DL-AoD-AdditionalMeasurements-r16",
+    "NR-DL-AoD-Error-r16",
+    "NR-DL-AoD-LocationInformation-r16",
+    "NR-DL-AoD-LocationServerErrorCauses-r16",
+    "NR-DL-AoD-MeasElement-r16",
+    "NR-DL-AoD-MeasList-r16",
+    "NR-DL-AoD-MeasurementCapability-r16",
+    "NR-DL-AoD-ProvideAssistanceData-r16",
+    "NR-DL-AoD-ProvideCapabilities-r16",
+    "NR-DL-AoD-ProvideLocationInformation-r16",
+    "NR-DL-AoD-ReportConfig-r16",
+    "NR-DL-AoD-RequestAssistanceData-r16",
+    "NR-DL-AoD-RequestCapabilities-r16",
+    "NR-DL-AoD-RequestLocationInformation-r16",
+    "NR-DL-AoD-SignalMeasurementInformation-r16",
+    "NR-DL-AoD-TargetDeviceErrorCauses-r16",
+    "NR-DL-PRS-AssistanceData-r16",
+    "NR-DL-PRS-AssistanceDataPerFreq-r16",
+    "NR-DL-PRS-AssistanceDataPerTRP-r16",
+    "NR-DL-PRS-BeamInfo-r16",
+    "NR-DL-PRS-BeamInfoPerFreqLayer-r16",
+    "NR-DL-PRS-BeamInfoPerTRP-r16",
+    "NR-DL-PRS-Info-r16",
+    "NR-DL-PRS-Periodicity-and-ResourceSetSlotOffset-r16",
+    "NR-DL-PRS-PositioningFrequencyLayer-r16",
+    "NR-DL-PRS-ProcessingCapability-r16",
+    "NR-DL-PRS-QCL-ProcessingCapability-r16",
+    "NR-DL-PRS-Resource-r16",
+    "NR-DL-PRS-ResourceID-r16",
+    "NR-DL-PRS-ResourceSet-r16",
+    "NR-DL-PRS-ResourceSetID-r16",
+    "NR-DL-PRS-ResourcesCapability-r16",
+    "NR-DL-PRS-SFN0-Offset-r16",
+    "NR-DL-TDOA-AdditionalMeasurementElement-r16",
+    "NR-DL-TDOA-AdditionalMeasurements-r16",
+    "NR-DL-TDOA-Error-r16",
+    "NR-DL-TDOA-LocationInformation-r16",
+    "NR-DL-TDOA-LocationServerErrorCauses-r16",
+    "NR-DL-TDOA-MeasElement-r16",
+    "NR-DL-TDOA-MeasList-r16",
+    "NR-DL-TDOA-MeasurementCapability-r16",
+    "NR-DL-TDOA-ProvideAssistanceData-r16",
+    "NR-DL-TDOA-ProvideCapabilities-r16",
+    "NR-DL-TDOA-ProvideLocationInformation-r16",
+    "NR-DL-TDOA-ReportConfig-r16",
+    "NR-DL-TDOA-RequestAssistanceData-r16",
+    "NR-DL-TDOA-RequestCapabilities-r16",
+    "NR-DL-TDOA-RequestLocationInformation-r16",
+    "NR-DL-TDOA-SignalMeasurementInformation-r16",
+    "NR-DL-TDOA-TargetDeviceErrorCauses-r16",
+    "NR-ECID-Error-r16",
+    "NR-ECID-LocationServerErrorCauses-r16",
+    "NR-ECID-ProvideCapabilities-r16",
+    "NR-ECID-ProvideLocationInformation-r16",
+    "NR-ECID-RequestCapabilities-r16",
+    "NR-ECID-RequestLocationInformation-r16",
+    "NR-ECID-SignalMeasurementInformation-r16",
+    "NR-ECID-TargetDeviceErrorCauses-r16",
+    "NR-MeasuredResultsElement-r16",
+    "NR-MeasuredResultsList-r16",
+    "NR-Multi-RTT-AdditionalMeasurementElement-r16",
+    "NR-Multi-RTT-AdditionalMeasurements-r16",
+    "NR-Multi-RTT-Error-r16",
+    "NR-Multi-RTT-LocationServerErrorCauses-r16",
+    "NR-Multi-RTT-MeasElement-r16",
+    "NR-Multi-RTT-MeasList-r16",
+    "NR-Multi-RTT-MeasurementCapability-r16",
+    "NR-Multi-RTT-ProvideAssistanceData-r16",
+    "NR-Multi-RTT-ProvideCapabilities-r16",
+    "NR-Multi-RTT-ProvideLocationInformation-r16",
+    "NR-Multi-RTT-ReportConfig-r16",
+    "NR-Multi-RTT-RequestAssistanceData-r16",
+    "NR-Multi-RTT-RequestCapabilities-r16",
+    "NR-Multi-RTT-RequestLocationInformation-r16",
+    "NR-Multi-RTT-SignalMeasurementInformation-r16",
+    "NR-Multi-RTT-TargetDeviceErrorCauses-r16",
+    "NR-MutingPattern-r16",
+    "NR-PhysCellID-r16",
+    "NR-PositionCalculationAssistance-r16",
+    "NR-RTD-Info-r16",
+    "NR-SSB-Config-r16",
+    "NR-SelectedDL-PRS-IndexList-r16",
+    "NR-SelectedDL-PRS-IndexPerTRP-r16",
+    "NR-SelectedDL-PRS-PerFreq-r16",
+    "NR-TRP-LocationInfo-r16",
+    "NR-TRP-LocationInfoPerFreqLayer-r16",
+    "NR-TimeStamp-r16",
+    "NR-TimingQuality-r16",
+    "NR-UEB-TRP-LocationData-r16",
+    "NR-UEB-TRP-RTD-Info-r16",
+    "NR-UL-ProvideCapabilities-r16",
+    "NR-UL-RequestCapabilities-r16",
+    "NR-UL-SRS-Capability-r16",
+    "NavIC-CDC-r16",
+    "NavIC-ClockModel-r16",
+    "NavIC-CorrectionElementAutoNav-r16",
+    "NavIC-CorrectionListAutoNav-r16",
+    "NavIC-DifferentialCorrections-r16",
+    "NavIC-DifferentialCorrectionsReq-r16",
+    "NavIC-DifferentialCorrectionsSupport-r16",
+    "NavIC-EDC-r16",
+    "NavIC-GridModelParameter-r16",
+    "NavIC-GridModelReq-r16",
+    "NavIC-GridModelSupport-r16",
+    "NavModel-BDS-KeplerianSet-r12",
+    "NavModel-BDS-KeplerianSet2-r16",
+    "NavModel-GLONASS-ECEF",
+    "NavModel-NavIC-KeplerianSet-r16",
+    "NavModel-SBAS-ECEF",
+    "NavModelCNAV-KeplerianSet",
+    "NavModelKeplerianSet",
+    "NavModelNAV-KeplerianSet",
+    "NeQuickModelParameter",
+    "NeighbourMeasurementElement",
+    "NeighbourMeasurementElement-NB-r14",
+    "NeighbourMeasurementList",
+    "NeighbourMeasurementList-NB-r14",
+    "NetworkTime",
+    "OLPC-SRS-Pos-r16",
+    "OTDOA-Error",
+    "OTDOA-LocationServerErrorCauses",
+    "OTDOA-MeasQuality",
+    "OTDOA-NeighbourCellInfoElement",
+    "OTDOA-NeighbourCellInfoList",
+    "OTDOA-NeighbourCellInfoListNB-r14",
+    "OTDOA-NeighbourCellInfoNB-r14",
+    "OTDOA-NeighbourFreqInfo",
+    "OTDOA-ProvideAssistanceData",
+    "OTDOA-ProvideCapabilities",
+    "OTDOA-ProvideLocationInformation",
+    "OTDOA-ReferenceCellInfo",
+    "OTDOA-ReferenceCellInfoNB-r14",
+    "OTDOA-RequestAssistanceData",
+    "OTDOA-RequestCapabilities",
+    "OTDOA-RequestLocationInformation",
+    "OTDOA-SignalMeasurementInformation",
+    "OTDOA-SignalMeasurementInformation-NB-r14",
+    "OTDOA-TargetDeviceErrorCauses",
+    "OTDOA-UE-Assisted-r15",
+    "PRS-Info",
+    "PRS-Info-NB-r14",
+    "PRS-ProcessingCapabilityPerBand-r16",
+    "PeriodicAssistanceDataControlParameters-r15",
+    "PeriodicSessionID-r15",
+    "PeriodicalReportingCriteria",
+    "PhysicalReferenceStationInfo-r15",
+    "Polygon",
+    "PolygonPoints",
+    "PositioningModes",
+    "PressureValidityArea-v1520",
+    "PressureValidityPeriod-v1520",
+    "ProvideAssistanceData",
+    "ProvideAssistanceData-r9-IEs",
+    "ProvideCapabilities",
+    "ProvideCapabilities-r9-IEs",
+    "ProvideLocationInformation",
+    "ProvideLocationInformation-r9-IEs",
+    "QoS",
+    "RTD-InfoElement-r16",
+    "RTD-InfoList-r16",
+    "RTD-InfoListPerFreqLayer-r16",
+    "RTK-CorrectionDifferencesElement-r15",
+    "RTK-CorrectionDifferencesList-r15",
+    "RTK-Residuals-Element-r15",
+    "RTK-Residuals-List-r15",
+    "ReferencePoint-r16",
+    "ReferenceStationList-r16",
+    "ReferenceTRP-RTD-Info-r16",
+    "RegionIgpElement-r16",
+    "RegionIgpList-r16",
+    "RelativeLocation-r16",
+    "RelativeLocationElement-r16",
+    "ReportingDuration",
+    "ReqNavListInfo",
+    "RequestAssistanceData",
+    "RequestAssistanceData-r9-IEs",
+    "RequestCapabilities",
+    "RequestCapabilities-r9-IEs",
+    "RequestLocationInformation",
+    "RequestLocationInformation-r9-IEs",
+    "ResponseTime",
+    "ResponseTimeNB-r14",
+    "ResultsPerCSI-RS-Index-r16",
+    "ResultsPerCSI-RS-IndexList-r16",
+    "ResultsPerSSB-Index-r16",
+    "ResultsPerSSB-IndexList-r16",
+    "SBAS-ClockModel",
+    "SBAS-ID",
+    "SBAS-IDs",
+    "SFN-r15",
+    "SRS-CapabilityPerBand-r16",
+    "SRS-PosResourcesPerBand-r16",
+    "SSR-ClockCorrectionList-r15",
+    "SSR-ClockCorrectionSatelliteElement-r15",
+    "SSR-CodeBiasSatElement-r15",
+    "SSR-CodeBiasSatList-r15",
+    "SSR-CodeBiasSignalElement-r15",
+    "SSR-CodeBiasSignalList-r15",
+    "SSR-OrbitCorrectionList-r15",
+    "SSR-OrbitCorrectionSatelliteElement-r15",
+    "SSR-PhaseBiasSatElement-r16",
+    "SSR-PhaseBiasSatList-r16",
+    "SSR-PhaseBiasSignalElement-r16",
+    "SSR-PhaseBiasSignalList-r16",
+    "SSR-URA-SatElement-r16",
+    "SSR-URA-SatList-r16",
+    "STEC-ResidualSatElement-r16",
+    "STEC-ResidualSatList-r16",
+    "STEC-SatElement-r16",
+    "STEC-SatList-r16",
+    "SV-ID",
+    "SatListElement-r15",
+    "SatListRelatedDataElement",
+    "SatListRelatedDataList",
+    "SegmentationInfo-r14",
+    "SegmentationInfo-r15",
+    "Sensor-AssistanceDataList-r14",
+    "Sensor-AssistanceDataSupportList-r14",
+    "Sensor-Error-r13",
+    "Sensor-LocationServerErrorCauses-r13",
+    "Sensor-MeasurementInformation-r13",
+    "Sensor-MotionInformation-r15",
+    "Sensor-ProvideAssistanceData-r14",
+    "Sensor-ProvideCapabilities-r13",
+    "Sensor-ProvideLocationInformation-r13",
+    "Sensor-RequestAssistanceData-r14",
+    "Sensor-RequestCapabilities-r13",
+    "Sensor-RequestLocationInformation-r13",
+    "Sensor-TargetDeviceErrorCauses-r13",
+    "SequenceNumber",
+    "SpatialRelationsSRS-Pos-r16",
+    "StandardClockModelElement",
+    "StandardClockModelList",
+    "StoredNavListInfo",
+    "SupportedBandEUTRA",
+    "SupportedBandEUTRA-v9a0",
+    "SupportedChannels-11a-r14",
+    "SupportedChannels-11bg-r14",
+    "TBS-AssistanceDataList-r14",
+    "TBS-Error-r13",
+    "TBS-LocationServerErrorCauses-r13",
+    "TBS-MeasurementInformation-r13",
+    "TBS-ProvideAssistanceData-r14",
+    "TBS-ProvideCapabilities-r13",
+    "TBS-ProvideLocationInformation-r13",
+    "TBS-RequestAssistanceData-r14",
+    "TBS-RequestCapabilities-r13",
+    "TBS-RequestLocationInformation-r13",
+    "TBS-TargetDeviceErrorCauses-r13",
+    "TDD-Config-v1520",
+    "TRP-LocationInfoElement-r16",
+    "TransactionNumber",
+    "TriggeredReportingCriteria",
+    "TropospericDelayCorrection-r16",
+    "UTC-ModelSet1",
+    "UTC-ModelSet2",
+    "UTC-ModelSet3",
+    "UTC-ModelSet4",
+    "UTC-ModelSet5-r12",
+    "UTC-Time-r15",
+    "UpdateCapabilities-r15",
+    "Velocity",
+    "VelocityTypes",
+    "VerticalAccuracy",
+    "VerticalAccuracyExt-r15",
+    "WLAN-AP-Data-r14",
+    "WLAN-AP-Identifier-r13",
+    "WLAN-AP-Location-r14",
+    "WLAN-DataSet-r14",
+    "WLAN-Error-r13",
+    "WLAN-LocationServerErrorCauses-r13",
+    "WLAN-MeasurementElement-r13",
+    "WLAN-MeasurementInformation-r13",
+    "WLAN-MeasurementList-r13",
+    "WLAN-ProvideAssistanceData-r14",
+    "WLAN-ProvideCapabilities-r13",
+    "WLAN-ProvideLocationInformation-r13",
+    "WLAN-RTT-r13",
+    "WLAN-RequestAssistanceData-r14",
+    "WLAN-RequestCapabilities-r13",
+    "WLAN-RequestLocationInformation-r13",
+    "WLAN-TargetDeviceErrorCauses-r13",
+    "maxAddPRSconfig-r14",
+    "maxAvailNarrowBands-Minus1-r14",
+    "maxBT-Beacon-r13",
+    "maxBandComb-r16",
+    "maxBands",
+    "maxCarrier-r14",
+    "maxCells-r14",
+    "maxEARFCN",
+    "maxEARFCN-Plus1",
+    "maxEARFCN2",
+    "maxEPDU",
+    "maxFBI",
+    "maxFBI-Plus1",
+    "maxFBI2",
+    "maxFreqLayers",
+    "maxKnownAPs-r14",
+    "maxMBS-r14",
+    "maxPaths-r14",
+    "maxSimultaneousBands-r16",
+    "maxVisibleAPs-r14",
+    "maxWLAN-AP-r13",
+    "maxWLAN-AP-r14",
+    "maxWLAN-DataSets-r14",
+    "nrMaxBands-r16",
+    "nrMaxConfiguredBands-r16",
+    "nrMaxFreqLayers-1-r16",
+    "nrMaxFreqLayers-r16",
+    "nrMaxNumDL-PRS-ResourceSetsPerTRP-1-r16",
+    "nrMaxNumDL-PRS-ResourcesPerSet-1-r16",
+    "nrMaxResourceIDs-r16",
+    "nrMaxResourceOffsetValue-1-r16",
+    "nrMaxResourcesPerSet-r16",
+    "nrMaxSetsPerTrp-1-r16",
+    "nrMaxSetsPerTrp-r16",
+    "nrMaxTRPs-r16",
+    "nrMaxTRPsPerFreq-1-r16",
+    "nrMaxTRPsPerFreq-r16"
+  ],
+  "summary": {
+    "definition_count": 652,
+    "duplicate_definition_count": 0,
+    "external_import_count": 0,
+    "import_count": 5,
+    "input_hashes": {
+      "LPP-Broadcast-Definitions.asn1": "b740f1ce01929f7b80126a4a080b0ae1590fb0f5c1ad04bcf22dfdd85049ff65",
+      "LPP-PDU-Definitions.asn1": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724"
+    },
+    "module_count": 2,
+    "object_assignment_count": 0,
+    "parameterized_assignment_count": 0,
+    "type_assignment_count": 615,
+    "unresolved_reference_count": 0,
+    "value_assignment_count": 37
+  }
+}

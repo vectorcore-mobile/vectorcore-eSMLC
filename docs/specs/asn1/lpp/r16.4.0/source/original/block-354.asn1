@@ -1,0 +1,9 @@
+NR-Multi-RTT-MeasurementCapability-r16 ::= SEQUENCE {
+maxNrOfRx-TX-MeasFR1-r16INTEGER (1..4)OPTIONAL,
+maxNrOfRx-TX-MeasFR2-r16INTEGER (1..4)OPTIONAL,
+supportOfRSRP-MeasFR1-r16ENUMERATED { supported}OPTIONAL,
+supportOfRSRP-MeasFR2-r16ENUMERATED { supported}OPTIONAL,
+srs-AssocPRS-MultiLayersFR1-r16ENUMERATED { supported}OPTIONAL,
+srs-AssocPRS-MultiLayersFR2-r16ENUMERATED { supported}OPTIONAL,
+...
+}

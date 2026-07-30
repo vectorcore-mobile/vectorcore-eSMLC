@@ -1,0 +1,5 @@
+BT-RequestLocationInformation-r13 ::= SEQUENCE {
+requestedMeasurements-r13BIT STRING {
+rssi(0)} (SIZE(1..8)),
+...
+}

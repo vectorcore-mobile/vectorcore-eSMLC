@@ -1,0 +1,5 @@
+WLAN-Error-r13 ::= CHOICE {
+locationServerErrorCauses-r13WLAN-LocationServerErrorCauses-r13,
+targetDeviceErrorCauses-r13WLAN-TargetDeviceErrorCauses-r13,
+...
+}

@@ -1,0 +1,8 @@
+ReferencePoint-r16 ::= SEQUENCE {
+referencePointGeographicLocation-r16 CHOICE {
+location3D-r16 EllipsoidPointWithAltitudeAndUncertaintyEllipsoid,
+ha-location3D-r16 HighAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-r15,
+...
+},
+...
+}

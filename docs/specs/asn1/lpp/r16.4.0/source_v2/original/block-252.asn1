@@ -1,0 +1,5 @@
+GNSS-ReferenceStationID-r15 ::= SEQUENCE {
+	referenceStationID-r15			INTEGER (0..65535),
+	providerName-r15				VisibleString (SIZE (1..32))		OPTIONAL,
+	...
+}

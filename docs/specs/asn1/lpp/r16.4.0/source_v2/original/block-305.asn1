@@ -1,0 +1,7 @@
+WLAN-RequestAssistanceData-r14 ::= SEQUENCE {
+	requestedAD-r14			BIT STRING {	ap-identifier		(0),
+											ap-location			(1)}	(SIZE (1..8)),
+	visibleAPs-r14			SEQUENCE (SIZE (1..maxVisibleAPs-r14)) OF WLAN-AP-Identifier-r13	OPTIONAL,
+	wlan-AP-StoredData-r14	SEQUENCE (SIZE (1..maxKnownAPs-r14)) OF WLAN-AP-Identifier-r13	OPTIONAL,
+	...
+}

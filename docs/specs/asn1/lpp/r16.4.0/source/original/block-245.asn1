@@ -1,0 +1,4 @@
+GNSS-FrequencyID-r15::= SEQUENCE {
+gnss-FrequencyID-r15INTEGER (0 .. 7),
+...
+}

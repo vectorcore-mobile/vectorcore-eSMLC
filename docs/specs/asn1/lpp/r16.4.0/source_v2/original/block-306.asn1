@@ -1,0 +1,5 @@
+BT-ProvideLocationInformation-r13 ::= SEQUENCE {
+	bt-MeasurementInformation-r13		BT-MeasurementInformation-r13	OPTIONAL,
+	bt-Error-r13						BT-Error-r13					OPTIONAL,
+	...	
+}

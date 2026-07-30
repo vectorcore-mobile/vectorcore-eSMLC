@@ -1,0 +1,12 @@
+ECID-Measured-Result-Scalar-Harness DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+PhysicalCellID ::= INTEGER (0..503)
+EUTRACarrierFrequencyRoot ::= INTEGER (0..65535)
+EUTRACarrierFrequencyV9a0 ::= INTEGER (65536..262143)
+
+ScalarPair ::= SEQUENCE {
+    physCellId  PhysicalCellID,
+    arfcnEUTRA  EUTRACarrierFrequencyRoot
+}
+
+END

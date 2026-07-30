@@ -1,0 +1,16 @@
+{
+  "root": "MeasuredResultsElement",
+  "module": "LPP-PDU-Definitions.asn1",
+  "imports": [],
+  "paths": {
+    "provide_location": ["ProvideLocationInformation", "criticalExtensions.c1[0]", "provideLocationInformation-r9[0]", "ProvideLocationInformation-r9-IEs.ecid-ProvideLocationInformation", "ECID-ProvideLocationInformation.ecid-SignalMeasurementInformation", "ECID-SignalMeasurementInformation.measuredResultsList", "MeasuredResultsList", "MeasuredResultsElement"],
+    "cell_global_id": ["MeasuredResultsElement.cellGlobalId", "CellGlobalIdEUTRA-AndUTRA", "plmn-Identity", "mcc: SEQUENCE SIZE(3) OF INTEGER(0..9)", "mnc: SEQUENCE SIZE(2..3) OF INTEGER(0..9)", "cellIdentity: CHOICE {eutra BIT STRING SIZE(28), utra BIT STRING SIZE(32)}"]
+  },
+  "cell_global_id": {
+    "source": "LPP-PDU-Definitions.asn1:299-309",
+    "form": "extensible SEQUENCE",
+    "root_choice_alternatives": ["eutra", "utra"],
+    "plmn": {"mcc": {"count": 3, "digit_constraint": "0..9"}, "mnc": {"count": "2..3", "digit_constraint": "0..9"}},
+    "cell_identity": {"eutra_bits": 28, "utra_bits": 32}
+  }
+}

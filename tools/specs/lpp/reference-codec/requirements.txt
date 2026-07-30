@@ -1,0 +1,4 @@
+# Development-only UPER reference compiler. Not used by runtime/default builds.
+asn1tools==0.167.0
+bitstruct==8.21.0
+pyparsing==3.3.2

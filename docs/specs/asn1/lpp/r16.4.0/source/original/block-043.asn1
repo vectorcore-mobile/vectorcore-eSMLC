@@ -1,0 +1,7 @@
+VelocityTypes ::= SEQUENCE {
+horizontalVelocityBOOLEAN,
+horizontalWithVerticalVelocityBOOLEAN,
+horizontalVelocityWithUncertaintyBOOLEAN,
+horizontalWithVerticalVelocityAndUncertaintyBOOLEAN,
+...
+}

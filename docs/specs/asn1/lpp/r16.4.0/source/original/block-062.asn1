@@ -1,0 +1,6 @@
+NR-PositionCalculationAssistance-r16 ::= SEQUENCE {
+nr-TRP-LocationInfo-r16 NR-TRP-LocationInfo-r16OPTIONAL,-- Need ON
+nr-DL-PRS-BeamInfo-r16NR-DL-PRS-BeamInfo-r16OPTIONAL,-- Need ON
+nr-RTD-Info-r16NR-RTD-Info-r16OPTIONAL,-- Need ON
+...
+}

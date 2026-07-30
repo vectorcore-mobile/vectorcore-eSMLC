@@ -1,0 +1,8 @@
+NR-DL-AoD-LocationInformation-r16 ::= SEQUENCE {
+	measurementReferenceTime-r16	CHOICE {
+			sfn-time-r16					NR-TimeStamp-r16,
+			utc-time-r16					UTCTime,
+			...
+			}															OPTIONAL,
+	...
+}

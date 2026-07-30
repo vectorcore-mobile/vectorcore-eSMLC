@@ -1,0 +1,61 @@
+CommonIEsProvideLocationInformation ::= SEQUENCE {
+	locationEstimate			LocationCoordinates		OPTIONAL,
+	velocityEstimate			Velocity				OPTIONAL,
+	locationError				LocationError			OPTIONAL,
+	...,
+	[[	earlyFixReport-r12		EarlyFixReport-r12		OPTIONAL
+	]],
+	[[	locationSource-r13		LocationSource-r13		OPTIONAL,
+		locationTimestamp-r13	UTCTime					OPTIONAL
+	]],
+	[[
+		segmentationInfo-r14	SegmentationInfo-r14	OPTIONAL		-- Cond Segmentation
+	]]
+}
+LocationCoordinates ::= CHOICE {
+	ellipsoidPoint								Ellipsoid-Point,
+	ellipsoidPointWithUncertaintyCircle			Ellipsoid-PointWithUncertaintyCircle,
+	ellipsoidPointWithUncertaintyEllipse		EllipsoidPointWithUncertaintyEllipse,
+	polygon										Polygon,
+	ellipsoidPointWithAltitude					EllipsoidPointWithAltitude,
+	ellipsoidPointWithAltitudeAndUncertaintyEllipsoid
+												EllipsoidPointWithAltitudeAndUncertaintyEllipsoid,
+	ellipsoidArc								EllipsoidArc,
+	...,
+	highAccuracyEllipsoidPointWithUncertaintyEllipse-v1510
+								HighAccuracyEllipsoidPointWithUncertaintyEllipse-r15,
+	highAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-v1510
+								HighAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-r15
+}
+Velocity ::= CHOICE {
+	horizontalVelocity							HorizontalVelocity,
+	horizontalWithVerticalVelocity				HorizontalWithVerticalVelocity,
+	horizontalVelocityWithUncertainty			HorizontalVelocityWithUncertainty,
+	horizontalWithVerticalVelocityAndUncertainty
+												HorizontalWithVerticalVelocityAndUncertainty,
+	...
+}
+LocationError ::= SEQUENCE {
+	locationfailurecause			LocationFailureCause,
+	...
+}
+LocationFailureCause ::= ENUMERATED {
+	undefined,
+	requestedMethodNotSupported,
+	positionMethodFailure,
+	periodicLocationMeasurementsNotAvailable,
+	...
+}
+EarlyFixReport-r12 ::= ENUMERATED {
+	noMoreMessages,
+	moreMessagesOnTheWay
+}
+LocationSource-r13 ::= BIT STRING {	a-gnss				(0),
+									wlan				(1),
+									bt					(2),
+									tbs					(3),
+									sensor				(4),
+									ha-gnss-v1510		(5),
+									motion-sensor-v1550 (6),
+									dl-tdoa-r16 		(7),
+									dl-aod-r16			(8) } (SIZE(1..16))

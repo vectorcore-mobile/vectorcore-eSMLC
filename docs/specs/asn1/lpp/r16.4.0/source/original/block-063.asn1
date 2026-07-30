@@ -1,0 +1,29 @@
+NR-RTD-Info-r16 ::= SEQUENCE {
+referenceTRP-RTD-Info-r16ReferenceTRP-RTD-Info-r16,
+rtd-InfoList-r16RTD-InfoList-r16,
+...
+}
+ReferenceTRP-RTD-Info-r16 ::= SEQUENCE {
+dl-PRS-ID-Ref-r16INTEGER (0..255),
+nr-PhysCellID-Ref-r16NR-PhysCellID-r16OPTIONAL,-- Need ON
+nr-CellGlobalID-Ref-r16NCGI-r15OPTIONAL,-- Need ON
+nr-ARFCN-Ref-r16ARFCN-ValueNR-r15OPTIONAL,-- Need ON
+refTime-r16CHOICE {
+systemFrameNumber-r16BIT STRING (SIZE (10)),
+utc-r16UTCTime,
+...
+},
+rtd-RefQuality-r16NR-TimingQuality-r16OPTIONAL,-- Need ON
+...
+}
+RTD-InfoList-r16 ::= SEQUENCE (SIZE (1..nrMaxFreqLayers-r16)) OF RTD-InfoListPerFreqLayer-r16
+RTD-InfoListPerFreqLayer-r16 ::= SEQUENCE (SIZE(1..nrMaxTRPsPerFreq-r16)) OF RTD-InfoElement-r16
+RTD-InfoElement-r16 ::= SEQUENCE {
+dl-PRS-ID-r16INTEGER (0..255),
+nr-PhysCellID-r16NR-PhysCellID-r16OPTIONAL,-- Need ON
+nr-CellGlobalID-r16NCGI-r15OPTIONAL,-- Need ON
+nr-ARFCN-r16ARFCN-ValueNR-r15OPTIONAL,-- Need ON
+subframeOffset-r16INTEGER (0..1966079),
+rtd-Quality-r16NR-TimingQuality-r16,
+...
+}

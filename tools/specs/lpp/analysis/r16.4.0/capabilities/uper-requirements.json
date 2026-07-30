@@ -1,0 +1,23 @@
+{
+  "deferred": [
+    "SEQUENCE OF and band constraints (OTDOA)",
+    "nested lists/bit strings (A-GNSS)",
+    "extension additions and open payloads"
+  ],
+  "missing": [
+    {
+      "constraint": "SIZE(1..8)",
+      "field": "ECID-ProvideCapabilities.ecid-MeasSupported",
+      "primitive": "bounded variable-size BIT STRING",
+      "proposed_api": "ReadBitString(min,max) / WriteBitString(bits,min,max)",
+      "required": true,
+      "uper_requirement": "constrained length followed by exactly that many MSB-first bits"
+    }
+  ],
+  "sufficient_existing": [
+    "optional bitmap",
+    "root CHOICE",
+    "extension-presence bit",
+    "BOOLEAN"
+  ]
+}

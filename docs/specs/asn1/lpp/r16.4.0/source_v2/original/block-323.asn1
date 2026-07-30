@@ -1,0 +1,12 @@
+NR-ECID-TargetDeviceErrorCauses-r16 ::= SEQUENCE {
+	cause-r16		ENUMERATED {	undefined,
+									requestedMeasurementNotAvailable,
+									notAllrequestedMeasurementsPossible,
+									...
+								},
+	ss-RSRPMeasurementNotPossible-r16				NULL		OPTIONAL,
+	ss-RSRQMeasurementNotPossible-r16				NULL		OPTIONAL,
+	csi-RSRPMeasurementNotPossible-r16				NULL		OPTIONAL,
+	csi-RSRQMeasurementNotPossible-r16				NULL		OPTIONAL,
+	...
+}

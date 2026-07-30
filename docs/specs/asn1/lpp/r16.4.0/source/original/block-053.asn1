@@ -1,0 +1,14 @@
+NR-AdditionalPathList-r16 ::= SEQUENCE (SIZE(1..2)) OF NR-AdditionalPath-r16
+NR-AdditionalPath-r16 ::= SEQUENCE {
+nr-RelativeTimeDifference-r16CHOICE {
+k0-r16INTEGER(0..16351),
+k1-r16INTEGER(0..8176),
+k2-r16INTEGER(0..4088),
+k3-r16INTEGER(0..2044),
+k4-r16INTEGER(0..1022),
+k5-r16INTEGER(0..511),
+...
+},
+nr-PathQuality-r16NR-TimingQuality-r16OPTIONAL,
+...
+}

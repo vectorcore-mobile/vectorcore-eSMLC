@@ -1,0 +1,41 @@
+NR-DL-PRS-ResourcesCapability-r16 ::= SEQUENCE {
+	maxNrOfDL-PRS-ResourceSetPerTrpPerFrequencyLayer-r16	
+												INTEGER (1..2),
+	maxNrOfTRP-AcrossFreqs-r16					ENUMERATED { n4, n6, n12, n16, n32,
+															 n64, n128, n256, ...},
+	maxNrOfPosLayer-r16							INTEGER (1..4),
+	dl-PRS-ResourcesCapabilityBandList-r16		SEQUENCE (SIZE (1..nrMaxBands-r16)) OF
+													DL-PRS-ResourcesCapabilityPerBand-r16,
+	dl-PRS-ResourcesBandCombinationList-r16		DL-PRS-ResourcesBandCombinationList-r16,
+	...
+}
+DL-PRS-ResourcesCapabilityPerBand-r16 ::= SEQUENCE {
+	freqBandIndicatorNR-r16						FreqBandIndicatorNR-r16,
+	maxNrOfDL-PRS-ResourcesPerResourceSet-r16	ENUMERATED { n1, n2, n4, n8, n16, n32, n64, ...},
+	maxNrOfDL-PRS-ResourcesPerPositioningFrequencylayer-r16	
+												ENUMERATED { n6, n24, n32, n64, n96, n128,
+															 n256, n512, n1024, ...},
+	...
+}
+DL-PRS-ResourcesBandCombinationList-r16 ::=	SEQUENCE (SIZE (1..maxBandComb-r16)) OF
+														DL-PRS-ResourcesBandCombination-r16
+DL-PRS-ResourcesBandCombination-r16 ::=	SEQUENCE {
+	bandList-r16							SEQUENCE (SIZE (1..maxSimultaneousBands-r16)) OF
+															FreqBandIndicatorNR-r16,
+	maxNrOfDL-PRS-ResourcesAcrossAllFL-TRP-ResourceSet-r16	
+											CHOICE {
+		fr1-Only-r16							ENUMERATED {n6, n24, n64, n128, n192,
+															 n256, n512, n1024, n2048},
+		fr2-Only-r16							ENUMERATED {n24, n64, n96, n128, n192,
+															 n256, n512, n1024, n2048},
+		fr1-FR2Mix-r16							SEQUENCE {
+			fr1-r16									ENUMERATED {n6, n24, n64, n96, n128,
+																 n192, n256, n512, n1024, n2048},
+			fr2-r16									ENUMERATED {n24, n64, n96, n128, n192,
+																 n256, n512, n1024, n2048},
+			...
+		},
+		...
+	},
+	...
+}

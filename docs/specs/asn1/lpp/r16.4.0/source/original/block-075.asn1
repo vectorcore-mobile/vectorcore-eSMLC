@@ -1,0 +1,4 @@
+TDD-Config-v1520 ::= SEQUENCE {
+subframeAssignment-v1520ENUMERATED { sa0, sa1, sa2, sa3, sa4, sa5, sa6 },
+...
+}

@@ -1,0 +1,20 @@
+GNSS-SSR-OrbitCorrections-r15 ::= SEQUENCE {
+	epochTime-r15						GNSS-SystemTime,
+	ssrUpdateInterval-r15				INTEGER (0..15),
+	satelliteReferenceDatum-r15			ENUMERATED { itrf, regional, ... },
+	iod-ssr-r15							INTEGER (0..15),
+	ssr-OrbitCorrectionList-r15			SSR-OrbitCorrectionList-r15,
+	...
+}
+SSR-OrbitCorrectionList-r15 ::= SEQUENCE (SIZE(1..64)) OF SSR-OrbitCorrectionSatelliteElement-r15
+SSR-OrbitCorrectionSatelliteElement-r15 ::= SEQUENCE {
+	svID-r15							SV-ID,
+	iod-r15								BIT STRING (SIZE(11)),
+	delta-radial-r15					INTEGER (-2097152..2097151),
+	delta-AlongTrack-r15				INTEGER (-524288..524287),
+	delta-CrossTrack-r15				INTEGER (-524288..524287),
+	dot-delta-radial-r15				INTEGER (-1048576..1048575)				OPTIONAL,
+	dot-delta-AlongTrack-r15			INTEGER (-262144..262143) 				OPTIONAL,
+	dot-delta-CrossTrack-r15			INTEGER (-262144..262143) 				OPTIONAL,
+	...
+}

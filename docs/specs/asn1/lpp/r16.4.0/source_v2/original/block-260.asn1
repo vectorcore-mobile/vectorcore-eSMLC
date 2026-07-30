@@ -1,0 +1,27 @@
+ECID-SignalMeasurementInformation ::= SEQUENCE {
+	primaryCellMeasuredResults	MeasuredResultsElement	OPTIONAL,
+	measuredResultsList			MeasuredResultsList,
+	...
+}
+MeasuredResultsList ::= SEQUENCE (SIZE(1..32)) OF MeasuredResultsElement
+MeasuredResultsElement ::= SEQUENCE {
+	physCellId						INTEGER (0..503),
+	cellGlobalId					CellGlobalIdEUTRA-AndUTRA	OPTIONAL,
+	arfcnEUTRA						ARFCN-ValueEUTRA,
+	systemFrameNumber				BIT STRING (SIZE (10))		OPTIONAL,
+	rsrp-Result						INTEGER (0..97)				OPTIONAL,
+	rsrq-Result						INTEGER (0..34)				OPTIONAL,
+	ue-RxTxTimeDiff					INTEGER (0..4095)			OPTIONAL,
+	...,
+	[[	arfcnEUTRA-v9a0				ARFCN-ValueEUTRA-v9a0		OPTIONAL		-- Cond EARFCN-max
+	]],
+	[[	nrsrp-Result-r14			INTEGER (0..113)			OPTIONAL,
+		nrsrq-Result-r14			INTEGER (0..74)				OPTIONAL,
+		carrierFreqOffsetNB-r14		CarrierFreqOffsetNB-r14		OPTIONAL,		-- Cond NB-IoT
+																										hyperSFN-r14				BIT STRING (SIZE (10))		OPTIONAL
+	]],
+	[[
+		rsrp-Result-v1470			INTEGER (-17..-1)			OPTIONAL,
+		rsrq-Result-v1470			INTEGER (-30..46)			OPTIONAL
+	]]
+}

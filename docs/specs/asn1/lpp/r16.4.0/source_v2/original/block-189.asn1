@@ -1,0 +1,5 @@
+GNSS-RTK-ResidualsReq-r15 ::= 	SEQUENCE {
+	stationID-r15						GNSS-ReferenceStationID-r15		OPTIONAL,
+	linkCombinations-PrefList-r15		GNSS-Link-CombinationsList-r15	OPTIONAL,
+	...
+}

@@ -1,0 +1,7 @@
+GNSS-SignalIDs	::= SEQUENCE {
+	gnss-SignalIDs		BIT STRING (SIZE(8)),
+	...,
+	[[
+		gnss-SignalIDs-Ext-r15	BIT STRING (SIZE(16))			OPTIONAL
+	]]
+}

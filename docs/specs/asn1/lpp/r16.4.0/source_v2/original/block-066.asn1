@@ -1,0 +1,14 @@
+NR-TimeStamp-r16 ::= SEQUENCE {
+	dl-PRS-ID-r16				INTEGER (0..255),
+	nr-PhysCellID-r16			NR-PhysCellID-r16			OPTIONAL,	-- Need ON
+	nr-CellGlobalID-r16			NCGI-r15					OPTIONAL,	-- Need ON
+	nr-ARFCN-r16				ARFCN-ValueNR-r15			OPTIONAL,	-- Need ON
+	nr-SFN-r16					INTEGER (0..1023),
+	nr-Slot-r16 				CHOICE {
+			scs15-r16				INTEGER (0..9),
+			scs30-r16				INTEGER (0..19),
+			scs60-r16				INTEGER (0..39),
+			scs120-r16				INTEGER (0..79)
+	},
+	...
+}

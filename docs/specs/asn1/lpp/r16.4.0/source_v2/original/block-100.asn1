@@ -1,0 +1,4 @@
+GNSS-ReferenceLocation ::= SEQUENCE {
+		threeDlocation			EllipsoidPointWithAltitudeAndUncertaintyEllipsoid,
+		...
+}

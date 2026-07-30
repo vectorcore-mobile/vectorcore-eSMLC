@@ -1,0 +1,13 @@
+GNSS-SSR-URA-r16 ::= SEQUENCE {
+epochTime-r16GNSS-SystemTime,
+ssrUpdateInterval-r16INTEGER (0..15),
+iod-ssr-r16INTEGER (0..15),
+ssr-URA-SatList-r16SSR-URA-SatList-r16,
+...
+}
+SSR-URA-SatList-r16 ::= SEQUENCE (SIZE(1..64)) OF SSR-URA-SatElement-r16
+SSR-URA-SatElement-r16 ::= SEQUENCE {
+svID-r16SV-ID,
+ssr-URA-r16BIT STRING (SIZE (6)),
+...
+}

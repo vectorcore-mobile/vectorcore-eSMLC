@@ -1,0 +1,8 @@
+version: operator-survey-2026-07
+cells:
+  - ecgi: "00f11000000001"
+    latitude: 38.000000
+    longitude: -90.000000
+    coverage_uncertainty_code: 40
+    source: "operator-survey"
+    updated_at: "2026-07-01T00:00:00Z"

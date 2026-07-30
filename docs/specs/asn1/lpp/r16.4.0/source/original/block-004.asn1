@@ -1,0 +1,11 @@
+LPP-TransactionID ::= SEQUENCE {
+initiatorInitiator,
+transactionNumberTransactionNumber,
+...
+}
+Initiator ::= ENUMERATED {
+locationServer,
+targetDevice,
+...
+}
+TransactionNumber ::= INTEGER (0..255)

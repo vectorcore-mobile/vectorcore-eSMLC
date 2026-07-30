@@ -1,0 +1,3 @@
+GNSS-SSR-STEC-CorrectionReq-r16 ::= SEQUENCE {
+...
+}

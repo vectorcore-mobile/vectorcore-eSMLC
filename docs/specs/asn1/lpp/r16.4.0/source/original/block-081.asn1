@@ -1,0 +1,9 @@
+OTDOA-ProvideLocationInformation ::= SEQUENCE {
+otdoaSignalMeasurementInformationOTDOA-SignalMeasurementInformationOPTIONAL,
+otdoa-ErrorOTDOA-ErrorOPTIONAL,
+...,
+[[
+otdoaSignalMeasurementInformation-NB-r14OTDOA-SignalMeasurementInformation-NB-r14
+OPTIONAL
+]]
+}

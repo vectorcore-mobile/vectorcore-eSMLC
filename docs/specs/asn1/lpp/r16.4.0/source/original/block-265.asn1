@@ -1,0 +1,6 @@
+ECID-LocationServerErrorCauses ::= SEQUENCE {
+causeENUMERATED{undefined,
+...
+},
+...
+}

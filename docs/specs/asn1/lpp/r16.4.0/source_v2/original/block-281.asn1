@@ -1,0 +1,5 @@
+TBS-RequestAssistanceData-r14 ::= SEQUENCE {
+	mbs-AlmanacAssistanceDataReq-r14		BOOLEAN,
+	mbs-AcquisitionAssistanceDataReq-r14	BOOLEAN,
+	...
+}

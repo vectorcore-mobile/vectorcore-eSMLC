@@ -1,0 +1,30 @@
+WLAN-MeasurementInformation-r13 ::= SEQUENCE {
+	measurementReferenceTime-r13		UTCTime						OPTIONAL,
+	wlan-MeasurementList-r13			WLAN-MeasurementList-r13	OPTIONAL,
+	...
+}
+WLAN-MeasurementList-r13 ::= SEQUENCE (SIZE(1..maxWLAN-AP-r13)) OF WLAN-MeasurementElement-r13
+WLAN-MeasurementElement-r13 ::= SEQUENCE {
+	wlan-AP-Identifier-r13		WLAN-AP-Identifier-r13,
+	rssi-r13					INTEGER (-127..128)					OPTIONAL,
+	rtt-r13						WLAN-RTT-r13						OPTIONAL,
+	apChannelFrequency-r13		INTEGER (0..256)					OPTIONAL,
+	servingFlag-r13				BOOLEAN								OPTIONAL,
+	...
+}
+WLAN-AP-Identifier-r13 ::= SEQUENCE {
+	bssid-r13					OCTET STRING (SIZE (6)),
+	ssid-r13					OCTET STRING (SIZE (1..32))			OPTIONAL,
+	...
+}
+WLAN-RTT-r13 ::= SEQUENCE {
+	rttValue-r13	INTEGER (0..16777215),
+	rttUnits-r13	ENUMERATED {	microseconds,
+									hundredsofnanoseconds,
+									tensofnanoseconds,
+									nanoseconds,
+									tenthsofnanoseconds,
+									... },
+	rttAccuracy-r13	INTEGER (0..255)								OPTIONAL,
+	...
+}

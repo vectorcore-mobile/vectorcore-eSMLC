@@ -1,0 +1,9 @@
+{
+  "criticalExtensions": [
+    "c1",
+    [
+      "requestCapabilities-r9",
+      {}
+    ]
+  ]
+}

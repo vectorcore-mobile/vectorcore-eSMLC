@@ -1,0 +1,5 @@
+# Downloaded 2026-07-29 using the explicit development-only package workflow.
+# These package archives are not runtime assets and are not committed binaries.
+cad53f6f6d788a6eec5e37543401cd8c39f138cc8016b64629ec29fb4735f5b2  asn1tools-0.167.0.tar.gz
+8b2325c5480474c6ecda1e61ffc5e0d2ce2b87c7125dd108ab6c2457fd36d30d  bitstruct-8.21.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d  pyparsing-3.3.2-py3-none-any.whl

@@ -1,0 +1,49 @@
+{
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "bit_length": 57,
+      "hex": "0120020040190f00",
+      "name": "one-rsrp",
+      "round_trip": true,
+      "sha256": "434d1265f5d59ce64c223b11076a2da84c3b2213e314c61b52554697d753a1d9",
+      "unused_trailing_bits": 7
+    },
+    {
+      "bit_length": 130,
+      "hex": "0124000000004000803207f7ffff8bffc0",
+      "name": "list-two-mixed",
+      "round_trip": true,
+      "sha256": "b21dd31f6fcdd04168530d310d93e60cbdf7e8400de2a517519bee15f926d39b",
+      "unused_trailing_bits": 6
+    },
+    {
+      "bit_length": 136,
+      "hex": "01200f80400201091a2b38032555862fff",
+      "name": "all-optionals-eutra",
+      "round_trip": true,
+      "sha256": "5691df9caca4e2ebd503441f79d330d0b6872978b43a8b5e5310ed76cbd027fd",
+      "unused_trailing_bits": 0
+    },
+    {
+      "bit_length": 109,
+      "hex": "0120087dc621260891a2b3c7fff8",
+      "name": "utravariant",
+      "round_trip": true,
+      "sha256": "b08806bf5e69eb1ad7041b9e052216e18509337f5099b344fef8d57ab3a20288",
+      "unused_trailing_bits": 3
+    },
+    {
+      "bit_length": 157,
+      "hex": "920f2809007c0200100848d159c0192aac317ff8",
+      "name": "message-all-optionals-eutra",
+      "round_trip": true,
+      "sha256": "79e4fce73d84004a8e073c3df59facea4b995872afa10e3f4fc4cab85997788c",
+      "unused_trailing_bits": 3
+    }
+  ],
+  "module_sha256": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724",
+  "specification": "3GPP TS 37.355 V16.4.0"
+}

@@ -1,0 +1,20 @@
+GNSS-PeriodicAssistData-r15 ::= SEQUENCE {
+	gnss-RTK-PeriodicObservations-r15		GNSS-PeriodicControlParam-r15	OPTIONAL,	-- Need ON
+	glo-RTK-PeriodicBiasInformation-r15		GNSS-PeriodicControlParam-r15	OPTIONAL,	-- Need ON
+	gnss-RTK-MAC-PeriodicCorrectionDifferences-r15
+											GNSS-PeriodicControlParam-r15	OPTIONAL,	-- Need ON
+	gnss-RTK-PeriodicResiduals-r15			GNSS-PeriodicControlParam-r15	OPTIONAL,	-- Need ON
+	gnss-RTK-FKP-PeriodicGradients-r15		GNSS-PeriodicControlParam-r15	OPTIONAL,	-- Need ON
+	gnss-SSR-PeriodicOrbitCorrections-r15
+											GNSS-PeriodicControlParam-r15	OPTIONAL, 	-- Need ON
+	gnss-SSR-PeriodicClockCorrections-r15
+											GNSS-PeriodicControlParam-r15	OPTIONAL, 	-- Need ON
+	gnss-SSR-PeriodicCodeBias-r15			GNSS-PeriodicControlParam-r15	OPTIONAL, 	-- Need ON
+	...,
+	[[
+	gnss-SSR-PeriodicURA-r16				GNSS-PeriodicControlParam-r15	OPTIONAL,	-- Need ON
+	gnss-SSR-PeriodicPhaseBias-r16			GNSS-PeriodicControlParam-r15	OPTIONAL, 	-- Need ON
+	gnss-SSR-PeriodicSTEC-Correction-r16	GNSS-PeriodicControlParam-r15	OPTIONAL, 	-- Need ON
+	gnss-SSR-PeriodicGriddedCorrection-r16	GNSS-PeriodicControlParam-r15	OPTIONAL 	-- Need ON
+	]]
+}

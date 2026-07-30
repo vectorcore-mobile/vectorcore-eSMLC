@@ -1,0 +1,33 @@
+service:
+  name: vectorcore-esmlc
+  log_level: info
+sls:
+  enabled: true
+  listen_address: 0.0.0.0
+  port: 9082
+  expected_ppid: 29
+  max_associations: 32
+  max_sessions: 10000
+  session_timeout: 10s
+  max_message_size: 1048576
+positioning:
+  method: gnss
+  # Local operator policy only: actual UE ECID support is verified through
+  # LPP ProvideCapabilities before a location-information request is sent.
+  ecid:
+    enabled: false
+    request_rsrp: false
+    request_rsrq: false
+    request_ue_rxtx_time_diff: false
+    # Optional operator-maintained serving-cell catalog. When configured, a
+    # coarse authoritative serving-cell ECID estimate can replace simulation.
+    cell_data_file: ""
+    cell_data_max_age: 0s
+  simulation:
+    # Development-only estimator, invoked only after a successful ECID
+    # measurement exchange; it is never treated as A-GNSS support.
+    enabled: false
+    latitude: 38.0
+    longitude: -90.0
+    uncertainty_meters: 50
+    response_delay: 0s

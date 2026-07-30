@@ -1,0 +1,38 @@
+OTDOA-NeighbourCellInfoList ::= SEQUENCE (SIZE (1..maxFreqLayers)) OF OTDOA-NeighbourFreqInfo
+OTDOA-NeighbourFreqInfo ::= SEQUENCE (SIZE (1..24)) OF OTDOA-NeighbourCellInfoElement
+OTDOA-NeighbourCellInfoElement ::= SEQUENCE {
+	physCellId							INTEGER (0..503),
+	cellGlobalId						ECGI				OPTIONAL,		-- Need ON
+	earfcn								ARFCN-ValueEUTRA	OPTIONAL,		-- Cond NotSameAsRef0
+	cpLength							ENUMERATED {normal, extended, ...}
+															OPTIONAL,		-- Cond NotSameAsRef1
+	prsInfo								PRS-Info			OPTIONAL,		-- Cond NotSameAsRef2
+	antennaPortConfig					ENUMERATED {ports-1-or-2, ports-4, ...}
+															OPTIONAL, 		-- Cond NotsameAsRef3
+	slotNumberOffset					INTEGER (0..19)		OPTIONAL,		-- Cond NotSameAsRef4
+	prs-SubframeOffset					INTEGER (0..1279)	OPTIONAL,		-- Cond InterFreq
+	expectedRSTD						INTEGER (0..16383),
+	expectedRSTD-Uncertainty			INTEGER (0..1023),
+	...,
+	[[ earfcn-v9a0					ARFCN-ValueEUTRA-v9a0	OPTIONAL		-- Cond NotSameAsRef5
+	]],
+	[[	tpId-r14					INTEGER (0..4095)		OPTIONAL,		-- Need ON
+		prs-only-tp-r14				ENUMERATED { true }		OPTIONAL,		-- Cond TBS
+		cpLengthCRS-r14				ENUMERATED { normal, extended, ... }	
+															OPTIONAL,		-- Cond CRS
+		sameMBSFNconfigNeighbour-r14	BOOLEAN				OPTIONAL,		-- Need ON
+		dlBandwidth-r14				ENUMERATED {n6, n15, n25, n50, n75, n100}
+															OPTIONAL,		-- Cond NotSameAsRef6
+		addPRSconfigNeighbour-r14	SEQUENCE (SIZE (1..maxAddPRSconfig-r14)) OF
+										Add-PRSconfigNeighbourElement-r14
+															OPTIONAL		-- Need ON
+	]],
+	[[
+		tdd-config-v1520			TDD-Config-v1520		OPTIONAL		-- Need ON
+	]]
+}
+Add-PRSconfigNeighbourElement-r14 ::= SEQUENCE {
+	add-prsInfo-r14					PRS-Info				OPTIONAL,		-- Cond NotSameAsRef7
+	...
+}
+maxFreqLayers	INTEGER ::= 3

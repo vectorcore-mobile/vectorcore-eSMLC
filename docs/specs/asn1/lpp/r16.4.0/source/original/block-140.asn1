@@ -1,0 +1,13 @@
+AlmanacNavIC-AlmanacSet-r16 ::= SEQUENCE {
+svID-r16SV-ID,
+navic-AlmToa-r16INTEGER (0..65535)OPTIONAL,-- Cond NotSameForAllSV
+navic-AlmE-r16INTEGER (0..65535),
+navic-AlmOMEGADOT-r16INTEGER (-32768..32767),
+navic-AlmSqrtA-r16INTEGER (0..16777215),
+navic-AlmOMEGAo-r16INTEGER (-8388608..8388607),
+navic-AlmOmega-r16INTEGER (-8388608..8388607),
+navic-AlmMo-r16INTEGER (-8388608..8388607),
+navic-Almaf0-r16INTEGER (-1024..1023),
+navic-Almaf1-r16INTEGER (-1024..1023),
+...
+}

@@ -1,0 +1,5 @@
+NCGI-r15 ::= SEQUENCE {
+mcc-r15SEQUENCE (SIZE (3)) OF INTEGER (0..9),
+mnc-r15SEQUENCE (SIZE (2..3)) OF INTEGER (0..9),
+nr-cellidentity-r15BIT STRING (SIZE (36))
+}

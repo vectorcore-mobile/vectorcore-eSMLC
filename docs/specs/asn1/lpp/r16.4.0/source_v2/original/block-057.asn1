@@ -1,0 +1,38 @@
+NR-DL-PRS-ProcessingCapability-r16 ::= SEQUENCE {
+	prs-ProcessingCapabilityBandList-r16	SEQUENCE (SIZE (1..nrMaxBands-r16)) OF
+												PRS-ProcessingCapabilityPerBand-r16,
+	maxSupportedFreqLayers-r16				INTEGER (1..4),
+	simulLTE-NR-PRS-r16						ENUMERATED { supported}	OPTIONAL,
+	...
+}
+PRS-ProcessingCapabilityPerBand-r16 ::= SEQUENCE {
+	freqBandIndicatorNR-r16				FreqBandIndicatorNR-r16,
+	supportedBandwidthPRS-r16			CHOICE {
+		fr1										ENUMERATED {mhz5, mhz10, mhz20, mhz40,
+															mhz50, mhz80, mhz100},
+		fr2										ENUMERATED {mhz50, mhz100, mhz200, mhz400},
+		...
+	},
+	dl-PRS-BufferType-r16		 		ENUMERATED {type1, type2, ...},
+	durationOfPRS-Processing-r16		SEQUENCE {
+		durationOfPRS-ProcessingSymbols-r16	ENUMERATED {nDot125, nDot25, nDot5, n1,
+															 n2, n4, n6, n8, n12, n16, n20, n25,
+															 n30, n32, n35, n40, n45, n50},
+		durationOfPRS-ProcessingSymbolsInEveryTms-r16	
+												ENUMERATED {n8, n16, n20, n30, n40, n80,
+															 n160,n320, n640, n1280},
+		...
+	},
+	maxNumOfDL-PRS-ResProcessedPerSlot-r16	SEQUENCE {
+		scs15-r16								ENUMERATED {n1, n2, n4, n8, n16, n24, n32,
+															 n48, n64}					OPTIONAL,
+		scs30-r16								ENUMERATED {n1, n2, n4, n8, n16, n24, n32,
+															 n48, n64}					OPTIONAL,
+		scs60-r16								ENUMERATED {n1, n2, n4, n8, n16, n24, n32,
+															 n48, n64}					OPTIONAL,
+		scs120-r16								ENUMERATED {n1, n2, n4, n8, n16, n24, n32,
+															 n48, n64}					OPTIONAL,
+		...
+	},
+	...
+}

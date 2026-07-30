@@ -1,0 +1,9 @@
+NR-DL-TDOA-ProvideAssistanceData-r16 ::= SEQUENCE {
+	nr-DL-PRS-AssistanceData-r16		NR-DL-PRS-AssistanceData-r16		OPTIONAL,	-- Need ON
+	nr-SelectedDL-PRS-IndexList-r16		NR-SelectedDL-PRS-IndexList-r16 	OPTIONAL,	-- Need ON
+	nr-PositionCalculationAssistance-r16
+										NR-PositionCalculationAssistance-r16
+																			OPTIONAL, 	-- Cond UEB
+	nr-DL-TDOA-Error-r16				NR-DL-TDOA-Error-r16				OPTIONAL,	-- Need ON
+	...
+}

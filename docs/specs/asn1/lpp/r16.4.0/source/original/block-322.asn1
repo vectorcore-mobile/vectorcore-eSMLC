@@ -1,0 +1,6 @@
+NR-ECID-LocationServerErrorCauses-r16 ::= SEQUENCE {
+cause-r16ENUMERATED{undefined,
+...
+},
+...
+}

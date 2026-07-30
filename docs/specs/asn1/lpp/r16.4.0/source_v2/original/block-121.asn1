@@ -1,0 +1,19 @@
+NavModelKeplerianSet ::= SEQUENCE {
+	keplerToe		INTEGER (0 .. 16383),
+	keplerW			INTEGER (-2147483648..2147483647),
+	keplerDeltaN	INTEGER (-32768..32767),
+	keplerM0		INTEGER (-2147483648..2147483647),
+	keplerOmegaDot	INTEGER (-8388608.. 8388607),
+	keplerE		INTEGER (0..4294967295),
+	keplerIDot		INTEGER (-8192..8191),
+	keplerAPowerHalf INTEGER (0.. 4294967295),
+	keplerI0		INTEGER (-2147483648..2147483647),
+	keplerOmega0	INTEGER (-2147483648..2147483647),
+	keplerCrs		INTEGER (-32768..32767),
+	keplerCis		INTEGER (-32768..32767),
+	keplerCus		INTEGER (-32768..32767),
+	keplerCrc		INTEGER (-32768..32767),
+	keplerCic		INTEGER (-32768..32767),
+	keplerCuc		INTEGER (-32768..32767),
+	...
+}

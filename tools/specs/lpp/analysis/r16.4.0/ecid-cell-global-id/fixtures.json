@@ -1,0 +1,64 @@
+{
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "bit_length": 51,
+      "hex": "00080400000000",
+      "name": "eutra-001-01-zero",
+      "round_trip": true,
+      "sha256": "62f1c13989199085f693cd9548f32997a6af299890f9de83b07666430e54560e"
+    },
+    {
+      "bit_length": 51,
+      "hex": "00080400000020",
+      "name": "eutra-001-01-one",
+      "round_trip": true,
+      "sha256": "fd1147f751ecc00aade5f60a8b400d8c733bb22a94d83fb120cc8d42625658e4"
+    },
+    {
+      "bit_length": 55,
+      "hex": "18849802468ace",
+      "name": "eutra-310-260-pattern",
+      "round_trip": true,
+      "sha256": "3409ae1ac33d5cfbcbe7971e7a577ddf8f70ce7a29aa62fd61040b46b96c6b64"
+    },
+    {
+      "bit_length": 55,
+      "hex": "1884981ffffffe",
+      "name": "eutra-max",
+      "round_trip": true,
+      "sha256": "f7f6e3c63f1849dccc4291cc20df333f7ed3d9f0f481471ee392026cd82476af"
+    },
+    {
+      "bit_length": 55,
+      "hex": "00080600000000",
+      "name": "utra-001-01-zero",
+      "round_trip": true,
+      "sha256": "e36fdff524b1421d5b9fa061d2f5fb3f1d96681a60a5539281e73887c5b2dfa3"
+    },
+    {
+      "bit_length": 55,
+      "hex": "00080600000002",
+      "name": "utra-001-01-one",
+      "round_trip": true,
+      "sha256": "15555fe7952180b6cfd0706d2e32fbef7996a044cc7d836bb25db59ea4a7728e"
+    },
+    {
+      "bit_length": 59,
+      "hex": "18849822468acf00",
+      "name": "utra-310-260-pattern",
+      "round_trip": true,
+      "sha256": "75684a47180debdf5f1001dc4c8df57a8b38d563a8753f4df35f0f6302676cf3"
+    },
+    {
+      "bit_length": 59,
+      "hex": "1884983fffffffe0",
+      "name": "utra-max",
+      "round_trip": true,
+      "sha256": "2a92c6b409e5b5f651933464be1c96cd18fc42300010c99d9bd79b16867f3d1a"
+    }
+  ],
+  "harness_sha256": "9dc9ee8845424c61101a1b18150463e68bdd7e63cd75e79d6bca7dc8f2e49d17"
+}

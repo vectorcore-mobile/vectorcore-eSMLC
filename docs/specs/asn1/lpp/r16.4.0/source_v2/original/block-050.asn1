@@ -1,0 +1,10 @@
+CommonIEsAbort ::= SEQUENCE {
+	abortCause			ENUMERATED {
+		undefined,
+		stopPeriodicReporting,
+		targetDeviceAbort,
+		networkAbort,
+		...,
+		stopPeriodicAssistanceDataDelivery-v1510
+	}
+}

@@ -1,0 +1,16 @@
+NavModel-GLONASS-ECEF ::= SEQUENCE {
+	gloEn				INTEGER (0..31),
+	gloP1				BIT STRING (SIZE(2)),
+	gloP2				BOOLEAN,
+	gloM				INTEGER (0..3),
+	gloX				INTEGER (-67108864..67108863),
+	gloXdot				INTEGER (-8388608..8388607),
+	gloXdotdot			INTEGER (-16..15),
+	gloY				INTEGER (-67108864..67108863),
+	gloYdot				INTEGER (-8388608..8388607),
+	gloYdotdot			INTEGER (-16..15),
+	gloZ				INTEGER (-67108864..67108863),
+	gloZdot				INTEGER (-8388608..8388607),
+	gloZdotdot			INTEGER (-16..15),
+	...
+}

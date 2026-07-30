@@ -1,0 +1,50 @@
+[
+  {
+    "extension_only": true,
+    "optional": false,
+    "positioning_method_specific": false,
+    "reachable_in_strict_closure": false,
+    "reason": "broadcast module is not reachable from LPP-Message",
+    "symbol": "AssistanceDataSIBelement-r15"
+  },
+  {
+    "extension_only": true,
+    "optional": false,
+    "positioning_method_specific": false,
+    "reachable_in_strict_closure": false,
+    "reason": "broadcast module is not reachable from LPP-Message",
+    "symbol": "CipheringKeyData-r15"
+  },
+  {
+    "extension_only": true,
+    "optional": false,
+    "positioning_method_specific": false,
+    "reachable_in_strict_closure": false,
+    "reason": "broadcast module is not reachable from LPP-Message",
+    "symbol": "SegmentationInfo-r15"
+  },
+  {
+    "extension_only": true,
+    "optional": false,
+    "positioning_method_specific": true,
+    "reachable_in_strict_closure": false,
+    "reason": "broadcast module is not reachable from LPP-Message",
+    "symbol": "OTDOA-UE-Assisted-r15"
+  },
+  {
+    "extension_only": true,
+    "optional": false,
+    "positioning_method_specific": true,
+    "reachable_in_strict_closure": false,
+    "reason": "broadcast module is not reachable from LPP-Message",
+    "symbol": "NR-UEB-TRP-LocationData-r16"
+  },
+  {
+    "extension_only": true,
+    "optional": false,
+    "positioning_method_specific": true,
+    "reachable_in_strict_closure": false,
+    "reason": "broadcast module is not reachable from LPP-Message",
+    "symbol": "NR-UEB-TRP-RTD-Info-r16"
+  }
+]

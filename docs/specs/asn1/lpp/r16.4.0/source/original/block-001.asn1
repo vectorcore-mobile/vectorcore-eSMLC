@@ -1,0 +1,5 @@
+LPP-PDU-Definitions {
+itu-t (0) identified-organization (4) etsi (0) mobileDomain (0)
+eps-Access (21) modules (3) lpp (7) version1 (1) lpp-PDU-Definitions (1) }
+DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN

@@ -1,0 +1,4 @@
+GNSS-AlmanacReq ::= SEQUENCE {
+	modelID				INTEGER(1..8)	OPTIONAL,
+	...
+}

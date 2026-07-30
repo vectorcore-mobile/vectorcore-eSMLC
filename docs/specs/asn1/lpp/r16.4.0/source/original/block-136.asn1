@@ -1,0 +1,16 @@
+AlmanacMidiAlmanacSet ::= SEQUENCE {
+svIDSV-ID,
+midiAlmEINTEGER (0..2047),
+midiAlmDeltaIINTEGER (-1024..1023),
+midiAlmOmegaDotINTEGER (-1024..1023),
+midiAlmSqrtAINTEGER (0..131071),
+midiAlmOmega0INTEGER (-32768..32767),
+midiAlmOmegaINTEGER (-32768..32767),
+midiAlmMoINTEGER (-32768..32767),
+midiAlmaf0INTEGER (-1024..1023),
+midiAlmaf1INTEGER (-512..511),
+midiAlmL1HealthBOOLEAN,
+midiAlmL2HealthBOOLEAN,
+midiAlmL5HealthBOOLEAN,
+...
+}

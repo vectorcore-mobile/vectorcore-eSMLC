@@ -1,0 +1,3 @@
+GNSS-DataBitAssistanceSupport ::=	SEQUENCE {
+	...
+}

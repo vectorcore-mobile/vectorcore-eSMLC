@@ -1,0 +1,10 @@
+CommonIEsProvideAssistanceData ::= SEQUENCE {
+...,
+[[
+segmentationInfo-r14SegmentationInfo-r14OPTIONAL-- Need ON
+]],
+[[
+periodicAssistanceData-r15PeriodicAssistanceDataControlParameters-r15
+OPTIONAL-- Cond PerAD
+]]
+}

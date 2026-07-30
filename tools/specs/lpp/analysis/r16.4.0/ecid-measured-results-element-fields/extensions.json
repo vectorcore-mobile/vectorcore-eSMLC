@@ -1,0 +1,9 @@
+{
+  "extensible_type": "MeasuredResultsElement",
+  "groups": [
+    {"addition_index": 0, "release": "r9a0", "fields": [{"name": "arfcnEUTRA-v9a0", "type": "ARFCN-ValueEUTRA-v9a0", "constraint": "INTEGER (65536..262143)", "optional": true}]},
+    {"addition_index": 1, "release": "r14", "fields": [{"name": "nrsrp-Result-r14", "type": "INTEGER", "constraint": "0..113", "optional": true}, {"name": "nrsrq-Result-r14", "type": "INTEGER", "constraint": "0..74", "optional": true}, {"name": "carrierFreqOffsetNB-r14", "type": "CarrierFreqOffsetNB-r14", "constraint": "ENUMERATED root 21 values", "optional": true}, {"name": "hyperSFN-r14", "type": "BIT STRING", "constraint": "SIZE(10)", "optional": true}]},
+    {"addition_index": 2, "release": "r1470", "fields": [{"name": "rsrp-Result-v1470", "type": "INTEGER", "constraint": "-17..-1", "optional": true}, {"name": "rsrq-Result-v1470", "type": "INTEGER", "constraint": "-30..46", "optional": true}]}
+  ],
+  "root_only_boundary": "encode extension-present=false; decode false only; reject true without skipping, preservation, or open-type parsing"
+}

@@ -1,0 +1,19 @@
+AssistanceDataSIBelement-r15 ::= SEQUENCE {
+valueTag-r15INTEGER (0..63)OPTIONAL,
+expirationTime-r15UTCTimeOPTIONAL,
+cipheringKeyData-r15CipheringKeyData-r15 OPTIONAL,
+segmentationInfo-r15SegmentationInfo-r15OPTIONAL,
+assistanceDataElement-r15OCTET STRING,
+...
+}
+CipheringKeyData-r15 ::= SEQUENCE {
+cipherSetID-r15 INTEGER (0..65535),
+d0-r15 BIT STRING (SIZE (1..128)),
+...
+}
+SegmentationInfo-r15 ::= SEQUENCE {
+segmentationOption-r15ENUMERATED {pseudo-seg, octet-string-seg},
+assistanceDataSegmentType-r15ENUMERATED {notLastSegment, lastSegment},
+assistanceDataSegmentNumber-r15INTEGER (0..63),
+...
+}

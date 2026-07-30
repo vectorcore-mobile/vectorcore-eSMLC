@@ -1,0 +1,29 @@
+NR-DL-AoD-SignalMeasurementInformation-r16 ::= SEQUENCE {
+nr-DL-AoD-MeasList-r16NR-DL-AoD-MeasList-r16,
+...
+}
+NR-DL-AoD-MeasList-r16 ::= SEQUENCE (SIZE(1..nrMaxTRPs-r16)) OF NR-DL-AoD-MeasElement-r16
+NR-DL-AoD-MeasElement-r16 ::= SEQUENCE {
+dl-PRS-ID-r16INTEGER (0..255),
+nr-PhysCellID-r16NR-PhysCellID-r16OPTIONAL,
+nr-CellGlobalID-r16NCGI-r15OPTIONAL,
+nr-ARFCN-r16ARFCN-ValueNR-r15OPTIONAL,
+nr-DL-PRS-ResourceID-r16NR-DL-PRS-ResourceID-r16 OPTIONAL,
+nr-DL-PRS-ResourceSetID-r16NR-DL-PRS-ResourceSetID-r16 OPTIONAL,
+nr-TimeStamp-r16NR-TimeStamp-r16,
+nr-DL-PRS-RSRP-Result-r16INTEGER (0..126),
+nr-DL-PRS-RxBeamIndex-r16INTEGER (1..8)OPTIONAL, -- Cond SameRx
+nr-DL-AoD-AdditionalMeasurements-r16
+NR-DL-AoD-AdditionalMeasurements-r16OPTIONAL,
+...
+}
+NR-DL-AoD-AdditionalMeasurements-r16 ::= SEQUENCE (SIZE (1..7)) OF
+NR-DL-AoD-AdditionalMeasurementElement-r16
+NR-DL-AoD-AdditionalMeasurementElement-r16 ::= SEQUENCE {
+nr-DL-PRS-ResourceID-r16NR-DL-PRS-ResourceID-r16 OPTIONAL,
+nr-DL-PRS-ResourceSetID-r16NR-DL-PRS-ResourceSetID-r16 OPTIONAL,
+nr-TimeStamp-r16NR-TimeStamp-r16,
+nr-DL-PRS-RSRP-ResultDiff-r16INTEGER (0..30),
+nr-DL-PRS-RxBeamIndex-r16INTEGER (1..8)OPTIONAL, -- Cond SameRx
+...
+}

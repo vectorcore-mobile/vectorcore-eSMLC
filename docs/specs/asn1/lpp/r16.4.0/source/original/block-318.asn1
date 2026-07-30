@@ -1,0 +1,7 @@
+NR-ECID-RequestLocationInformation-r16 ::= SEQUENCE {
+requestedMeasurements-r16BIT STRING {ssrsrpReq(0),
+ssrsrqReq(1),
+csirsrpReq(2),
+csirsrqReq(3)} (SIZE(1..8)),
+...
+}

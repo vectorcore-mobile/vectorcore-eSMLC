@@ -1,0 +1,30 @@
+RelativeLocation-r16 ::= SEQUENCE {
+	milli-arc-second-units-r16 	ENUMERATED { mas0-03, mas0-3, mas3, mas30, ...},
+	height-units-r16			ENUMERATED {mm, cm, m, ...},
+	delta-latitude-r16			Delta-Latitude-r16,
+	delta-longitude-r16			Delta-Longitude-r16,
+	delta-height-r16			Delta-Height-r16,
+	locationUNC-r16				LocationUncertainty-r16				OPTIONAL,		-- Need OP
+	...
+}
+Delta-Latitude-r16 ::= SEQUENCE {
+	delta-Latitude-r16						INTEGER (-1024..1023),
+	coarse-delta-Latitude-r16				INTEGER (0..4095)		OPTIONAL,		-- Need OP
+	...
+}
+Delta-Longitude-r16 ::= SEQUENCE {
+	delta-Longitude-r16						INTEGER (-1024..1023),
+	coarse-delta-Longitude-r16				INTEGER (0..4095)		OPTIONAL,		-- Need OP
+	...
+}
+Delta-Height-r16 ::= SEQUENCE {
+	delta-Height-r16						INTEGER (-1024..1023),
+	coarse-delta-Height-r16					INTEGER (0..4095)		OPTIONAL,		-- Need OP
+	...
+}
+LocationUncertainty-r16 ::= SEQUENCE {
+	horizontalUncertainty-r16				INTEGER (0..255),
+	horizontalConfidence-r16				INTEGER (0..100),
+	verticalUncertainty-r16					INTEGER (0..255),
+	verticalConfidence-r16					INTEGER (0..100)
+}

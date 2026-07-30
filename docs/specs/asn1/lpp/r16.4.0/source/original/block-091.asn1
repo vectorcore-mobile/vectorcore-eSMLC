@@ -1,0 +1,10 @@
+OTDOA-TargetDeviceErrorCauses ::= SEQUENCE {
+causeENUMERATED {undefined,
+assistance-data-missing,
+unableToMeasureReferenceCell,
+unableToMeasureAnyNeighbourCell,
+attemptedButUnableToMeasureSomeNeighbourCells,
+...
+},
+...
+}

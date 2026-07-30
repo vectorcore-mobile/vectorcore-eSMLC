@@ -1,0 +1,11 @@
+GNSS-RTK-MAC-CorrectionDifferencesReq-r15 ::= 	SEQUENCE {
+	master-ReferenceStationID-r15		GNSS-ReferenceStationID-r15				OPTIONAL,
+	aux-ReferenceStationList-r15		AUX-ReferenceStationList-r15			OPTIONAL,
+	linkCombinations-PrefList-r15		GNSS-Link-CombinationsList-r15			OPTIONAL,
+	...
+}
+AUX-ReferenceStationList-r15 ::= SEQUENCE (SIZE (1..32)) OF AUX-ReferenceStationID-Element-r15
+AUX-ReferenceStationID-Element-r15 ::= SEQUENCE {
+	aux-stationID-r15		GNSS-ReferenceStationID-r15,
+	...
+}

@@ -1,0 +1,5 @@
+NR-ECID-ProvideLocationInformation-r16 ::= SEQUENCE {
+	nr-ECID-SignalMeasurementInformation-r16	NR-ECID-SignalMeasurementInformation-r16 OPTIONAL,
+	nr-ECID-Error-r16							NR-ECID-Error-r16						 OPTIONAL,
+	...
+}

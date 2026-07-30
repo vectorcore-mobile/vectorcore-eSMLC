@@ -1,0 +1,15 @@
+ECID-TargetDeviceErrorCauses ::= SEQUENCE {
+	cause		ENUMERATED {	undefined,
+								requestedMeasurementNotAvailable,
+								notAllrequestedMeasurementsPossible,
+								...
+							},
+	rsrpMeasurementNotPossible				NULL		OPTIONAL,
+	rsrqMeasurementNotPossible				NULL		OPTIONAL,
+	ueRxTxMeasurementNotPossible			NULL		OPTIONAL,
+	...,
+	[[
+	 nrsrpMeasurementNotPossible-r14		NULL		OPTIONAL,
+	 nrsrqMeasurementNotPossible-r14		NULL		OPTIONAL
+	]]
+}

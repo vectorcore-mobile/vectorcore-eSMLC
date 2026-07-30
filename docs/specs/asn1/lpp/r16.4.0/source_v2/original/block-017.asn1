@@ -1,0 +1,5 @@
+CarrierFreq-NB-r14 ::=		SEQUENCE {
+	carrierFreq-r14				ARFCN-ValueEUTRA-r14,
+	carrierFreqOffset-r14		CarrierFreqOffsetNB-r14				OPTIONAL,
+	...
+}

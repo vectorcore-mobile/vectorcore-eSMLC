@@ -1,0 +1,32 @@
+RequestCapabilities ::= SEQUENCE {
+criticalExtensionsCHOICE {
+c1CHOICE {
+requestCapabilities-r9RequestCapabilities-r9-IEs,
+spare3 NULL, spare2 NULL, spare1 NULL
+},
+criticalExtensionsFutureSEQUENCE {}
+}
+}
+RequestCapabilities-r9-IEs ::= SEQUENCE {
+commonIEsRequestCapabilitiesCommonIEsRequestCapabilitiesOPTIONAL,-- Need ON
+a-gnss-RequestCapabilitiesA-GNSS-RequestCapabilitiesOPTIONAL,-- Need ON
+otdoa-RequestCapabilitiesOTDOA-RequestCapabilitiesOPTIONAL,-- Need ON
+ecid-RequestCapabilitiesECID-RequestCapabilitiesOPTIONAL,-- Need ON
+epdu-RequestCapabilitiesEPDU-SequenceOPTIONAL,-- Need ON
+...,
+[[sensor-RequestCapabilities-r13Sensor-RequestCapabilities-r13OPTIONAL,-- Need ON
+tbs-RequestCapabilities-r13TBS-RequestCapabilities-r13OPTIONAL,-- Need ON
+wlan-RequestCapabilities-r13WLAN-RequestCapabilities-r13OPTIONAL,-- Need ON
+bt-RequestCapabilities-r13BT-RequestCapabilities-r13OPTIONAL-- Need ON
+]],
+[[nr-ECID-RequestCapabilities-r16NR-ECID-RequestCapabilities-r16OPTIONAL,-- Need ON
+nr-Multi-RTT-RequestCapabilities-r16
+NR-Multi-RTT-RequestCapabilities-r16
+OPTIONAL,-- Need ON
+nr-DL-AoD-RequestCapabilities-r16
+NR-DL-AoD-RequestCapabilities-r16OPTIONAL,-- Need ON
+nr-DL-TDOA-RequestCapabilities-r16
+NR-DL-TDOA-RequestCapabilities-r16OPTIONAL,-- Need ON
+nr-UL-RequestCapabilities-r16NR-UL-RequestCapabilities-r16OPTIONAL-- Need ON
+]]
+}

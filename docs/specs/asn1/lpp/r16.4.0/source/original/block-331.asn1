@@ -1,0 +1,7 @@
+NR-DL-TDOA-MeasurementCapability-r16 ::= SEQUENCE {
+dl-RSTD-MeasurementPerPairOfTRP-FR1-r16INTEGER (1..4),
+dl-RSTD-MeasurementPerPairOfTRP-FR2-r16INTEGER (1..4),
+supportOfDL-PRS-RSRP-MeasFR1-r16ENUMERATED { supported}OPTIONAL,
+supportOfDL-PRS-RSRP-MeasFR2-r16ENUMERATED { supported}OPTIONAL,
+...
+}

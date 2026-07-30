@@ -1,0 +1,5 @@
+ECID-ProvideLocationInformation ::= SEQUENCE {
+ecid-SignalMeasurementInformationECID-SignalMeasurementInformationOPTIONAL,
+ecid-ErrorECID-ErrorOPTIONAL,
+...
+}

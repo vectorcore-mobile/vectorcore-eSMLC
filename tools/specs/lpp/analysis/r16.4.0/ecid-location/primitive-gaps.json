@@ -1,0 +1,20 @@
+{
+  "available": [
+    "BOOLEAN",
+    "constrained INTEGER",
+    "root CHOICE",
+    "optional bitmap",
+    "bounded variable BIT STRING"
+  ],
+  "initial_request_only_requires": [
+    "bounded BIT STRING SIZE(1..8)",
+    "sequence extension bit",
+    "R9 five-bit optional bitmap"
+  ],
+  "missing": [
+    "SIZE-constrained SEQUENCE OF (1..32)",
+    "fixed BIT STRING SIZE(10)",
+    "CellGlobalIdEUTRA-AndUTRA nested PLMN digit lists",
+    "ECID error CHOICE/ENUMERATED extension handling"
+  ]
+}

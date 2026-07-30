@@ -1,0 +1,6 @@
+Ellipsoid-PointWithUncertaintyCircle ::= SEQUENCE {
+	latitudeSign				ENUMERATED {north, south},
+	degreesLatitude				INTEGER (0..8388607),			-- 23 bit field
+	degreesLongitude			INTEGER (-8388608..8388607),	-- 24 bit field
+	uncertainty					INTEGER (0..127)
+}

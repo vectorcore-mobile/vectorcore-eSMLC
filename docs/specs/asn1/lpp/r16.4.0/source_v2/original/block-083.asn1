@@ -1,0 +1,32 @@
+OTDOA-SignalMeasurementInformation-NB-r14 ::= SEQUENCE {
+	systemFrameNumber-r14			BIT STRING (SIZE (10)),
+	physCellIdRef-r14				INTEGER (0..503),
+	cellGlobalIdRef-r14				ECGI					OPTIONAL,
+	earfcnRef-r14					ARFCN-ValueEUTRA-r14	OPTIONAL,	-- Cond NotSameAsRef0
+	referenceQuality-r14			OTDOA-MeasQuality		OPTIONAL,
+	neighbourMeasurementList-r14	NeighbourMeasurementList-NB-r14,
+	tpIdRef-r14						INTEGER (0..4095)		OPTIONAL,	-- Cond ProvidedByServer0
+	prsIdRef-r14					INTEGER (0..4095)		OPTIONAL,	-- Cond ProvidedByServer1
+	additionalPathsRef-r14			AdditionalPathList-r14	OPTIONAL,
+	nprsIdRef-r14					INTEGER (0..4095)		OPTIONAL,	-- Cond ProvidedByServer2
+	carrierFreqOffsetNB-Ref-r14		CarrierFreqOffsetNB-r14	OPTIONAL,	-- Cond NB-IoT
+	hyperSFN-r14					BIT STRING (SIZE (10))	OPTIONAL,	-- Cond H-SFN
+	...
+}
+NeighbourMeasurementList-NB-r14 ::= SEQUENCE (SIZE(1..24)) OF NeighbourMeasurementElement-NB-r14
+NeighbourMeasurementElement-NB-r14 ::= SEQUENCE {
+	physCellIdNeighbour-r14		INTEGER (0..503),
+	cellGlobalIdNeighbour-r14	ECGI					OPTIONAL,
+	earfcnNeighbour-r14			ARFCN-ValueEUTRA-r14	OPTIONAL,		-- Cond NotSameAsRef2
+	rstd-r14					INTEGER (0..12711),
+	rstd-Quality-r14			OTDOA-MeasQuality,
+	tpIdNeighbour-r14			INTEGER (0..4095)		OPTIONAL,		-- Cond ProvidedByServer0
+	prsIdNeighbour-r14			INTEGER (0..4095)		OPTIONAL,		-- Cond ProvidedByServer1
+	delta-rstd-r14				INTEGER (0..5)			OPTIONAL,
+	additionalPathsNeighbour-r14	
+								AdditionalPathList-r14	OPTIONAL,
+	nprsIdNeighbour-r14			INTEGER (0..4095)		OPTIONAL,		-- Cond ProvidedByServer2
+	carrierFreqOffsetNB-Neighbour-r14
+								CarrierFreqOffsetNB-r14	OPTIONAL,		-- Cond NB-IoT
+	...
+}

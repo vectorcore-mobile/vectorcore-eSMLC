@@ -1,0 +1,31 @@
+Sensor-AssistanceDataList-r14::= SEQUENCE {
+	refPressure-r14		INTEGER (-20000..10000),
+	refPosition-r14		EllipsoidPointWithAltitudeAndUncertaintyEllipsoid	OPTIONAL,	-- Need ON
+	refTemperature-r14	INTEGER (-64..63)									OPTIONAL,	-- Need ON
+	...,
+	[[
+	period-v1520		SEQUENCE {
+		pressureValidityPeriod-v1520	PressureValidityPeriod-v1520,
+		referencePressureRate-v1520		INTEGER	(-128..127)					OPTIONAL,	-- Need ON
+		...
+	}																		OPTIONAL,	-- Need ON
+	area-v1520			SEQUENCE {
+		pressureValidityArea-v1520		PressureValidityArea-v1520,
+		gN-pressure-v1520				INTEGER (-1024..1023)				OPTIONAL,	-- Need ON
+		gE-pressure-v1520				INTEGER (-1024..1023)				OPTIONAL,	-- Need ON
+		...
+	}																		OPTIONAL	-- Need ON
+	]]
+}
+PressureValidityArea-v1520 ::= SEQUENCE {
+	centerPoint-v1520				Ellipsoid-Point,
+	validityAreaWidth-v1520			INTEGER (1..128),
+	validityAreaHeight-v1520		INTEGER (1..128),
+	...
+}
+PressureValidityPeriod-v1520 ::= SEQUENCE {
+	beginTime-v1520					GNSS-SystemTime,
+	beginTimeAlt-v1520				INTEGER (0..2881)						OPTIONAL,	-- Need ON
+	duration-v1520					INTEGER (1..2881),
+	...
+}

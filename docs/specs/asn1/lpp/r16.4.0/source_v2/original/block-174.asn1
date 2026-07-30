@@ -1,0 +1,4 @@
+GNSS-SSR-CorrectionPointsReq-r16 ::=	SEQUENCE {
+	correctionPointSetID-Req-r16			INTEGER (0..16383)			OPTIONAL,
+	...
+}

@@ -1,0 +1,10 @@
+Sample DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+EXPORTS ALL;
+IMPORTS ImportedType FROM OtherModule;
+Example ::= SEQUENCE {
+    localField LocalType OPTIONAL,
+    importedField ImportedType,
+    state ENUMERATED { ready(0), waiting(1) }
+}
+LocalType ::= INTEGER (0..255)
+END

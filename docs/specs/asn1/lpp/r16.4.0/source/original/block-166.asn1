@@ -1,0 +1,52 @@
+GNSS-GenericAssistDataReq ::= SEQUENCE (SIZE (1..16)) OF GNSS-GenericAssistDataReqElement
+GNSS-GenericAssistDataReqElement ::= SEQUENCE {
+gnss-IDGNSS-ID,
+sbas-IDSBAS-IDOPTIONAL, -- Cond GNSS-ID-SBAS
+gnss-TimeModelsReqGNSS-TimeModelListReqOPTIONAL, -- Cond TimeModReq
+gnss-DifferentialCorrectionsReqGNSS-DifferentialCorrectionsReqOPTIONAL, -- Cond DGNSS-Req
+gnss-NavigationModelReqGNSS-NavigationModelReqOPTIONAL, -- Cond NavModReq
+gnss-RealTimeIntegrityReqGNSS-RealTimeIntegrityReqOPTIONAL, -- Cond RTIReq
+gnss-DataBitAssistanceReqGNSS-DataBitAssistanceReqOPTIONAL, -- Cond DataBitsReq
+gnss-AcquisitionAssistanceReqGNSS-AcquisitionAssistanceReqOPTIONAL, -- Cond AcquAssistReq
+gnss-AlmanacReqGNSS-AlmanacReqOPTIONAL, -- Cond AlmanacReq
+gnss-UTCModelReqGNSS-UTC-ModelReqOPTIONAL, -- Cond UTCModReq
+gnss-AuxiliaryInformationReqGNSS-AuxiliaryInformationReqOPTIONAL, -- Cond AuxInfoReq
+...,
+[[
+bds-DifferentialCorrectionsReq-r12
+BDS-DifferentialCorrectionsReq-r12
+OPTIONAL,-- Cond DBDS-Req
+bds-GridModelReq-r12BDS-GridModelReq-r12OPTIONAL-- Cond BDS-GridModReq
+]],
+[[
+gnss-RTK-ObservationsReq-r15
+GNSS-RTK-ObservationsReq-r15OPTIONAL,-- Cond RTK-OSR-Req
+glo-RTK-BiasInformationReq-r15
+GLO-RTK-BiasInformationReq-r15OPTIONAL,-- Cond GLO-CPB-Req
+gnss-RTK-MAC-CorrectionDifferencesReq-r15
+GNSS-RTK-MAC-CorrectionDifferencesReq-r15
+OPTIONAL,-- Cond MAC-Req
+gnss-RTK-ResidualsReq-r15GNSS-RTK-ResidualsReq-r15OPTIONAL,-- Cond Res-Req
+gnss-RTK-FKP-GradientsReq-r15
+GNSS-RTK-FKP-GradientsReq-r15OPTIONAL,-- Cond FKP-Req
+gnss-SSR-OrbitCorrectionsReq-r15
+GNSS-SSR-OrbitCorrectionsReq-r15
+OPTIONAL, -- Cond OC-Req
+gnss-SSR-ClockCorrectionsReq-r15
+GNSS-SSR-ClockCorrectionsReq-r15
+OPTIONAL, -- Cond CC-Req
+gnss-SSR-CodeBiasReq-r15GNSS-SSR-CodeBiasReq-r15OPTIONAL -- Cond CB-Req
+]],
+[[
+gnss-SSR-URA-Req-r16GNSS-SSR-URA-Req-r16OPTIONAL,-- Cond URA-Req
+gnss-SSR-PhaseBiasReq-r16GNSS-SSR-PhaseBiasReq-r16OPTIONAL,-- Cond PB-Req
+gnss-SSR-STEC-CorrectionReq-r16
+GNSS-SSR-STEC-CorrectionReq-r16OPTIONAL,-- Cond STEC-Req
+gnss-SSR-GriddedCorrectionReq-r16GNSS-SSR-GriddedCorrectionReq-r16
+OPTIONAL,-- Cond Grid-Req
+navic-DifferentialCorrectionsReq-r16
+NavIC-DifferentialCorrectionsReq-r16
+OPTIONAL,-- Cond DNavIC-Req
+navic-GridModelReq-r16NavIC-GridModelReq-r16OPTIONAL-- Cond NavIC-GridModReq
+]]
+}

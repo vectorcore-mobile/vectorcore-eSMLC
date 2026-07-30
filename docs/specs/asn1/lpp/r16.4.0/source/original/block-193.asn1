@@ -1,0 +1,5 @@
+GNSS-SSR-CodeBiasReq-r15 ::= SEQUENCE {
+signal-and-tracking-mode-ID-Map-r15GNSS-SignalIDs,
+storedNavList-r15GNSS-NavListInfo-r15OPTIONAL,
+...
+}

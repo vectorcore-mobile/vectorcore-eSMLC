@@ -1,0 +1,10 @@
+WLAN-LocationServerErrorCauses-r13 ::= SEQUENCE {
+cause-r13ENUMERATED{undefined,
+...,
+requestedADNotAvailable-v1420,
+notAllrequestedADAvailable-v1420
+},
+...,
+[[apLocationDataUnavailable-r14NULLOPTIONAL-- Need ON
+]]
+}

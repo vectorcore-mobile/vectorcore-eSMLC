@@ -1,0 +1,10 @@
+TBS-AssistanceDataList-r14 ::= SEQUENCE {
+	mbs-AssistanceDataList-r14		MBS-AssistanceDataList-r14		OPTIONAL,	-- Need ON
+	...
+}
+MBS-AssistanceDataList-r14 ::= SEQUENCE (SIZE (1..maxMBS-r14)) OF MBS-AssistanceDataElement-r14
+MBS-AssistanceDataElement-r14 ::= SEQUENCE {
+	mbs-AlmanacAssistance-r14		MBS-AlmanacAssistance-r14			OPTIONAL,	-- Need ON
+	mbs-AcquisitionAssistance-r14	MBS-AcquisitionAssistance-r14		OPTIONAL,	-- Need ON
+	...
+}

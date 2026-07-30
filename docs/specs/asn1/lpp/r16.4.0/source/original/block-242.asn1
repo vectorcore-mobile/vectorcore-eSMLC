@@ -1,0 +1,5 @@
+A-GNSS-Error ::= CHOICE {
+locationServerErrorCausesGNSS-LocationServerErrorCauses,
+targetDeviceErrorCausesGNSS-TargetDeviceErrorCauses,
+...
+}

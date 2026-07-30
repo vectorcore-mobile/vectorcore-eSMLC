@@ -1,0 +1,4 @@
+A-GNSS-RequestLocationInformation ::= SEQUENCE {
+	gnss-PositioningInstructions		GNSS-PositioningInstructions,
+	...
+}

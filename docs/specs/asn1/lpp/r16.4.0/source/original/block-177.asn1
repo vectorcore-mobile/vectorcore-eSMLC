@@ -1,0 +1,27 @@
+GNSS-NavigationModelReq ::=CHOICE {
+storedNavListStoredNavListInfo,
+reqNavListReqNavListInfo,
+...
+}
+StoredNavListInfo ::= SEQUENCE {
+gnss-WeekOrDayINTEGER (0..4095),
+gnss-ToeINTEGER (0..255),
+t-toeLimitINTEGER (0..15),
+satListRelatedDataListSatListRelatedDataListOPTIONAL,
+...
+}
+SatListRelatedDataList ::= SEQUENCE (SIZE (1..64)) OF SatListRelatedDataElement
+SatListRelatedDataElement ::= SEQUENCE {
+svIDSV-ID,
+iodBIT STRING (SIZE(11)),
+clockModelIDINTEGER (1..8)OPTIONAL,
+orbitModelIDINTEGER (1..8)OPTIONAL,
+...
+}
+ReqNavListInfo ::=SEQUENCE {
+svReqListBIT STRING (SIZE (64)),
+clockModelID-PrefListSEQUENCE (SIZE (1..8)) OFINTEGER (1..8)OPTIONAL,
+orbitModelID-PrefListSEQUENCE (SIZE (1..8)) OFINTEGER (1..8)OPTIONAL,
+addNavparamReqBOOLEANOPTIONAL,-- Cond orbitModelID-2
+...
+}

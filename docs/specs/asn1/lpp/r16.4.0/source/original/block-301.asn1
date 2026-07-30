@@ -1,0 +1,10 @@
+WLAN-TargetDeviceErrorCauses-r13 ::= SEQUENCE {
+cause-r13ENUMERATED {undefined,
+requestedMeasurementsNotAvailable,
+notAllrequestedMeasurementsPossible,
+...
+},
+wlan-AP-RSSI-MeasurementNotPossible-r13NULLOPTIONAL,
+wlan-AP-RTT-MeasurementNotPossible-r13NULLOPTIONAL,
+...
+}

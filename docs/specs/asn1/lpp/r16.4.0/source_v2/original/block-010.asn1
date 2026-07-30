@@ -1,0 +1,35 @@
+ProvideLocationInformation ::= SEQUENCE {
+	criticalExtensions		CHOICE {
+		c1						CHOICE {
+			provideLocationInformation-r9	ProvideLocationInformation-r9-IEs,
+			spare3 NULL, spare2 NULL, spare1 NULL
+		},
+		criticalExtensionsFuture	SEQUENCE {}
+	}
+}
+ProvideLocationInformation-r9-IEs ::= SEQUENCE {
+	commonIEsProvideLocationInformation
+										CommonIEsProvideLocationInformation	OPTIONAL,
+	a-gnss-ProvideLocationInformation	A-GNSS-ProvideLocationInformation	OPTIONAL,
+	otdoa-ProvideLocationInformation	OTDOA-ProvideLocationInformation	OPTIONAL,
+	ecid-ProvideLocationInformation		ECID-ProvideLocationInformation		OPTIONAL,
+	epdu-ProvideLocationInformation		EPDU-Sequence						OPTIONAL,
+	...,
+	[[
+	sensor-ProvideLocationInformation-r13
+										Sensor-ProvideLocationInformation-r13
+																			OPTIONAL,
+	tbs-ProvideLocationInformation-r13	TBS-ProvideLocationInformation-r13	OPTIONAL,
+	wlan-ProvideLocationInformation-r13	WLAN-ProvideLocationInformation-r13	OPTIONAL,
+	bt-ProvideLocationInformation-r13	BT-ProvideLocationInformation-r13	OPTIONAL
+	]],
+	[[	nr-ECID-ProvideLocationInformation-r16
+									NR-ECID-ProvideLocationInformation-r16		OPTIONAL,
+		nr-Multi-RTT-ProvideLocationInformation-r16
+									NR-Multi-RTT-ProvideLocationInformation-r16 OPTIONAL,
+		nr-DL-AoD-ProvideLocationInformation-r16	
+									NR-DL-AoD-ProvideLocationInformation-r16	OPTIONAL,
+		nr-DL-TDOA-ProvideLocationInformation-r16
+									NR-DL-TDOA-ProvideLocationInformation-r16	OPTIONAL
+	]]
+}

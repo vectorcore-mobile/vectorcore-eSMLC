@@ -1,0 +1,12 @@
+LPP-Message ::= SEQUENCE {
+	transactionID			LPP-TransactionID	OPTIONAL,	-- Need ON
+	endTransaction			BOOLEAN,
+	sequenceNumber			SequenceNumber		OPTIONAL,	-- Need ON
+	acknowledgement			Acknowledgement		OPTIONAL,	-- Need ON
+	lpp-MessageBody			LPP-MessageBody		OPTIONAL	-- Need ON
+}
+SequenceNumber ::= INTEGER (0..255)
+Acknowledgement ::= SEQUENCE {
+	ackRequested	BOOLEAN,
+	ackIndicator	SequenceNumber		OPTIONAL
+}

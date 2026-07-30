@@ -1,0 +1,19 @@
+BDS-DifferentialCorrections-r12 ::= SEQUENCE {
+	dbds-RefTime-r12			INTEGER (0..3599),
+	bds-SgnTypeList-r12			BDS-SgnTypeList-r12,
+	...
+}
+BDS-SgnTypeList-r12 ::= SEQUENCE (SIZE (1..3)) OF BDS-SgnTypeElement-r12
+BDS-SgnTypeElement-r12 ::= SEQUENCE {
+	gnss-SignalID				GNSS-SignalID				OPTIONAL,	-- Need ON
+	dbds-CorrectionList-r12		DBDS-CorrectionList-r12,
+	...
+}
+DBDS-CorrectionList-r12 ::= SEQUENCE (SIZE (1..64)) OF DBDS-CorrectionElement-r12
+DBDS-CorrectionElement-r12 ::= SEQUENCE {
+	svID						SV-ID,
+	bds-UDREI-r12				INTEGER (0..15),
+	bds-RURAI-r12				INTEGER (0..15),
+	bds-ECC-DeltaT-r12			INTEGER (-4096..4095),
+	...
+}

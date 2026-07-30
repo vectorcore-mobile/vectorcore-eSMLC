@@ -1,0 +1,10 @@
+OTDOA-RequestAssistanceData ::= SEQUENCE {
+	physCellId			INTEGER (0..503),
+	...,
+	[[
+	 adType-r14			BIT STRING { prs (0), nprs (1) } (SIZE (1..8))		OPTIONAL
+	]],
+	[[
+		nrPhysCellId-r15	INTEGER (0..1007)									OPTIONAL
+	]]
+}

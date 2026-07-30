@@ -1,0 +1,5 @@
+WLAN-ProvideLocationInformation-r13 ::= SEQUENCE {
+	wlan-MeasurementInformation-r13		WLAN-MeasurementInformation-r13		OPTIONAL,
+	wlan-Error-r13						WLAN-Error-r13						OPTIONAL,
+	...
+}

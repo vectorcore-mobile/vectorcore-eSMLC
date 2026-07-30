@@ -1,0 +1,7 @@
+GNSS-SignalID::= SEQUENCE {
+gnss-SignalIDINTEGER (0 .. 7),
+...,
+[[
+gnss-SignalID-Ext-r15INTEGER (8..23)OPTIONAL
+]]
+}

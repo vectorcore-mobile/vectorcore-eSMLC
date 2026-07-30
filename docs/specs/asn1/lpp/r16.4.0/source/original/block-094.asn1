@@ -1,0 +1,46 @@
+GNSS-GenericAssistData ::= SEQUENCE (SIZE (1..16)) OF GNSS-GenericAssistDataElement
+GNSS-GenericAssistDataElement ::= SEQUENCE {
+gnss-IDGNSS-ID,
+sbas-IDSBAS-IDOPTIONAL, -- Cond GNSS-ID-SBAS
+gnss-TimeModelsGNSS-TimeModelListOPTIONAL,-- Need ON
+gnss-DifferentialCorrectionsGNSS-DifferentialCorrectionsOPTIONAL,-- Need ON
+gnss-NavigationModelGNSS-NavigationModelOPTIONAL,-- Need ON
+gnss-RealTimeIntegrityGNSS-RealTimeIntegrityOPTIONAL,-- Need ON
+gnss-DataBitAssistanceGNSS-DataBitAssistanceOPTIONAL,-- Need ON
+gnss-AcquisitionAssistanceGNSS-AcquisitionAssistanceOPTIONAL,-- Need ON
+gnss-AlmanacGNSS-AlmanacOPTIONAL,-- Need ON
+gnss-UTC-ModelGNSS-UTC-ModelOPTIONAL,-- Need ON
+gnss-AuxiliaryInformationGNSS-AuxiliaryInformationOPTIONAL,-- Need ON
+...,
+[[
+bds-DifferentialCorrections-r12
+BDS-DifferentialCorrections-r12OPTIONAL,-- CondGNSS-ID-BDS
+bds-GridModel-r12BDS-GridModelParameter-r12OPTIONAL-- CondGNSS-ID-BDS
+]],
+[[
+gnss-RTK-Observations-r15GNSS-RTK-Observations-r15OPTIONAL,-- Need ON
+glo-RTK-BiasInformation-r15GLO-RTK-BiasInformation-r15OPTIONAL,-- Cond GNSS-ID-GLO
+gnss-RTK-MAC-CorrectionDifferences-r15
+GNSS-RTK-MAC-CorrectionDifferences-r15
+OPTIONAL,-- Need ON
+gnss-RTK-Residuals-r15GNSS-RTK-Residuals-r15OPTIONAL,-- Need ON
+gnss-RTK-FKP-Gradients-r15GNSS-RTK-FKP-Gradients-r15OPTIONAL,-- Need ON
+gnss-SSR-OrbitCorrections-r15
+GNSS-SSR-OrbitCorrections-r15OPTIONAL,-- Need ON
+gnss-SSR-ClockCorrections-r15
+GNSS-SSR-ClockCorrections-r15OPTIONAL,-- Need ON
+gnss-SSR-CodeBias-r15GNSS-SSR-CodeBias-r15OPTIONAL-- Need ON
+]],
+[[
+gnss-SSR-URA-r16GNSS-SSR-URA-r16OPTIONAL,-- Need ON
+gnss-SSR-PhaseBias-r16GNSS-SSR-PhaseBias-r16OPTIONAL,-- Need ON
+gnss-SSR-STEC-Correction-r16GNSS-SSR-STEC-Correction-r16
+OPTIONAL,-- Need ON
+gnss-SSR-GriddedCorrection-r16GNSS-SSR-GriddedCorrection-r16
+OPTIONAL,-- Need ON
+navic-DifferentialCorrections-r16NavIC-DifferentialCorrections-r16
+OPTIONAL,-- CondGNSS-ID-NavIC
+navic-GridModel-r16NavIC-GridModelParameter-r16
+OPTIONAL-- CondGNSS-ID-NavIC
+]]
+}

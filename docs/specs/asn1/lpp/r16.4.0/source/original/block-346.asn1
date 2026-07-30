@@ -1,0 +1,9 @@
+NR-DL-AoD-LocationServerErrorCauses-r16 ::= SEQUENCE {
+cause-r16ENUMERATED{undefined,
+assistanceDataNotSupportedByServer,
+assistanceDataSupportedButCurrentlyNotAvailableByServer,
+notProvidedAssistanceDataNotSupportedByServer,
+...
+},
+...
+}

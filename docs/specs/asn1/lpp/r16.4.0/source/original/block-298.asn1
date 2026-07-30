@@ -1,0 +1,3 @@
+WLAN-RequestCapabilities-r13 ::= SEQUENCE {
+...
+}

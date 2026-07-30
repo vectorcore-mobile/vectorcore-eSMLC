@@ -1,0 +1,5 @@
+ECID-Cell-Global-ID-Harness DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+CellGlobalIdEUTRA-AndUTRA ::= SEQUENCE {
+ plmn-Identity SEQUENCE { mcc SEQUENCE (SIZE(3)) OF INTEGER (0..9), mnc SEQUENCE (SIZE(2..3)) OF INTEGER (0..9) },
+ cellIdentity CHOICE { eutra BIT STRING (SIZE(28)), utra BIT STRING (SIZE(32)) }, ... }
+END

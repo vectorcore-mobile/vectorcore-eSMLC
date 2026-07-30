@@ -1,0 +1,8 @@
+GNSS-UTC-Model ::= CHOICE {
+utcModel1UTC-ModelSet1,-- Model-1
+utcModel2UTC-ModelSet2,-- Model-2
+utcModel3UTC-ModelSet3,-- Model-3
+utcModel4UTC-ModelSet4,-- Model-4
+...,
+utcModel5-r12UTC-ModelSet5-r12-- Model-5
+}

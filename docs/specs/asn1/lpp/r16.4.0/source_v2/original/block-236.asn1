@@ -1,0 +1,4 @@
+GNSS-SSR-PhaseBiasSupport-r16 ::= SEQUENCE {
+	signal-and-tracking-mode-ID-Sup-r16		GNSS-SignalIDs,
+	...
+}

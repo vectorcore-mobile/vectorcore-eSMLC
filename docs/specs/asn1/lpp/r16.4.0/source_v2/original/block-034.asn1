@@ -1,0 +1,5 @@
+HorizontalVelocityWithUncertainty ::= SEQUENCE {
+	bearing						INTEGER(0..359),
+	horizontalSpeed				INTEGER(0..2047),
+	uncertaintySpeed			INTEGER(0..255)
+}

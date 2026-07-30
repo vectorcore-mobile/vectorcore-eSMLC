@@ -1,0 +1,32 @@
+GNSS-MeasurementList ::= SEQUENCE (SIZE(1..16)) OF GNSS-MeasurementForOneGNSS
+GNSS-MeasurementForOneGNSS ::= SEQUENCE {
+gnss-IDGNSS-ID,
+gnss-SgnMeasListGNSS-SgnMeasList,
+...
+}
+GNSS-SgnMeasList ::= SEQUENCE (SIZE(1..8)) OF GNSS-SgnMeasElement
+GNSS-SgnMeasElement ::= SEQUENCE {
+gnss-SignalIDGNSS-SignalID,
+gnss-CodePhaseAmbiguityINTEGER (0..127)OPTIONAL,
+gnss-SatMeasListGNSS-SatMeasList,
+...
+}
+GNSS-SatMeasList ::= SEQUENCE (SIZE(1..64)) OF GNSS-SatMeasElement
+GNSS-SatMeasElement ::= SEQUENCE {
+svIDSV-ID,
+cNoINTEGER (0..63),
+mpathDetENUMERATED {notMeasured (0), low (1), medium (2), high (3), ...},
+carrierQualityIndINTEGER (0..3)OPTIONAL,
+codePhaseINTEGER (0..2097151),
+integerCodePhaseINTEGER (0..127)OPTIONAL,
+codePhaseRMSErrorINTEGER (0..63),
+dopplerINTEGER (-32768..32767)OPTIONAL,
+adrINTEGER (0..33554431)OPTIONAL,
+...,
+[[
+adrMSB-r15INTEGER (0..15)OPTIONAL,
+adrSign-r15ENUMERATED {positive, negative}OPTIONAL,
+adrRMSerror-r15INTEGER (0..127)OPTIONAL,
+delta-codePhase-r15INTEGER (0..7)OPTIONAL
+]]
+}

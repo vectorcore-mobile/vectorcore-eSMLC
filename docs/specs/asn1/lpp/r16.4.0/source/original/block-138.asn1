@@ -1,0 +1,13 @@
+AlmanacECEF-SBAS-AlmanacSet ::= SEQUENCE {
+sbasAlmDataIDINTEGER (0..3),
+svIDSV-ID,
+sbasAlmHealthBIT STRING (SIZE(8)),
+sbasAlmXgINTEGER (-16384..16383),
+sbasAlmYgINTEGER (-16384..16383),
+sbasAlmZgINTEGER (-256..255),
+sbasAlmXgdotINTEGER (-4..3),
+sbasAlmYgDotINTEGER (-4..3),
+sbasAlmZgDotINTEGER (-8..7),
+sbasAlmToINTEGER (0..2047),
+...
+}

@@ -1,0 +1,26 @@
+GNSS-AuxiliaryInformation ::= CHOICE {
+gnss-ID-GPSGNSS-ID-GPS,
+gnss-ID-GLONASSGNSS-ID-GLONASS,
+...,
+[[gnss-ID-BDS-r16GNSS-ID-BDS-r16
+]]
+}
+GNSS-ID-GPS ::= SEQUENCE(SIZE(1..64)) OF GNSS-ID-GPS-SatElement
+GNSS-ID-GPS-SatElement ::= SEQUENCE {
+svIDSV-ID,
+signalsAvailableGNSS-SignalIDs,
+...
+}
+GNSS-ID-GLONASS ::= SEQUENCE (SIZE(1..64)) OF GNSS-ID-GLONASS-SatElement
+GNSS-ID-GLONASS-SatElement ::= SEQUENCE {
+svIDSV-ID,
+signalsAvailableGNSS-SignalIDs,
+channelNumberINTEGER (-7..13)OPTIONAL,-- Cond FDMA
+...
+}
+GNSS-ID-BDS-r16 ::= SEQUENCE(SIZE(1..64)) OF GNSS-ID-BDS-SatElement-r16
+GNSS-ID-BDS-SatElement-r16 ::= SEQUENCE {
+svID-r16SV-ID,
+satType-r16INTEGER (0..3),
+...
+}

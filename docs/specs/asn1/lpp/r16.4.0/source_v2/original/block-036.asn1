@@ -1,0 +1,14 @@
+LocationCoordinateTypes ::= SEQUENCE {
+	ellipsoidPoint											BOOLEAN,
+	ellipsoidPointWithUncertaintyCircle						BOOLEAN,
+	ellipsoidPointWithUncertaintyEllipse					BOOLEAN,
+	polygon													BOOLEAN,
+	ellipsoidPointWithAltitude								BOOLEAN,
+	ellipsoidPointWithAltitudeAndUncertaintyEllipsoid		BOOLEAN,
+	ellipsoidArc											BOOLEAN,
+	...,
+	[[
+		highAccuracyEllipsoidPointWithUncertaintyEllipse-r15				BOOLEAN		OPTIONAL,
+		highAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-r15	BOOLEAN		OPTIONAL
+	]]
+}

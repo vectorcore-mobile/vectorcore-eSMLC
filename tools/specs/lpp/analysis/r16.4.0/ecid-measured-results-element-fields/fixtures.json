@@ -1,0 +1,405 @@
+{
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "annotation": "extension=0; root optionals=00000",
+      "bit_length": 31,
+      "hex": "000200c8",
+      "name": "mandatory-only",
+      "round_trip": true,
+      "sha256": "87e7b9edd370b87e6f280f2400e2f75bec71a176fd5a53ac5434c3e4017c2c71",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1
+      }
+    },
+    {
+      "annotation": "one root optional present",
+      "bit_length": 82,
+      "hex": "4002001008000000001900",
+      "name": "optional-cellGlobalId",
+      "round_trip": true,
+      "sha256": "5ea46af19daf369e1c6f7d9f14518a0f9bdba3d4ef61a43f1197b0fb0b1de932",
+      "value": {
+        "arfcnEUTRA": 100,
+        "cellGlobalId": {
+          "cellIdentity": [
+            "eutra",
+            {
+              "bit_length": 28,
+              "hex": "00000000"
+            }
+          ],
+          "plmn-Identity": {
+            "mcc": [
+              0,
+              0,
+              1
+            ],
+            "mnc": [
+              0,
+              1
+            ]
+          }
+        },
+        "physCellId": 1
+      }
+    },
+    {
+      "annotation": "one root optional present",
+      "bit_length": 41,
+      "hex": "200200c95500",
+      "name": "optional-systemFrameNumber",
+      "round_trip": true,
+      "sha256": "bb6c32f61c2d0d5f252d62ed68008aa636a74ab24f3d32e72d26d9ad578d7916",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "systemFrameNumber": {
+          "bit_length": 10,
+          "hex": "aa80"
+        }
+      }
+    },
+    {
+      "annotation": "one root optional present",
+      "bit_length": 38,
+      "hex": "100200c8c4",
+      "name": "optional-rsrp-Result",
+      "round_trip": true,
+      "sha256": "d275c35d02ae2633329f4c3cc3e90d9977ce778b0ec72452be672b38fde297fa",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrp-Result": 49
+      }
+    },
+    {
+      "annotation": "one root optional present",
+      "bit_length": 37,
+      "hex": "080200c888",
+      "name": "optional-rsrq-Result",
+      "round_trip": true,
+      "sha256": "ddd4f3c453dce407ccf4450c3e6a1e53c46b9a9200261e0d85642ea3bbafa486",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrq-Result": 17
+      }
+    },
+    {
+      "annotation": "one root optional present",
+      "bit_length": 43,
+      "hex": "040200c90000",
+      "name": "optional-ue-RxTxTimeDiff",
+      "round_trip": true,
+      "sha256": "5980e499744629778824832230683529b74f98359bacb4c498afc2c891b7e974",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "ue-RxTxTimeDiff": 2048
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 38,
+      "hex": "100200c800",
+      "name": "rsrp-Result-0",
+      "round_trip": true,
+      "sha256": "a0d4089bef7728f19feac52d7043f210d74143e6e9a1d274f62d3e8059752c28",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrp-Result": 0
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 38,
+      "hex": "100200c8c4",
+      "name": "rsrp-Result-49",
+      "round_trip": true,
+      "sha256": "d275c35d02ae2633329f4c3cc3e90d9977ce778b0ec72452be672b38fde297fa",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrp-Result": 49
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 38,
+      "hex": "100200c984",
+      "name": "rsrp-Result-97",
+      "round_trip": true,
+      "sha256": "d7d3015a95b224e34c7108c862dd3189f7247a8e923339bdb9a5eea250e760a6",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrp-Result": 97
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 37,
+      "hex": "080200c800",
+      "name": "rsrq-Result-0",
+      "round_trip": true,
+      "sha256": "44174a8e862ec7b8f309418e433cb75ce236bc1c2ff8704339954c39f5d74d5a",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrq-Result": 0
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 37,
+      "hex": "080200c888",
+      "name": "rsrq-Result-17",
+      "round_trip": true,
+      "sha256": "ddd4f3c453dce407ccf4450c3e6a1e53c46b9a9200261e0d85642ea3bbafa486",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrq-Result": 17
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 37,
+      "hex": "080200c910",
+      "name": "rsrq-Result-34",
+      "round_trip": true,
+      "sha256": "744e3f68dc5a1f7329aa43cc7e71af87cd226d3af149513536f5d927eb824a47",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "rsrq-Result": 34
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 43,
+      "hex": "040200c80000",
+      "name": "ue-RxTxTimeDiff-0",
+      "round_trip": true,
+      "sha256": "4b87db85f1584f118a0431db2df5e0584b39fba175b27454be211e4f8b4063c5",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "ue-RxTxTimeDiff": 0
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 43,
+      "hex": "040200c90000",
+      "name": "ue-RxTxTimeDiff-2048",
+      "round_trip": true,
+      "sha256": "5980e499744629778824832230683529b74f98359bacb4c498afc2c891b7e974",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "ue-RxTxTimeDiff": 2048
+      }
+    },
+    {
+      "annotation": "scalar boundary fixture",
+      "bit_length": 43,
+      "hex": "040200c9ffe0",
+      "name": "ue-RxTxTimeDiff-4095",
+      "round_trip": true,
+      "sha256": "0118b65fd34a82f5d376a52ba08bac789862b129fd6205bd4472f40e31eabc2e",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "ue-RxTxTimeDiff": 4095
+      }
+    },
+    {
+      "annotation": "fixed 10-bit BIT STRING",
+      "bit_length": 41,
+      "hex": "200200c80000",
+      "name": "sfn-all-zero",
+      "round_trip": true,
+      "sha256": "31012698b97ef657a44ce90f90cada42943c57089afba402b78585d1aef76950",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "systemFrameNumber": {
+          "bit_length": 10,
+          "hex": "0000"
+        }
+      }
+    },
+    {
+      "annotation": "fixed 10-bit BIT STRING",
+      "bit_length": 41,
+      "hex": "200200c9ff80",
+      "name": "sfn-all-one",
+      "round_trip": true,
+      "sha256": "c2f7d9d11515d97b4b4164ca646730ca6acc6fbb4073e390a7f9260cb734ac33",
+      "value": {
+        "arfcnEUTRA": 100,
+        "physCellId": 1,
+        "systemFrameNumber": {
+          "bit_length": 10,
+          "hex": "ffc0"
+        }
+      }
+    },
+    {
+      "annotation": "E-UTRA CellGlobalId fixture",
+      "bit_length": 82,
+      "hex": "4002001008000000001900",
+      "name": "cell-two-digit-mnc",
+      "round_trip": true,
+      "sha256": "5ea46af19daf369e1c6f7d9f14518a0f9bdba3d4ef61a43f1197b0fb0b1de932",
+      "value": {
+        "arfcnEUTRA": 100,
+        "cellGlobalId": {
+          "cellIdentity": [
+            "eutra",
+            {
+              "bit_length": 28,
+              "hex": "00000000"
+            }
+          ],
+          "plmn-Identity": {
+            "mcc": [
+              0,
+              0,
+              1
+            ],
+            "mnc": [
+              0,
+              1
+            ]
+          }
+        },
+        "physCellId": 1
+      }
+    },
+    {
+      "annotation": "E-UTRA CellGlobalId fixture",
+      "bit_length": 86,
+      "hex": "40023109303ffffffc0190",
+      "name": "cell-three-digit-mnc",
+      "round_trip": true,
+      "sha256": "b4843cdc3ea821afb652045ff34f85cf7de869042b08dc8134ad9245b6c920d3",
+      "value": {
+        "arfcnEUTRA": 100,
+        "cellGlobalId": {
+          "cellIdentity": [
+            "eutra",
+            {
+              "bit_length": 28,
+              "hex": "fffffff0"
+            }
+          ],
+          "plmn-Identity": {
+            "mcc": [
+              3,
+              1,
+              0
+            ],
+            "mnc": [
+              2,
+              6,
+              0
+            ]
+          }
+        },
+        "physCellId": 1
+      }
+    },
+    {
+      "annotation": "E-UTRA CellGlobalId fixture",
+      "bit_length": 82,
+      "hex": "400220800848d159c01900",
+      "name": "cell-mcc-zero",
+      "round_trip": true,
+      "sha256": "e306c752f84b25b27d86bed47c6bcb2dccbf72237a11cf5b31f7cac2e5b966a1",
+      "value": {
+        "arfcnEUTRA": 100,
+        "cellGlobalId": {
+          "cellIdentity": [
+            "eutra",
+            {
+              "bit_length": 28,
+              "hex": "12345670"
+            }
+          ],
+          "plmn-Identity": {
+            "mcc": [
+              2,
+              0,
+              8
+            ],
+            "mnc": [
+              0,
+              1
+            ]
+          }
+        },
+        "physCellId": 1
+      }
+    },
+    {
+      "annotation": "extension=0; root optionals=11111",
+      "bit_length": 117,
+      "hex": "7c0200100848d159c0192aac317ff8",
+      "name": "all-root-optionals",
+      "round_trip": true,
+      "sha256": "cd2124b668c4923d348c0b12e32d51b44cc929afde2aaf717c352f9c8fb71225",
+      "value": {
+        "arfcnEUTRA": 100,
+        "cellGlobalId": {
+          "cellIdentity": [
+            "eutra",
+            {
+              "bit_length": 28,
+              "hex": "12345670"
+            }
+          ],
+          "plmn-Identity": {
+            "mcc": [
+              0,
+              0,
+              1
+            ],
+            "mnc": [
+              0,
+              1
+            ]
+          }
+        },
+        "physCellId": 1,
+        "rsrp-Result": 97,
+        "rsrq-Result": 34,
+        "systemFrameNumber": {
+          "bit_length": 10,
+          "hex": "aa80"
+        },
+        "ue-RxTxTimeDiff": 4095
+      }
+    },
+    {
+      "annotation": "extension addition 0 present",
+      "bit_length": 80,
+      "hex": "800200c80a01c0000000",
+      "name": "extension-arfcn-v9a0",
+      "round_trip": true,
+      "sha256": "8fef0a2dcba8905973aa3678ea12078108cdd2e0e69c6e8a515c385101c40ba6",
+      "value": {
+        "arfcnEUTRA": 100,
+        "arfcnEUTRA-v9a0": 65536,
+        "physCellId": 1
+      }
+    }
+  ],
+  "harness_sha256": "80095d79310dd55510a8797d5ff9ecac78d7848928f7f7455f41747374573b72"
+}

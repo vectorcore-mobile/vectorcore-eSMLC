@@ -1,0 +1,7 @@
+GNSS-IonosphericModel ::= SEQUENCE {
+klobucharModelKlobucharModelParameterOPTIONAL,-- Need ON
+neQuickModelNeQuickModelParameterOPTIONAL,-- Need ON
+...,
+[[klobucharModel2-r16KlobucharModel2Parameter-r16OPTIONAL-- Need ON
+]]
+}

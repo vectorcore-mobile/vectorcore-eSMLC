@@ -1,0 +1,12 @@
+{
+  "mandatory-only": {"hex": "000200c8", "meaningful_bits": 31, "bits": "0 | 00000 | 000000001 | 0000000001100100", "meaning": "extension=false | no root optionals | PCI=1 | ARFCN=100"},
+  "individual_optional_bitmap_proof": [
+    {"field": "cellGlobalId", "header_bits": "0 | 10000"},
+    {"field": "systemFrameNumber", "header_bits": "0 | 01000"},
+    {"field": "rsrp-Result", "header_bits": "0 | 00100"},
+    {"field": "rsrq-Result", "header_bits": "0 | 00010"},
+    {"field": "ue-RxTxTimeDiff", "header_bits": "0 | 00001"}
+  ],
+  "all-root-optionals": {"header_bits": "0 | 11111", "meaning": "all five root optionals present in declaration order"},
+  "extension-arfcn-v9a0": {"hex": "800200c80a01c0000000", "meaningful_bits": 80, "root_prefix": "1 | 00000 | PCI=1 (9 bits) | ARFCN=100 (16 bits)", "extension_suffix": "normally-small extension-map length value 2 (7 bits) | addition bitmap 100 | open-type length 3 octets | 7 pad bits | 18-bit inner scalar offset 0 plus 6 pad bits"}
+}

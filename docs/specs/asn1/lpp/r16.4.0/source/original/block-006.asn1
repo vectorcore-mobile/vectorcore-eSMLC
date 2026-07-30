@@ -1,0 +1,31 @@
+ProvideCapabilities ::= SEQUENCE {
+criticalExtensionsCHOICE {
+c1CHOICE {
+provideCapabilities-r9ProvideCapabilities-r9-IEs,
+spare3 NULL, spare2 NULL, spare1 NULL
+},
+criticalExtensionsFutureSEQUENCE {}
+}
+}
+ProvideCapabilities-r9-IEs ::= SEQUENCE {
+commonIEsProvideCapabilitiesCommonIEsProvideCapabilitiesOPTIONAL,
+a-gnss-ProvideCapabilitiesA-GNSS-ProvideCapabilitiesOPTIONAL,
+otdoa-ProvideCapabilitiesOTDOA-ProvideCapabilitiesOPTIONAL,
+ecid-ProvideCapabilitiesECID-ProvideCapabilitiesOPTIONAL,
+epdu-ProvideCapabilitiesEPDU-SequenceOPTIONAL,
+...,
+[[sensor-ProvideCapabilities-r13Sensor-ProvideCapabilities-r13OPTIONAL,
+tbs-ProvideCapabilities-r13TBS-ProvideCapabilities-r13OPTIONAL,
+wlan-ProvideCapabilities-r13WLAN-ProvideCapabilities-r13OPTIONAL,
+bt-ProvideCapabilities-r13BT-ProvideCapabilities-r13OPTIONAL
+]],
+[[nr-ECID-ProvideCapabilities-r16NR-ECID-ProvideCapabilities-r16OPTIONAL,
+nr-Multi-RTT-ProvideCapabilities-r16
+NR-Multi-RTT-ProvideCapabilities-r16OPTIONAL,
+nr-DL-AoD-ProvideCapabilities-r16
+NR-DL-AoD-ProvideCapabilities-r16OPTIONAL,
+nr-DL-TDOA-ProvideCapabilities-r16
+NR-DL-TDOA-ProvideCapabilities-r16OPTIONAL,
+nr-UL-ProvideCapabilities-r16NR-UL-ProvideCapabilities-r16OPTIONAL
+]]
+}

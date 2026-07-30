@@ -1,0 +1,14 @@
+AlmanacNAV-KeplerianSet ::= SEQUENCE {
+	svID					SV-ID,
+	navAlmE					INTEGER (0..65535),
+	navAlmDeltaI			INTEGER (-32768..32767),
+	navAlmOMEGADOT			INTEGER (-32768..32767),
+	navAlmSVHealth			INTEGER (0..255),
+	navAlmSqrtA				INTEGER (0..16777215),
+	navAlmOMEGAo			INTEGER (-8388608..8388607),
+	navAlmOmega				INTEGER (-8388608..8388607),
+	navAlmMo				INTEGER (-8388608..8388607),
+	navAlmaf0				INTEGER (-1024..1023),
+	navAlmaf1				INTEGER (-1024..1023),
+	...
+}

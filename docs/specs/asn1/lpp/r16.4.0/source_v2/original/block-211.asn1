@@ -1,0 +1,6 @@
+GNSS-IonosphericModelSupport ::=	SEQUENCE {
+	ionoModel		BIT STRING {	klobuchar	(0),
+									neQuick		(1),
+									klobuchar2-r16	(2) } (SIZE (1..8)),
+	...
+}

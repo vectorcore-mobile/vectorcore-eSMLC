@@ -1,0 +1,11 @@
+UTC-ModelSet1 ::= SEQUENCE {
+	gnss-Utc-A1			INTEGER (-8388608..8388607),
+	gnss-Utc-A0			INTEGER (-2147483648..2147483647),
+	gnss-Utc-Tot		INTEGER (0..255),
+	gnss-Utc-WNt		INTEGER (0..255),
+	gnss-Utc-DeltaTls	INTEGER (-128..127),
+	gnss-Utc-WNlsf		INTEGER (0..255),
+	gnss-Utc-DN			INTEGER (-128..127),
+	gnss-Utc-DeltaTlsf	INTEGER (-128..127),
+	...
+}

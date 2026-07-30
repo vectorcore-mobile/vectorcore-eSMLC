@@ -1,0 +1,10 @@
+AlmanacReducedKeplerianSet ::= SEQUENCE {
+	svID					SV-ID,
+	redAlmDeltaA			INTEGER (-128..127),
+	redAlmOmega0			INTEGER (-64..63),
+	redAlmPhi0				INTEGER (-64..63),
+	redAlmL1Health			BOOLEAN,
+	redAlmL2Health			BOOLEAN,
+	redAlmL5Health			BOOLEAN,
+	...
+}

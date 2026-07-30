@@ -1,0 +1,5 @@
+GNSS-ReferenceTimeSupport ::=SEQUENCE {
+gnss-SystemTimeGNSS-ID-Bitmap,
+fta-SupportAccessTypesOPTIONAL, -- Cond fta
+...
+}

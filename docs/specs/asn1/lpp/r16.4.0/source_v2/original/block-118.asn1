@@ -1,0 +1,9 @@
+BDS-ClockModel-r12 ::= SEQUENCE {
+	bdsAODC-r12			INTEGER (0..31),
+	bdsToc-r12			INTEGER (0..131071),
+	bdsA0-r12			INTEGER (-8388608..8388607),
+	bdsA1-r12			INTEGER (-2097152..2097151),
+	bdsA2-r12			INTEGER (-1024..1023),
+	bdsTgd1-r12			INTEGER (-512..511),
+	...
+}

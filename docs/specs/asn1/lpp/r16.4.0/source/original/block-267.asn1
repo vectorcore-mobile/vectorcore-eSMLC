@@ -1,0 +1,5 @@
+TBS-ProvideLocationInformation-r13 ::= SEQUENCE {
+tbs-MeasurementInformation-r13TBS-MeasurementInformation-r13OPTIONAL,
+tbs-Error-r13TBS-Error-r13OPTIONAL,
+...
+}

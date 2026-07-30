@@ -1,0 +1,30 @@
+NavIC-DifferentialCorrections-r16 ::= SEQUENCE {
+navic-RefTOWC-r16INTEGER (0..50400),
+navic-CorrectionListAutoNav-r16NavIC-CorrectionListAutoNav-r16,
+...
+}
+NavIC-CorrectionListAutoNav-r16 ::= SEQUENCE (SIZE (1..64)) OF NavIC-CorrectionElementAutoNav-r16
+NavIC-CorrectionElementAutoNav-r16 ::= SEQUENCE {
+svIDSV-ID,
+navic-Tod-r16INTEGER (0..65535),
+navic-iodec-r16INTEGER (0..255),
+navic-UDRAI-r16INTEGER (-16..15),
+navic-UDRArateI-r16INTEGER (-16..15),
+navic-EDC-r16NavIC-EDC-r16,
+navic-CDC-r16NavIC-CDC-r16,
+...
+}
+NavIC-EDC-r16 ::= SEQUENCE {
+navic-AlphaEDC-r16INTEGER (-8192..8191),
+navic-BetaEDC-r16INTEGER (-8192..8191),
+navic-GammaEDC-r16INTEGER (-16384..16383),
+navic-AoIcorrection-r16INTEGER (-2048..2047),
+navic-AoRAcorrection-r16INTEGER (-2048..2047),
+navic-SemiMajorcorrection-r16INTEGER (-2048..2047),
+...
+}
+NavIC-CDC-r16 ::= SEQUENCE {
+navic-ClockBiasCorrection-r16INTEGER (-4096..4095),
+navic-ClockDriftCorrection-r16INTEGER (-128..127),
+...
+}

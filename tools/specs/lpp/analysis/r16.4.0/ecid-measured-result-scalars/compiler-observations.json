@@ -1,0 +1,17 @@
+{
+  "compiler": "asn1tools 0.167.0",
+  "deterministic_rerun": true,
+  "root_out_of_range_structured_input": {
+    "input": 65536,
+    "observed_decode_after_encode": 0,
+    "observed_hex": "0000",
+    "type": "EUTRACarrierFrequencyRoot",
+    "warning": "The pinned encoder silently truncates this invalid structured value. It is not an extension encoding and must not be used as an invalid-value oracle."
+  },
+  "v9a0_analysis_fixture": {
+    "bit_length": 18,
+    "hex": "000000",
+    "type": "EUTRACarrierFrequencyV9a0",
+    "value": 65536
+  }
+}

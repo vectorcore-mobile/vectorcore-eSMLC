@@ -1,0 +1,13 @@
+Sensor-MeasurementInformation-r13 ::= SEQUENCE {
+measurementReferenceTime-r13UTCTimeOPTIONAL,
+uncompensatedBarometricPressure-r13INTEGER (30000..115000)OPTIONAL, -- Cond Barometer
+...,
+[[
+uncertainty-r14SEQUENCE {
+range-r14INTEGER (0..1000),
+confidence-r14INTEGER (1..100)
+}OPTIONAL
+]],
+[[adjustment-r16INTEGER (-5000..5000) OPTIONAL
+]]
+}

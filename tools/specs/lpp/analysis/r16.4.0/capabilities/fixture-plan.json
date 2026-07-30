@@ -1,0 +1,19 @@
+{
+  "negative": [
+    "ecid-bitstring-empty",
+    "ecid-bitstring-too-long",
+    "invalid-critical-extension-choice",
+    "non-zero-padding-after-encoding"
+  ],
+  "positive": [
+    "request-empty",
+    "request-ecid-selector",
+    "provide-empty",
+    "provide-ecid-rsrp",
+    "provide-ecid-rsrp-rsrq-uerxtx"
+  ],
+  "selected_fields": [
+    "ecid-RequestCapabilities",
+    "ecid-ProvideCapabilities.ecid-MeasSupported"
+  ]
+}

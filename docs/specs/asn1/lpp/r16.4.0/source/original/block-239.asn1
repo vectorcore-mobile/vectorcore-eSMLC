@@ -1,0 +1,4 @@
+NavIC-DifferentialCorrectionsSupport-r16 ::=SEQUENCE {
+gnssSignalIDs-r16GNSS-SignalIDs,
+...
+}

@@ -1,0 +1,5 @@
+GNSS-PeriodicControlParam-r15 ::= SEQUENCE {
+deliveryAmount-r15INTEGER (1..32),
+deliveryInterval-r15INTEGER (1..64),
+...
+}

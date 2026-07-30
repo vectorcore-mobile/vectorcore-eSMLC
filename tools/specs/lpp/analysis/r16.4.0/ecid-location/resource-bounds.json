@@ -1,0 +1,7 @@
+{
+  "initial_request_no_lists": true,
+  "measuredResultsList_max": 32,
+  "measurement_depth": 4,
+  "provide_initially_defer": "all measurement lists, CellGlobalId, systemFrameNumber and error CHOICE",
+  "request_bitstring_max": 8
+}

@@ -1,0 +1,11 @@
+NR-DL-TDOA-TargetDeviceErrorCauses-r16 ::= SEQUENCE {
+cause-r16ENUMERATED {undefined,
+assistance-data-missing,
+unableToMeasureAnyTRP,
+attemptedButUnableToMeasureSomeNeighbourTRPs,
+thereWereNotEnoughSignalsReceivedForUeBasedDL-TDOA,
+locationCalculationAssistanceDataMissing,
+...
+},
+...
+}

@@ -1,0 +1,11 @@
+GNSS-PositioningInstructions ::= SEQUENCE {
+gnss-MethodsGNSS-ID-Bitmap,
+fineTimeAssistanceMeasReqBOOLEAN,
+adrMeasReqBOOLEAN,
+multiFreqMeasReqBOOLEAN,
+assistanceAvailabilityBOOLEAN,
+...,
+[[
+ha-GNSS-Req-r15ENUMERATED { true }OPTIONAL-- Cond UEB
+]]
+}

@@ -1,0 +1,30 @@
+ProvideAssistanceData ::= SEQUENCE {
+criticalExtensionsCHOICE {
+c1CHOICE {
+provideAssistanceData-r9ProvideAssistanceData-r9-IEs,
+spare3 NULL, spare2 NULL, spare1 NULL
+},
+criticalExtensionsFutureSEQUENCE {}
+}
+}
+ProvideAssistanceData-r9-IEs ::= SEQUENCE {
+commonIEsProvideAssistanceDataCommonIEsProvideAssistanceDataOPTIONAL,-- Need ON
+a-gnss-ProvideAssistanceDataA-GNSS-ProvideAssistanceDataOPTIONAL,-- Need ON
+otdoa-ProvideAssistanceDataOTDOA-ProvideAssistanceDataOPTIONAL,-- Need ON
+epdu-Provide-Assistance-DataEPDU-SequenceOPTIONAL,-- Need ON
+...,
+[[
+sensor-ProvideAssistanceData-r14Sensor-ProvideAssistanceData-r14OPTIONAL,-- Need ON
+tbs-ProvideAssistanceData-r14TBS-ProvideAssistanceData-r14OPTIONAL,-- Need ON
+wlan-ProvideAssistanceData-r14WLAN-ProvideAssistanceData-r14OPTIONAL-- Need ON
+]],
+[[nr-Multi-RTT-ProvideAssistanceData-r16
+NR-Multi-RTT-ProvideAssistanceData-r16
+OPTIONAL,-- Need ON
+nr-DL-AoD-ProvideAssistanceData-r16
+NR-DL-AoD-ProvideAssistanceData-r16OPTIONAL,-- Need ON
+nr-DL-TDOA-ProvideAssistanceData-r16
+NR-DL-TDOA-ProvideAssistanceData-r16
+OPTIONAL-- Need ON
+]]
+}

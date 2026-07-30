@@ -1,0 +1,16 @@
+AlmanacGLONASS-AlmanacSet ::= SEQUENCE {
+	gloAlm-NA				INTEGER (1..1461),
+	gloAlmnA				INTEGER (1..24),
+	gloAlmHA				INTEGER (0..31),
+	gloAlmLambdaA			INTEGER (-1048576..1048575),
+	gloAlmtlambdaA			INTEGER (0..2097151),
+	gloAlmDeltaIa			INTEGER (-131072..131071),
+	gloAlmDeltaTA			INTEGER (-2097152..2097151),
+	gloAlmDeltaTdotA		INTEGER (-64..63),
+	gloAlmEpsilonA			INTEGER (0..32767),
+	gloAlmOmegaA			INTEGER (-32768..32767),
+	gloAlmTauA				INTEGER (-512..511),
+	gloAlmCA				INTEGER (0..1),
+	gloAlmMA				BIT STRING (SIZE(2))			OPTIONAL,	-- Need ON
+	...
+}

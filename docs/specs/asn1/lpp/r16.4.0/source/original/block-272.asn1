@@ -1,0 +1,5 @@
+MBS-AssistanceDataSupportList-r14 ::= SEQUENCE {
+mbs-AcquisitionAssistanceDataSupport-r14BOOLEAN,
+mbs-AlmanacAssistanceDataSupport-r14BOOLEAN,
+...
+}

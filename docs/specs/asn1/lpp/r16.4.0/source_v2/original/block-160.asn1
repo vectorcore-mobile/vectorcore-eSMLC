@@ -1,0 +1,18 @@
+GNSS-SSR-STEC-Correction-r16 ::= SEQUENCE {
+	epochTime-r16						GNSS-SystemTime,
+	ssrUpdateInterval-r16				INTEGER (0..15),
+	iod-ssr-r16							INTEGER (0..15),
+	correctionPointSetID-r16			INTEGER (0..16383),
+	stec-SatList-r16					STEC-SatList-r16,
+	...
+}
+STEC-SatList-r16 ::= SEQUENCE (SIZE(1..64)) OF STEC-SatElement-r16
+STEC-SatElement-r16 ::= SEQUENCE {
+	svID-r16							SV-ID,
+	stecQualityIndicator-r16			BIT STRING (SIZE(6)),
+	stec-C00-r16						INTEGER (-8192..8191),
+	stec-C01-r16						INTEGER (-2048..2047)				OPTIONAL,
+	stec-C10-r16						INTEGER (-2048..2047)				OPTIONAL,
+	stec-C11-r16						INTEGER (-512..511)					OPTIONAL,
+	...
+}

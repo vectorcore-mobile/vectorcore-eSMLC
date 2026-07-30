@@ -1,0 +1,9 @@
+MBS-BeaconMeasList-r13 ::= SEQUENCE (SIZE(1..64)) OF MBS-BeaconMeasElement-r13
+MBS-BeaconMeasElement-r13 ::= SEQUENCE {
+	transmitterID-r13				INTEGER (0..32767),
+	codePhase-r13					INTEGER (0..2097151),
+	codePhaseRMSError-r13			INTEGER (0..63),
+	...,
+	[[ rssi-r14						INTEGER (-130..-30)		OPTIONAL
+	]]
+}

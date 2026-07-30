@@ -1,0 +1,70 @@
+{
+  "ecid_provide": [
+    {
+      "name": "ecid-SignalMeasurementInformation",
+      "optional": true
+    },
+    {
+      "name": "ecid-Error",
+      "optional": true
+    }
+  ],
+  "ecid_request": [
+    {
+      "mandatory": true,
+      "name": "requestedMeasurements",
+      "type": "BIT STRING SIZE(1..8)"
+    }
+  ],
+  "measurement_element": [
+    {
+      "mandatory": true,
+      "name": "physCellId",
+      "type": "INTEGER(0..503)"
+    },
+    {
+      "name": "cellGlobalId",
+      "optional": true,
+      "type": "CellGlobalIdEUTRA-AndUTRA"
+    },
+    {
+      "mandatory": true,
+      "name": "arfcnEUTRA",
+      "type": "INTEGER"
+    },
+    {
+      "name": "systemFrameNumber",
+      "optional": true,
+      "type": "BIT STRING SIZE(10)"
+    },
+    {
+      "name": "rsrp-Result",
+      "optional": true,
+      "type": "INTEGER(0..97)"
+    },
+    {
+      "name": "rsrq-Result",
+      "optional": true,
+      "type": "INTEGER(0..34)"
+    },
+    {
+      "name": "ue-RxTxTimeDiff",
+      "optional": true,
+      "type": "INTEGER(0..4095)"
+    }
+  ],
+  "provide_r9_root": [
+    "common",
+    "a-gnss",
+    "otdoa",
+    "ecid",
+    "epdu"
+  ],
+  "request_r9_root": [
+    "common",
+    "a-gnss",
+    "otdoa",
+    "ecid",
+    "epdu"
+  ]
+}

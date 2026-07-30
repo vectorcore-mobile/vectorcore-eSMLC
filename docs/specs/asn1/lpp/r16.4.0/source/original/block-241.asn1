@@ -1,0 +1,6 @@
+A-GNSS-RequestCapabilities ::= SEQUENCE {
+gnss-SupportListReqBOOLEAN,
+assistanceDataSupportListReqBOOLEAN,
+locationVelocityTypesReqBOOLEAN,
+...
+}

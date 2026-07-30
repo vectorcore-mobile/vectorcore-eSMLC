@@ -1,0 +1,28 @@
+maxEARFCN					INTEGER ::= 65535	-- Maximum value of EUTRA carrier frequency
+maxEARFCN-Plus1				INTEGER ::= 65536	-- Lowest value extended EARFCN range
+maxEARFCN2					INTEGER ::= 262143	-- Highest value extended EARFCN range
+maxMBS-r14					INTEGER ::= 64
+maxWLAN-AP-r13				INTEGER ::= 64
+maxKnownAPs-r14				INTEGER ::= 2048
+maxVisibleAPs-r14			INTEGER ::= 32
+maxWLAN-AP-r14				INTEGER ::= 128
+maxWLAN-DataSets-r14		INTEGER ::= 8
+maxBT-Beacon-r13			INTEGER ::= 32
+nrMaxBands-r16							INTEGER ::= 1024	-- Maximum number of supported bands in
+															-- UE capability.
+		nrMaxFreqLayers-r16						INTEGER ::= 4		-- Max freq layers
+nrMaxFreqLayers-1-r16					INTEGER ::= 3
+nrMaxNumDL-PRS-ResourcesPerSet-1-r16 	INTEGER ::= 63
+nrMaxNumDL-PRS-ResourceSetsPerTRP-1-r16	INTEGER ::= 7
+nrMaxResourceIDs-r16					INTEGER ::= 64		-- Max Resource IDs
+nrMaxResourceOffsetValue-1-r16 			INTEGER ::= 511
+nrMaxResourcesPerSet-r16				INTEGER ::= 64		-- Maximum resources for one set
+nrMaxSetsPerTrp-r16						INTEGER ::= 2		-- Maximum resource sets for one TRP
+		nrMaxSetsPerTrp-1-r16					INTEGER ::= 1
+nrMaxTRPs-r16							INTEGER ::= 256		-- Max TRPs per UE
+nrMaxTRPsPerFreq-r16					INTEGER ::= 64		-- Max TRPs per freq layers
+nrMaxTRPsPerFreq-1-r16					INTEGER ::= 63
+maxSimultaneousBands-r16				INTEGER ::= 4		-- Maximum number of simultaneously
+															-- measured bands
+maxBandComb-r16							INTEGER ::= 1024
+nrMaxConfiguredBands-r16				INTEGER ::= 16

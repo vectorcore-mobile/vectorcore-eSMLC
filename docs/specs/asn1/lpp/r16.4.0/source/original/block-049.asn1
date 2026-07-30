@@ -1,0 +1,61 @@
+CommonIEsProvideLocationInformation ::= SEQUENCE {
+locationEstimateLocationCoordinatesOPTIONAL,
+velocityEstimateVelocityOPTIONAL,
+locationErrorLocationErrorOPTIONAL,
+...,
+[[earlyFixReport-r12EarlyFixReport-r12OPTIONAL
+]],
+[[locationSource-r13LocationSource-r13OPTIONAL,
+locationTimestamp-r13UTCTimeOPTIONAL
+]],
+[[
+segmentationInfo-r14SegmentationInfo-r14OPTIONAL-- Cond Segmentation
+]]
+}
+LocationCoordinates ::= CHOICE {
+ellipsoidPointEllipsoid-Point,
+ellipsoidPointWithUncertaintyCircleEllipsoid-PointWithUncertaintyCircle,
+ellipsoidPointWithUncertaintyEllipseEllipsoidPointWithUncertaintyEllipse,
+polygonPolygon,
+ellipsoidPointWithAltitudeEllipsoidPointWithAltitude,
+ellipsoidPointWithAltitudeAndUncertaintyEllipsoid
+EllipsoidPointWithAltitudeAndUncertaintyEllipsoid,
+ellipsoidArcEllipsoidArc,
+...,
+highAccuracyEllipsoidPointWithUncertaintyEllipse-v1510
+HighAccuracyEllipsoidPointWithUncertaintyEllipse-r15,
+highAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-v1510
+HighAccuracyEllipsoidPointWithAltitudeAndUncertaintyEllipsoid-r15
+}
+Velocity ::= CHOICE {
+horizontalVelocityHorizontalVelocity,
+horizontalWithVerticalVelocityHorizontalWithVerticalVelocity,
+horizontalVelocityWithUncertaintyHorizontalVelocityWithUncertainty,
+horizontalWithVerticalVelocityAndUncertainty
+HorizontalWithVerticalVelocityAndUncertainty,
+...
+}
+LocationError ::= SEQUENCE {
+locationfailurecauseLocationFailureCause,
+...
+}
+LocationFailureCause ::= ENUMERATED {
+undefined,
+requestedMethodNotSupported,
+positionMethodFailure,
+periodicLocationMeasurementsNotAvailable,
+...
+}
+EarlyFixReport-r12 ::= ENUMERATED {
+noMoreMessages,
+moreMessagesOnTheWay
+}
+LocationSource-r13 ::= BIT STRING {a-gnss(0),
+wlan(1),
+bt(2),
+tbs(3),
+sensor(4),
+ha-gnss-v1510(5),
+motion-sensor-v1550 (6),
+dl-tdoa-r16 (7),
+dl-aod-r16(8) } (SIZE(1..16))

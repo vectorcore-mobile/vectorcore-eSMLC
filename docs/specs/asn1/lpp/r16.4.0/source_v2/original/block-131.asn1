@@ -1,0 +1,25 @@
+GNSS-AcquisitionAssistance ::= SEQUENCE {
+	gnss-SignalID				GNSS-SignalID,
+	gnss-AcquisitionAssistList	GNSS-AcquisitionAssistList,
+	...,
+	confidence-r10				INTEGER (0..100)	OPTIONAL	-- Need ON
+}
+GNSS-AcquisitionAssistList ::= SEQUENCE (SIZE(1..64)) OF GNSS-AcquisitionAssistElement
+GNSS-AcquisitionAssistElement ::= SEQUENCE {
+	svID						SV-ID,
+	doppler0					INTEGER (-2048..2047),
+	doppler1					INTEGER (0..63),
+	dopplerUncertainty			INTEGER (0..4),
+	codePhase					INTEGER (0..1022),
+	intCodePhase				INTEGER (0..127),
+	codePhaseSearchWindow		INTEGER (0..31),
+	azimuth						INTEGER (0..511),
+	elevation					INTEGER (0..127),		
+	...,
+	codePhase1023				BOOLEAN				OPTIONAL,	-- Need OP
+	dopplerUncertaintyExt-r10	ENUMERATED {	d60,
+												d80,
+												d100,
+												d120,
+												noInformation, ... }	OPTIONAL	-- Need ON
+}

@@ -1,0 +1,11 @@
+NR-Multi-RTT-TargetDeviceErrorCauses-r16 ::= SEQUENCE {
+cause-r16ENUMERATED {undefined,
+dl-assistance-data-missing,
+unableToMeasureAnyTRP,
+attemptedButUnableToMeasureSomeNeighbourTRPs,
+ul-srs-configuration-missing,
+unableToTransmit-ul-srs,
+...
+},
+...
+}

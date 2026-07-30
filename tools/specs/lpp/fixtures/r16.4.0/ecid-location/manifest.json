@@ -1,0 +1,42 @@
+{
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "bit_length": 14,
+      "hex": "0104",
+      "name": "request-ecid-rsrp",
+      "round_trip": true,
+      "sha256": "a8d5dd63fba471ebcb1f3e8f7c1e1879b7152a6e7298a91ce119a63400ade7c5",
+      "type": "RequestLocationInformation",
+      "unused_trailing_bits": 2
+    },
+    {
+      "bit_length": 16,
+      "hex": "0117",
+      "name": "request-ecid-all-root",
+      "round_trip": true,
+      "sha256": "5809addc9f6926fc5c4e20cf87958858c4454c21cdfc6b02f377f12c06b35cca",
+      "type": "RequestLocationInformation",
+      "unused_trailing_bits": 0
+    },
+    {
+      "bit_length": 57,
+      "hex": "0120020040190f00",
+      "name": "provide-ecid-rsrp-one-cell",
+      "round_trip": true,
+      "sha256": "434d1265f5d59ce64c223b11076a2da84c3b2213e314c61b52554697d753a1d9",
+      "type": "ProvideLocationInformation",
+      "unused_trailing_bits": 7
+    }
+  ],
+  "negative_plan": [
+    "requestedMeasurements length 0/9",
+    "missing measuredResultsList",
+    "physCellId >503",
+    "arfcnEUTRA out of range",
+    "truncation",
+    "extension present"
+  ]
+}

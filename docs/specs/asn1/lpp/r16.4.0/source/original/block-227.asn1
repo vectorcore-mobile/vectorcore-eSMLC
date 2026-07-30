@@ -1,0 +1,4 @@
+GNSS-RTK-ObservationsSupport-r15 ::= SEQUENCE {
+gnssSignalIDs-r15GNSS-SignalIDs,
+...
+}

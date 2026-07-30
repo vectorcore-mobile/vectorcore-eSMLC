@@ -1,0 +1,15 @@
+AlmanacKeplerianSet ::= SEQUENCE {
+svIDSV-ID,
+kepAlmanacEINTEGER (0..2047),
+kepAlmanacDeltaIINTEGER (-1024..1023),
+kepAlmanacOmegaDotINTEGER (-1024..1023),
+kepSV-StatusINAVBIT STRING (SIZE (4)),
+kepSV-StatusFNAVBIT STRING (SIZE (2))OPTIONAL,-- Need ON
+kepAlmanacAPowerHalfINTEGER (-4096..4095),
+kepAlmanacOmega0INTEGER (-32768..32767),
+kepAlmanacWINTEGER (-32768..32767),
+kepAlmanacM0INTEGER (-32768..32767),
+kepAlmanacAF0INTEGER (-32768..32767),
+kepAlmanacAF1INTEGER (-4096..4095),
+...
+}

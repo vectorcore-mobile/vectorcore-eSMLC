@@ -1,0 +1,6 @@
+NR-DL-TDOA-RequestAssistanceData-r16 ::= SEQUENCE {
+	nr-PhysCellID-r16				NR-PhysCellID-r16							OPTIONAL,
+	nr-AdType-r16					BIT STRING {	dl-prs 	(0),
+													posCalc (1) } (SIZE (1..8)),
+	...
+}

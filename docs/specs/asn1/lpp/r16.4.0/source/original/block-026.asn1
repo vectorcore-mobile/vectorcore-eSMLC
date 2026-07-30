@@ -1,0 +1,12 @@
+EllipsoidPointWithAltitudeAndUncertaintyEllipsoid ::= SEQUENCE {
+latitudeSignENUMERATED {north, south},
+degreesLatitudeINTEGER (0..8388607),-- 23 bit field
+degreesLongitudeINTEGER (-8388608..8388607),-- 24 bit field
+altitudeDirectionENUMERATED {height, depth},
+altitudeINTEGER (0..32767),-- 15 bit field
+uncertaintySemiMajorINTEGER (0..127),
+uncertaintySemiMinorINTEGER (0..127),
+orientationMajorAxisINTEGER (0..179),
+uncertaintyAltitudeINTEGER (0..127),
+confidenceINTEGER (0..100)
+}

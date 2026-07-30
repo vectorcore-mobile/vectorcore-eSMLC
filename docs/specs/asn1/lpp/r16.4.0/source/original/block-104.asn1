@@ -1,0 +1,11 @@
+NeQuickModelParameter ::= SEQUENCE {
+ai0INTEGER (0..2047),
+ai1INTEGER (-1024..1023),
+ai2INTEGER (-8192..8191),
+ionoStormFlag1INTEGER (0..1)OPTIONAL,-- Need OP
+ionoStormFlag2INTEGER (0..1)OPTIONAL,-- Need OP
+ionoStormFlag3INTEGER (0..1)OPTIONAL,-- Need OP
+ionoStormFlag4INTEGER (0..1)OPTIONAL,-- Need OP
+ionoStormFlag5INTEGER (0..1)OPTIONAL,-- Need OP
+...
+}

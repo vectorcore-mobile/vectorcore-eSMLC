@@ -1,0 +1,8 @@
+GNSS-RTK-ObservationsReq-r15::= 	SEQUENCE {
+	gnss-RTK-SignalsReq-r15				GNSS-SignalIDs,
+	gnss-RTK-Integer-ms-Req-r15			BOOLEAN,
+	gnss-RTK-PhaseRangeRateReq-r15		BOOLEAN,
+	gnss-RTK-CNR-Req-r15				BOOLEAN,
+	stationID-r15						GNSS-ReferenceStationID-r15		OPTIONAL,
+	...
+}

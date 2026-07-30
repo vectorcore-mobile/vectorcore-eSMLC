@@ -1,0 +1,16 @@
+{
+  "generated_modules": {
+    "LPP-PDU-Definitions.asn1": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724"
+  },
+  "generator": "tools/specs/lpp/subset/generate.py",
+  "included_symbol_count": 646,
+  "input_modules": {
+    "LPP-Broadcast-Definitions.asn1": "b740f1ce01929f7b80126a4a080b0ae1590fb0f5c1ad04bcf22dfdd85049ff65",
+    "LPP-PDU-Definitions.asn1": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724"
+  },
+  "minimum_compiler_complete_closure_count": 646,
+  "minimum_structural_closure_count": 19,
+  "omitted_symbol_count": 6,
+  "target": "minimum-envelope compiler-complete subset",
+  "why_expanded": "LPP-MessageBody is a normative CHOICE with non-open alternatives; preserving it unchanged requires all referenced PDU assignments and their dependencies."
+}

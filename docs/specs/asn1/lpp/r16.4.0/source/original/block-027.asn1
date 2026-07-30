@@ -1,0 +1,10 @@
+EllipsoidArc ::= SEQUENCE {
+latitudeSignENUMERATED {north, south},
+degreesLatitudeINTEGER (0..8388607),-- 23 bit field
+degreesLongitudeINTEGER (-8388608..8388607),-- 24 bit field
+innerRadiusINTEGER (0..65535),-- 16 bit field,
+uncertaintyRadiusINTEGER (0..127),
+offsetAngleINTEGER (0..179),
+includedAngleINTEGER (0..179),
+confidenceINTEGER (0..100)
+}

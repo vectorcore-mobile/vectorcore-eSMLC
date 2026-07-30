@@ -1,0 +1,5 @@
+GNSS-LocationInformation ::= SEQUENCE {
+	measurementReferenceTime		MeasurementReferenceTime,
+	agnss-List						GNSS-ID-Bitmap,					
+	...
+}

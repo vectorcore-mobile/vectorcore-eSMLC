@@ -1,0 +1,18 @@
+GNSS-RTK-FKP-Gradients-r15 ::= SEQUENCE {
+referenceStationID-r15GNSS-ReferenceStationID-r15,
+epochTime-r15GNSS-SystemTime,
+l1-r15GNSS-FrequencyID-r15OPTIONAL,-- Need OP
+l2-r15GNSS-FrequencyID-r15OPTIONAL,-- Need OP
+fkp-gradients-list-r15FKP-Gradients-List-r15,
+...
+}
+FKP-Gradients-List-r15 ::= SEQUENCE (SIZE(1..64)) OF FKP-Gradients-Element-r15
+FKP-Gradients-Element-r15 ::= SEQUENCE {
+svID-r15SV-ID,
+iod-r15BIT STRING (SIZE(11)),
+north-geometric-gradient-r15INTEGER (-2048..2047),
+east-geometric-gradient-r15INTEGER (-2048..2047),
+north-ionospheric-gradient-r15INTEGER (-8192..8191),
+east-ionospheric-gradient-r15INTEGER (-8192..8191),
+...
+}

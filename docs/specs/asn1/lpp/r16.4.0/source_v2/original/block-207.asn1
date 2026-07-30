@@ -1,0 +1,40 @@
+A-GNSS-ProvideCapabilities ::= SEQUENCE {
+	gnss-SupportList			GNSS-SupportList				OPTIONAL,
+	assistanceDataSupportList	AssistanceDataSupportList		OPTIONAL,
+	locationCoordinateTypes		LocationCoordinateTypes			OPTIONAL,
+	velocityTypes				VelocityTypes					OPTIONAL,
+	...,
+	[[ periodicalReportingNotSupported-r14
+								PositioningModes				OPTIONAL,
+		idleStateForMeasurements-r14		
+								ENUMERATED { required }			OPTIONAL
+	]],
+	[[ periodicAssistanceData-r15
+								BIT STRING { solicited 	 (0),
+											 unsolicited (1)	} (SIZE (1..8))		OPTIONAL
+	]]
+}
+GNSS-SupportList ::= SEQUENCE (SIZE(1..16)) OF GNSS-SupportElement
+GNSS-SupportElement ::= SEQUENCE {
+	gnss-ID							GNSS-ID,
+	sbas-IDs						SBAS-IDs					OPTIONAL,	-- Cond GNSS-ID-SBAS
+	agnss-Modes						PositioningModes,
+	gnss-Signals					GNSS-SignalIDs,
+	fta-MeasSupport					SEQUENCE {
+										cellTime	AccessTypes,
+										mode		PositioningModes,
+										...
+									}							OPTIONAL,	-- Cond fta
+	adr-Support						BOOLEAN,
+	velocityMeasurementSupport		BOOLEAN,
+	...,
+	[[
+		adrEnhancementsSupport-r15	ENUMERATED { true }			OPTIONAL,
+		ha-gnss-Modes-r15			PositioningModes			OPTIONAL
+	]]
+}
+AssistanceDataSupportList ::= SEQUENCE {
+	gnss-CommonAssistanceDataSupport	GNSS-CommonAssistanceDataSupport,
+	gnss-GenericAssistanceDataSupport	GNSS-GenericAssistanceDataSupport,
+	...
+}

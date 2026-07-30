@@ -1,0 +1,6 @@
+GLONASS-ClockModel ::= SEQUENCE {
+gloTauINTEGER (-2097152..2097151),
+gloGammaINTEGER (-1024..1023),
+gloDeltaTauINTEGER (-16..15)OPTIONAL,-- Need ON
+...
+}

@@ -1,0 +1,20 @@
+Sensor-ProvideCapabilities-r13 ::= SEQUENCE {
+	sensor-Modes-r13			BIT STRING {	standalone	(0),
+												ue-assisted	(1),
+												ue-based	(2)} (SIZE (1..8)),
+	...,
+	[[	sensor-AssistanceDataSupportList-r14	Sensor-AssistanceDataSupportList-r14	OPTIONAL,
+		periodicalReportingSupported-r14		PositioningModes						OPTIONAL,
+		idleStateForMeasurements-r14			ENUMERATED { required }					OPTIONAL
+	]],
+	[[	sensor-MotionInformationSup-r15			ENUMERATED { true }						OPTIONAL
+	]],
+	[[	adjustmentSupported-r16					ENUMERATED	{ true }					OPTIONAL
+	]]
+}
+Sensor-AssistanceDataSupportList-r14 ::= SEQUENCE {
+	...,
+	[[	validityPeriodSupported-v1520			ENUMERATED { true }		OPTIONAL,
+		validityAreaSupported-v1520				ENUMERATED { true }		OPTIONAL
+	]]
+}

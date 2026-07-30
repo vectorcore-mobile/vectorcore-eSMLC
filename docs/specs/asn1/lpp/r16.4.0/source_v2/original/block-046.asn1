@@ -1,0 +1,13 @@
+CommonIEsRequestAssistanceData ::= SEQUENCE {
+	primaryCellID		ECGI		OPTIONAL,	-- Cond EUTRA
+	...,
+	[[
+		segmentationInfo-r14		SegmentationInfo-r14		OPTIONAL	-- Cond Segmentation
+	]],
+	[[
+		periodicAssistanceDataReq-r15
+									PeriodicAssistanceDataControlParameters-r15
+																OPTIONAL,	-- Cond PerADreq
+		primaryCellID-r15			NCGI-r15					OPTIONAL	-- Cond NR
+	]]
+}

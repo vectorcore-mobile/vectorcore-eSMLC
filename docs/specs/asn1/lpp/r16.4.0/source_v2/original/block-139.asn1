@@ -1,0 +1,15 @@
+AlmanacBDS-AlmanacSet-r12 ::= SEQUENCE {
+	svID					SV-ID,
+	bdsAlmToa-r12			INTEGER (0..255)					OPTIONAL,	-- Cond NotSameForAllSV
+		bdsAlmSqrtA-r12			INTEGER (0..16777215),
+	bdsAlmE-r12				INTEGER (0..131071),
+	bdsAlmW-r12				INTEGER (-8388608..8388607),
+	bdsAlmM0-r12			INTEGER (-8388608..8388607),
+	bdsAlmOmega0-r12		INTEGER (-8388608..8388607),
+	bdsAlmOmegaDot-r12		INTEGER (-65536..65535),
+	bdsAlmDeltaI-r12		INTEGER (-32768..32767),
+	bdsAlmA0-r12			INTEGER (-1024..1023),
+	bdsAlmA1-r12			INTEGER (-1024..1023),
+	bdsSvHealth-r12			BIT STRING (SIZE(9))				OPTIONAL,	-- Cond SV-ID
+	...
+}

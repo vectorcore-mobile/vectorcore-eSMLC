@@ -1,0 +1,5 @@
+Sensor-Error-r13 ::= CHOICE {
+locationServerErrorCauses-r13Sensor-LocationServerErrorCauses-r13,
+targetDeviceErrorCauses-r13Sensor-TargetDeviceErrorCauses-r13,
+...
+}

@@ -1,0 +1,9 @@
+NR-DL-TDOA-LocationServerErrorCauses-r16 ::= SEQUENCE {
+cause-r16ENUMERATED{undefined,
+assistanceDataNotSupportedByServer,
+assistanceDataSupportedButCurrentlyNotAvailableByServer,
+notProvidedAssistanceDataNotSupportedByServer,
+...
+},
+...
+}

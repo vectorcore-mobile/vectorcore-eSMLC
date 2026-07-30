@@ -1,0 +1,103 @@
+CommonIEsRequestLocationInformation ::= SEQUENCE {
+	locationInformationType		LocationInformationType,
+	triggeredReporting			TriggeredReportingCriteria	OPTIONAL,	-- Cond ECID
+	periodicalReporting			PeriodicalReportingCriteria OPTIONAL,	-- Need ON
+	additionalInformation		AdditionalInformation		OPTIONAL,	-- Need ON
+	qos							QoS							OPTIONAL,	-- Need ON
+	environment					Environment					OPTIONAL,	-- Need ON
+	locationCoordinateTypes		LocationCoordinateTypes		OPTIONAL,	-- Need ON
+	velocityTypes				VelocityTypes				OPTIONAL,	-- Need ON
+	...,
+	[[
+		messageSizeLimitNB-r14	MessageSizeLimitNB-r14		OPTIONAL	-- Need ON
+	]],
+	[[
+		segmentationInfo-r14	SegmentationInfo-r14		OPTIONAL	-- Need ON
+	]]
+}
+LocationInformationType ::= ENUMERATED {
+	locationEstimateRequired,
+	locationMeasurementsRequired,
+	locationEstimatePreferred,
+	locationMeasurementsPreferred,
+	...
+}
+PeriodicalReportingCriteria ::=		SEQUENCE {
+	reportingAmount						ENUMERATED {
+											ra1, ra2, ra4, ra8, ra16, ra32,
+											ra64, ra-Infinity
+										} DEFAULT ra-Infinity,
+	reportingInterval					ENUMERATED {
+											noPeriodicalReporting, ri0-25,
+											ri0-5, ri1, ri2, ri4, ri8, ri16, ri32, ri64
+										}
+}
+TriggeredReportingCriteria ::=		SEQUENCE {
+	cellChange							BOOLEAN,
+	reportingDuration					ReportingDuration,
+	...
+}
+ReportingDuration ::=				INTEGER (0..255)
+AdditionalInformation ::= ENUMERATED {
+	onlyReturnInformationRequested,
+	mayReturnAditionalInformation,
+	...
+}
+QoS ::= SEQUENCE {
+	horizontalAccuracy			HorizontalAccuracy		OPTIONAL,	-- Need ON
+	verticalCoordinateRequest	BOOLEAN,
+	verticalAccuracy			VerticalAccuracy		OPTIONAL,	-- Need ON
+	responseTime				ResponseTime			OPTIONAL,	-- Need ON
+	velocityRequest				BOOLEAN,				
+	...,
+	[[	responseTimeNB-r14		ResponseTimeNB-r14		OPTIONAL	-- Need ON
+	]],
+	[[	horizontalAccuracyExt-r15	HorizontalAccuracyExt-r15		OPTIONAL,	-- Need ON
+		verticalAccuracyExt-r15		VerticalAccuracyExt-r15			OPTIONAL	-- Need ON
+	]]
+}
+HorizontalAccuracy ::= SEQUENCE {
+	accuracy		INTEGER(0..127),
+	confidence		INTEGER(0..100),
+	...
+}
+VerticalAccuracy ::= SEQUENCE {
+	accuracy		INTEGER(0..127),
+	confidence		INTEGER(0..100),
+	...
+}
+HorizontalAccuracyExt-r15 ::= SEQUENCE {
+	accuracyExt-r15		INTEGER(0..255),
+	confidence-r15		INTEGER(0..100),
+	...
+}
+VerticalAccuracyExt-r15 ::= SEQUENCE {
+	accuracyExt-r15		INTEGER(0..255),
+	confidence-r15		INTEGER(0..100),
+	...
+}
+ResponseTime ::= SEQUENCE {
+	time								INTEGER (1..128),
+	...,	
+	[[	responseTimeEarlyFix-r12		INTEGER (1..128)		OPTIONAL		-- Need ON
+	]],
+	[[	unit-r15				ENUMERATED { ten-seconds, ... }	OPTIONAL		-- Need ON
+	]]
+}
+ResponseTimeNB-r14 ::= SEQUENCE {
+	timeNB-r14							INTEGER (1..512),
+	responseTimeEarlyFixNB-r14			INTEGER (1..512)		OPTIONAL,		-- Need ON
+	...,
+	[[	unitNB-r15				ENUMERATED { ten-seconds, ... }	OPTIONAL		-- Need ON
+	]]
+}
+Environment ::= ENUMERATED {
+	badArea,
+	notBadArea,
+	mixedArea,
+	...
+}
+MessageSizeLimitNB-r14 ::= SEQUENCE {
+	measurementLimit-r14				INTEGER (1..512)		OPTIONAL,		-- Need ON
+	...
+}

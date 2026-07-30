@@ -1,0 +1,7 @@
+GNSS-RTK-ReferenceStationInfoReq-r15 ::= SEQUENCE {
+antennaDescriptionReq-r15BOOLEAN,
+antennaHeightReq-r15BOOLEAN,
+physicalReferenceStationReq-r15BOOLEAN,
+stationID-r15GNSS-ReferenceStationID-r15OPTIONAL,
+...
+}

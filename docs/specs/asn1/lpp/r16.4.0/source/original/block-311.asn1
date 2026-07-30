@@ -1,0 +1,5 @@
+BT-Error-r13 ::= CHOICE {
+locationServerErrorCauses-r13BT-LocationServerErrorCauses-r13,
+targetDeviceErrorCauses-r13BT-TargetDeviceErrorCauses-r13,
+...
+}

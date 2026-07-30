@@ -1,0 +1,7 @@
+CommonIEsRequestCapabilities ::= SEQUENCE {
+...,
+[[
+lpp-message-segmentation-req-r14BIT STRING {serverToTarget(0),
+targetToServer(1) }OPTIONAL -- Need ON
+]]
+}

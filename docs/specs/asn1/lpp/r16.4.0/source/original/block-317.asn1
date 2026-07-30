@@ -1,0 +1,33 @@
+NR-ECID-SignalMeasurementInformation-r16 ::= SEQUENCE {
+nr-PrimaryCellMeasuredResults-r16NR-MeasuredResultsElement-r16,
+nr-MeasuredResultsList-r16NR-MeasuredResultsList-r16OPTIONAL,
+...
+}
+NR-MeasuredResultsList-r16 ::= SEQUENCE (SIZE(1..32)) OF NR-MeasuredResultsElement-r16
+NR-MeasuredResultsElement-r16 ::= SEQUENCE {
+nr-PhysCellID-r16NR-PhysCellID-r16,
+nr-ARFCN-r16CHOICE {
+ssb-ARFCN-r16ARFCN-ValueNR-r15,
+csi-RS-pointA-r16ARFCN-ValueNR-r15
+},
+nr-CellGlobalID-r16NCGI-r15OPTIONAL,
+systemFrameNumber-r16BIT STRING (SIZE (10))OPTIONAL,resultsSSB-Cell-r16MeasQuantityResults-r16OPTIONAL,
+resultsCSI-RS-Cell-r16MeasQuantityResults-r16OPTIONAL,
+resultsSSB-Indexes-r16ResultsPerSSB-IndexList-r16OPTIONAL,
+resultsCSI-RS-Indexes-r16ResultsPerCSI-RS-IndexList-r16OPTIONAL,
+...
+}
+MeasQuantityResults-r16 ::= SEQUENCE {
+nr-RSRP-r16INTEGER (0..127)OPTIONAL,
+nr-RSRQ-r16INTEGER (0..127)OPTIONAL
+}
+ResultsPerSSB-IndexList-r16::= SEQUENCE (SIZE (1..64)) OF ResultsPerSSB-Index-r16
+ResultsPerSSB-Index-r16 ::= SEQUENCE {
+ssb-Index-r16INTEGER (0..63),
+ssb-Results-r16MeasQuantityResults-r16
+}
+ResultsPerCSI-RS-IndexList-r16::= SEQUENCE (SIZE (1..64)) OF ResultsPerCSI-RS-Index-r16
+ResultsPerCSI-RS-Index-r16 ::= SEQUENCE {
+csi-RS-Index-r16INTEGER (0..95),
+csi-RS-Results-r16MeasQuantityResults-r16
+}

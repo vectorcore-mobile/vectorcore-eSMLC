@@ -1,0 +1,3 @@
+NR-ECID-RequestCapabilities-r16 ::= SEQUENCE {
+...
+}

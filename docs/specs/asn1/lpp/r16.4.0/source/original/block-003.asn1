@@ -1,0 +1,15 @@
+LPP-MessageBody ::= CHOICE {
+c1CHOICE {
+requestCapabilitiesRequestCapabilities,
+provideCapabilitiesProvideCapabilities,
+requestAssistanceDataRequestAssistanceData,
+provideAssistanceDataProvideAssistanceData,
+requestLocationInformationRequestLocationInformation,
+provideLocationInformationProvideLocationInformation,
+abortAbort,
+errorError,
+spare7 NULL, spare6 NULL, spare5 NULL, spare4 NULL,
+spare3 NULL, spare2 NULL, spare1 NULL, spare0 NULL
+},
+messageClassExtensionSEQUENCE {}
+}

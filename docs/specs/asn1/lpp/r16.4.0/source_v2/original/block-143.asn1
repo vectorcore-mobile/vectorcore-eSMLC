@@ -1,0 +1,15 @@
+UTC-ModelSet2 ::= SEQUENCE {
+	utcA0				INTEGER (-32768..32767),
+	utcA1				INTEGER (-4096..4095),
+	utcA2				INTEGER (-64..63),
+	utcDeltaTls			INTEGER (-128..127),
+	utcTot				INTEGER (0..65535),
+	utcWNot				INTEGER (0..8191),
+	utcWNlsf			INTEGER (0..255),
+	utcDN				BIT STRING (SIZE(4)),
+	utcDeltaTlsf		INTEGER (-128..127),
+	...,
+	[[
+		utcWNlsf-ext-r16	INTEGER (256..8191)	OPTIONAL	-- Need ON
+	]]
+}

@@ -1,0 +1,10 @@
+OTDOA-ProvideAssistanceData ::= SEQUENCE {
+	otdoa-ReferenceCellInfo			OTDOA-ReferenceCellInfo				OPTIONAL,	-- Need ON
+	otdoa-NeighbourCellInfo			OTDOA-NeighbourCellInfoList			OPTIONAL,	-- Need ON
+	otdoa-Error						OTDOA-Error							OPTIONAL,	-- Need ON
+	...,
+	[[
+	 otdoa-ReferenceCellInfoNB-r14	OTDOA-ReferenceCellInfoNB-r14		OPTIONAL,	-- Need ON
+	 otdoa-NeighbourCellInfoNB-r14	OTDOA-NeighbourCellInfoListNB-r14	OPTIONAL	-- Need ON
+	]]
+}

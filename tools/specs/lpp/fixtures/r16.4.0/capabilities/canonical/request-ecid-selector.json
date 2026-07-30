@@ -1,0 +1,11 @@
+{
+  "criticalExtensions": [
+    "c1",
+    [
+      "requestCapabilities-r9",
+      {
+        "ecid-RequestCapabilities": {}
+      }
+    ]
+  ]
+}

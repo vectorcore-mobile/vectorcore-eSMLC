@@ -1,0 +1,16 @@
+{
+  "source": "docs/specs/asn1/lpp/r16.4.0/modules_v2/normalized/LPP-PDU-Definitions.asn1:3955-3975",
+  "type": "MeasuredResultsElement",
+  "extensible": true,
+  "root_fields": [
+    {"index": 0, "name": "physCellId", "optional": false, "type": "INTEGER", "constraint": "0..503", "uper_bits": 9},
+    {"index": 1, "name": "cellGlobalId", "optional": true, "presence_bit": 0, "type": "CellGlobalIdEUTRA-AndUTRA", "constraint": "extensible SEQUENCE", "uper_bits": null},
+    {"index": 2, "name": "arfcnEUTRA", "optional": false, "type": "ARFCN-ValueEUTRA", "constraint": "INTEGER (0..65535)", "uper_bits": 16},
+    {"index": 3, "name": "systemFrameNumber", "optional": true, "presence_bit": 1, "type": "BIT STRING", "constraint": "SIZE(10)", "uper_bits": 10},
+    {"index": 4, "name": "rsrp-Result", "optional": true, "presence_bit": 2, "type": "INTEGER", "constraint": "0..97", "uper_bits": 7},
+    {"index": 5, "name": "rsrq-Result", "optional": true, "presence_bit": 3, "type": "INTEGER", "constraint": "0..34", "uper_bits": 6},
+    {"index": 6, "name": "ue-RxTxTimeDiff", "optional": true, "presence_bit": 4, "type": "INTEGER", "constraint": "0..4095", "uper_bits": 12}
+  ],
+  "root_optional_bitmap": ["cellGlobalId", "systemFrameNumber", "rsrp-Result", "rsrq-Result", "ue-RxTxTimeDiff"],
+  "root_encoding_order": ["extension-present", "root-optional-bitmap", "physCellId", "cellGlobalId-if-present", "arfcnEUTRA", "systemFrameNumber-if-present", "rsrp-Result-if-present", "rsrq-Result-if-present", "ue-RxTxTimeDiff-if-present"]
+}

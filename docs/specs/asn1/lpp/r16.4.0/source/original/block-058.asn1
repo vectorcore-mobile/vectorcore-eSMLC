@@ -1,0 +1,11 @@
+NR-DL-PRS-QCL-ProcessingCapability-r16 ::= SEQUENCE {
+dl-PRS-QCL-ProcessingCapabilityBandList-r16SEQUENCE (SIZE (1..nrMaxBands-r16)) OF
+DL-PRS-QCL-ProcessingCapabilityPerBand-r16,
+...
+}
+DL-PRS-QCL-ProcessingCapabilityPerBand-r16 ::= SEQUENCE {
+freqBandIndicatorNR-r16FreqBandIndicatorNR-r16,
+ssb-FromNeighCellAsQCL-r16ENUMERATED { supported}OPTIONAL,
+prs-FromServNeighCellAsQCL-r16ENUMERATED { supported} OPTIONAL,
+...
+}

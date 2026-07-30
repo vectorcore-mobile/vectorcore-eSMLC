@@ -1,0 +1,5 @@
+OTDOA-Error ::= CHOICE {
+	locationServerErrorCauses		OTDOA-LocationServerErrorCauses,
+	targetDeviceErrorCauses			OTDOA-TargetDeviceErrorCauses,
+	...
+}

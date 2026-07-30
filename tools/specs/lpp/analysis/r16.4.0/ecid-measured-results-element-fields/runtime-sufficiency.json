@@ -1,0 +1,12 @@
+[
+  {"dependency": "extension-present bit", "existing_support": "complete", "missing_primitive": null, "blocks_root_only": false, "blocks_extensions": false},
+  {"dependency": "five-bit root optional bitmap", "existing_support": "complete", "missing_primitive": null, "blocks_root_only": false, "blocks_extensions": false},
+  {"dependency": "RSRP/RSRQ/RxTx constrained integers", "existing_support": "complete", "missing_primitive": null, "blocks_root_only": false, "blocks_extensions": false},
+  {"dependency": "fixed BIT STRING SIZE(10)", "existing_support": "complete", "missing_primitive": null, "blocks_root_only": false, "blocks_extensions": false},
+  {"dependency": "MCC/MNC bounded digit sequences", "existing_support": "complete", "missing_primitive": null, "blocks_root_only": false, "blocks_extensions": false},
+  {"dependency": "CellGlobalId sequence extension bit", "existing_support": "partial", "missing_primitive": null, "blocks_root_only": false, "blocks_extensions": false},
+  {"dependency": "CellGlobalId root CHOICE and fixed BIT STRING", "existing_support": "complete", "missing_primitive": null, "blocks_root_only": false, "blocks_extensions": false},
+  {"dependency": "extension-addition presence map", "existing_support": "absent", "missing_primitive": "normally-small non-negative whole number plus addition bitmap", "blocks_root_only": false, "blocks_extensions": true},
+  {"dependency": "extension open type", "existing_support": "absent", "missing_primitive": "UPER open-type length, octet payload, nested limit", "blocks_root_only": false, "blocks_extensions": true},
+  {"dependency": "unknown extension skip/preservation", "existing_support": "absent", "missing_primitive": "bounded open-type skip/preservation policy", "blocks_root_only": false, "blocks_extensions": true}
+]

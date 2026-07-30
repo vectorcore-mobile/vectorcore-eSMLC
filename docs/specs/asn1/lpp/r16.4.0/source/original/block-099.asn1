@@ -1,0 +1,50 @@
+NetworkTime ::= SEQUENCE {
+secondsFromFrameStructureStartINTEGER(0..12533),
+fractionalSecondsFromFrameStructureStartINTEGER(0..3999999),
+frameDriftINTEGER (-64..63)OPTIONAL,-- Cond GNSSsynch
+cellIDCHOICE {
+eUTRASEQUENCE {
+physCellIdINTEGER (0..503),
+cellGlobalIdEUTRACellGlobalIdEUTRA-AndUTRAOPTIONAL,-- Need ON
+earfcnARFCN-ValueEUTRA,
+...,
+[[ earfcn-v9a0ARFCN-ValueEUTRA-v9a0 OPTIONAL-- Cond EARFCN-max
+]]
+},
+uTRASEQUENCE {
+modeCHOICE {
+fddSEQUENCE {
+primary-CPICH-InfoINTEGER (0..511),
+...
+},
+tddSEQUENCE {
+cellParametersINTEGER (0..127),
+...
+}
+},
+cellGlobalIdUTRACellGlobalIdEUTRA-AndUTRAOPTIONAL,-- Need ON
+uarfcnARFCN-ValueUTRA,
+...
+},
+gSMSEQUENCE {
+bcchCarrierINTEGER (0..1023),
+bsicINTEGER (0..63),
+cellGlobalIdGERANCellGlobalIdGERANOPTIONAL,-- Need ON
+...
+},
+...,
+nBIoT-r14SEQUENCE {
+nbPhysCellId-r14INTEGER (0..503),
+nbCellGlobalId-r14ECGIOPTIONAL,-- Need ON
+nbCarrierFreq-r14CarrierFreq-NB-r14,
+...
+},
+nr-r15SEQUENCE {
+nrPhysCellId-r15INTEGER (0..1007),
+nrCellGlobalID-r15NCGI-r15OPTIONAL,-- Need ON
+nrARFCN-r15ARFCN-ValueNR-r15,
+...
+}
+},
+...
+}

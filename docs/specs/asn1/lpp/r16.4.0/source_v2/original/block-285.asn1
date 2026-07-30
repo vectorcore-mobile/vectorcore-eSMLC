@@ -1,0 +1,10 @@
+Sensor-RequestLocationInformation-r13 ::= SEQUENCE {
+	uncompensatedBarometricPressureReq-r13		BOOLEAN,
+	...,
+	[[	assistanceAvailability-r14				BOOLEAN		OPTIONAL	-- Need ON
+	]],
+	[[	sensor-MotionInformationReq-r15			BOOLEAN		OPTIONAL	-- Need ON
+	]],
+	[[	adjustmentReq-r16						BOOLEAN		OPTIONAL	-- Need ON
+	]]
+}
