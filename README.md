@@ -58,6 +58,71 @@ audited and race-tested: every piece of live request state is keyed by
 association and correlation together, so concurrent MMEs reusing identical
 correlation bytes cannot collide — see `docs/architecture.md`.
 
+## Supported Location Types
+
+Five methods can produce a location estimate, each gated by
+`positioning.<method>.enabled` in `config/esmlc.yaml` (see
+`config/esmlc.yaml.example`). Each populates `GeographicEstimate.Source`
+with a distinct value, so the origin of every estimate is traceable —
+including in the JSON log (below).
+
+| Method | Config key | How the estimate is derived | `EstimateSource` |
+|---|---|---|---|
+| E-CID | `positioning.ecid.enabled` | Coarse surveyed serving-cell point, looked up by E-CGI in the operator-maintained catalog (`ecid.cell_data_file`) | `EstimateSourceAuthoritativeServingCell` |
+| OTDOA | `positioning.otdoa.enabled` | 2D hyperbolic multilateration solved from UE-reported RSTD measurements, against the same cell catalog's reference/neighbour positions | `EstimateSourceOTDOAMultilateration` |
+| A-GNSS | `positioning.agnss.enabled` | UE-based (MS-based) GPS only: the UE reports its own already-computed position; this service validates and relays it, with no solver of its own | `EstimateSourceAGNSSUEReported` |
+| LPPa E-CID | `positioning.lppa_ecid.enabled` | eNB's self-reported antenna position over LPPa (TS 36.455), needing no UE round trip; falls back to the E-CID catalog when the eNB has none | `EstimateSourceLPPaAccessPointPosition` |
+| Simulation | `positioning.simulation.enabled` | Fixed, operator-configured coordinate for testing only; never installed unless explicitly enabled, and never substitutes for a real estimate | `EstimateSourceSimulation` |
+
+LPPa E-CID takes priority over every UE-based method when enabled, since it
+needs no UE round trip. MS-assisted A-GNSS (raw pseudoranges, an
+E-SMLC-side solver) and every other LPPa procedure remain unimplemented —
+see `docs/limitations.md`.
+
+## JSON Log API
+
+All logging is structured JSON (`slog.NewJSONHandler`), written to stderr.
+`service.log_level` (`debug`/`info`/`warn`/`error`) sets the minimum level.
+Every entry has `time`, `level`, and `msg`; `msg` is a stable, dotted event
+name safe to match on. The events covering one location transaction:
+
+| Event (`msg`) | Level | Fields | Meaning |
+|---|---|---|---|
+| `esmlc.lcsap.location_request_received` | Info | `association` | LCS-AP Location Request accepted; positioning job started |
+| `esmlc.lpp.event` | Info | `association`, `correlation`, `kind` | An LPP procedure event applied to the job (e.g. capability match, measurement report) |
+| `esmlc.lppa.no_active_job` | Warn | `association`, `correlation` | LPPa message received with no matching job (association or job already gone) |
+| `esmlc.positioning.job_outcome` | Info | `association`, `outcome` | Job reached a terminal state; see `outcome` values below |
+| `esmlc.cell_catalog_reloaded` / `esmlc.cell_catalog_reload_failed` | Info / Warn | `version` or `error`, `active_version`, `records` | Result of a `POST /admin/reload-catalog` call |
+
+`outcome` on `esmlc.positioning.job_outcome` is one of: `estimate_available`,
+`measurements_without_estimator`, `estimation_failed`, `quality_not_met`,
+`no_eligible_method`, `procedure_failure`, `deadline_expired`, `cancelled`.
+Other events (`esmlc.startup`, `esmlc.sls.listening`,
+`esmlc.sls.association_up`/`_down`, `esmlc.shutdown`, ...) cover process and
+transport lifecycle rather than a specific location transaction.
+
+Example lines (one JSON object per line; reformatted here for readability):
+
+```json
+{"time":"2026-08-02T17:20:03.114Z","level":"INFO","msg":"esmlc.lcsap.location_request_received","association":"assoc-7"}
+{"time":"2026-08-02T17:20:03.118Z","level":"INFO","msg":"esmlc.lpp.event","association":"assoc-7","correlation":"1a2b3c4d","kind":"MeasurementReport"}
+{"time":"2026-08-02T17:20:03.121Z","level":"INFO","msg":"esmlc.positioning.job_outcome","association":"assoc-7","outcome":"estimate_available"}
+```
+
+A job where no configured method could produce a fix:
+
+```json
+{"time":"2026-08-02T17:20:11.402Z","level":"INFO","msg":"esmlc.positioning.job_outcome","association":"assoc-9","outcome":"no_eligible_method"}
+```
+
+An operator-triggered catalog reload — the same fields are also the JSON
+HTTP response body of `POST /admin/reload-catalog`, e.g.
+`{"ActiveChanged":true,"ActiveVersion":"2026-08-01","RecordCount":842}`:
+
+```json
+{"time":"2026-08-02T17:22:00.010Z","level":"INFO","msg":"esmlc.cell_catalog_reloaded","version":"2026-08-01","records":842}
+```
+
 ## Run
 
 Copy `config/esmlc.yaml.example` to `config/esmlc.yaml`, review it, then run:
