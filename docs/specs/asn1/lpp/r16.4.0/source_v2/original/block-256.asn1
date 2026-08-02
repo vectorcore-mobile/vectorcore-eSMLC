@@ -1,4 +1,0 @@
-SBAS-ID ::= SEQUENCE {
-	sbas-id				ENUMERATED { waas, egnos, msas, gagan, ...},
-	...
-}

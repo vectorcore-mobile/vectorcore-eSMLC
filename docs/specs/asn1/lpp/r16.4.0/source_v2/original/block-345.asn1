@@ -1,5 +1,0 @@
-NR-DL-AoD-Error-r16 ::= CHOICE {
-	locationServerErrorCauses-r16		NR-DL-AoD-LocationServerErrorCauses-r16,
-	targetDeviceErrorCauses-r16			NR-DL-AoD-TargetDeviceErrorCauses-r16,
-	...
-}

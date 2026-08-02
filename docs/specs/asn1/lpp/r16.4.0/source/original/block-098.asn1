@@ -1,9 +1,0 @@
-GPS-TOW-Assist ::= SEQUENCE (SIZE(1..64)) OF GPS-TOW-AssistElement
-GPS-TOW-AssistElement ::= SEQUENCE {
-satelliteIDINTEGER (1..64),
-tlmWordINTEGER (0..16383),
-antiSpoofINTEGER (0..1),
-alertINTEGER (0..1),
-tlmRsvdBitsINTEGER (0..3),
-...
-}

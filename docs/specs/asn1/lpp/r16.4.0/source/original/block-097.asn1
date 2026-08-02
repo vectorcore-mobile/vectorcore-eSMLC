@@ -1,9 +1,0 @@
-GNSS-SystemTime ::= SEQUENCE {
-gnss-TimeIDGNSS-ID,
-gnss-DayNumberINTEGER (0..32767),
-gnss-TimeOfDayINTEGER (0..86399),
-gnss-TimeOfDayFrac-msecINTEGER (0..999)OPTIONAL,-- Need ON
-notificationOfLeapSecondBIT STRING (SIZE(2))OPTIONAL,-- Cond gnss-TimeID-glonass
-gps-TOW-AssistGPS-TOW-AssistOPTIONAL,-- Cond gnss-TimeID-gps
-...
-}

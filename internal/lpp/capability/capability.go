@@ -6,29 +6,68 @@ import (
 )
 
 // RequestCapabilitiesR9IEs has five root optional fields in ASN.1 order:
-// common, A-GNSS, OTDOA, ECID, EPDU. Only ECID is representable here.
-type RequestCapabilitiesR9IEs struct{ ECID *ECIDRequestCapabilities }
+// common, A-GNSS, OTDOA, ECID, EPDU. Only A-GNSS, OTDOA, and ECID are
+// representable here.
+type RequestCapabilitiesR9IEs struct {
+	AGNSS *AGNSSRequestCapabilities
+	OTDOA *OTDOARequestCapabilities
+	ECID  *ECIDRequestCapabilities
+}
 type ECIDRequestCapabilities struct{}
-type ProvideCapabilitiesR9IEs struct{ ECID *ECIDProvideCapabilities }
+
+// OTDOARequestCapabilities is TS 37.355 OTDOA-RequestCapabilities, an
+// extensible SEQUENCE with no root fields at all.
+type OTDOARequestCapabilities struct{}
+
+type ProvideCapabilitiesR9IEs struct {
+	AGNSS *AGNSSProvideCapabilities
+	OTDOA *OTDOAProvideCapabilities
+	ECID  *ECIDProvideCapabilities
+}
 type ECIDProvideCapabilities struct{ MeasurementSupport uper.BitString }
+
+// OTDOAProvideCapabilities is the bounded TS 37.355 OTDOA-ProvideCapabilities
+// root: only otdoa-Mode BIT STRING(SIZE(1..8)). Every Release 10/14/15
+// optional root field after it (PRS config, band lists, antenna count, ...)
+// is deliberately not represented.
+type OTDOAProvideCapabilities struct{ Mode uper.BitString }
 
 func (v ECIDProvideCapabilities) SupportsRSRP() bool { return bit(v.MeasurementSupport, 0) }
 func (v ECIDProvideCapabilities) SupportsRSRQ() bool { return bit(v.MeasurementSupport, 1) }
 func (v ECIDProvideCapabilities) SupportsUERxTxTimeDifference() bool {
 	return bit(v.MeasurementSupport, 2)
 }
+
+// SupportsUEAssisted reports otdoa-Mode bit 0: UE-assisted OTDOA with LTE PRS.
+func (v OTDOAProvideCapabilities) SupportsUEAssisted() bool { return bit(v.Mode, 0) }
+
 func bit(v uper.BitString, n int) bool {
 	b := v.Bytes()
 	return n < v.BitLen() && b[n/8]&(1<<(7-(n%8))) != 0
 }
-func (v RequestCapabilitiesR9IEs) Validate() error { return nil }
-func (v ProvideCapabilitiesR9IEs) Validate() error {
-	if v.ECID == nil {
-		return nil
+func (v RequestCapabilitiesR9IEs) Validate() error {
+	if v.AGNSS != nil {
+		return v.AGNSS.Validate()
 	}
-	n := v.ECID.MeasurementSupport.BitLen()
-	if n < 1 || n > 8 {
-		return fmt.Errorf("%w: length %d", ErrInvalidECID, n)
+	return nil
+}
+func (v ProvideCapabilitiesR9IEs) Validate() error {
+	if v.AGNSS != nil {
+		if err := v.AGNSS.Validate(); err != nil {
+			return err
+		}
+	}
+	if v.OTDOA != nil {
+		n := v.OTDOA.Mode.BitLen()
+		if n < 1 || n > 8 {
+			return fmt.Errorf("%w: length %d", ErrInvalidOTDOA, n)
+		}
+	}
+	if v.ECID != nil {
+		n := v.ECID.MeasurementSupport.BitLen()
+		if n < 1 || n > 8 {
+			return fmt.Errorf("%w: length %d", ErrInvalidECID, n)
+		}
 	}
 	return nil
 }
@@ -68,8 +107,18 @@ func encodeRequestR9(w *uper.Writer, v RequestCapabilitiesR9IEs) error {
 	if e := w.WriteExtensionPresent(false); e != nil {
 		return e
 	}
-	if e := w.WriteOptionalBitmap([]bool{false, false, false, v.ECID != nil, false}); e != nil {
+	if e := w.WriteOptionalBitmap([]bool{false, v.AGNSS != nil, v.OTDOA != nil, v.ECID != nil, false}); e != nil {
 		return e
+	}
+	if v.AGNSS != nil {
+		if e := v.AGNSS.EncodeUPER(w); e != nil {
+			return e
+		}
+	}
+	if v.OTDOA != nil {
+		if e := w.WriteExtensionPresent(false); e != nil {
+			return e
+		}
 	}
 	if v.ECID != nil {
 		return w.WriteExtensionPresent(false)
@@ -91,16 +140,27 @@ func decodeRequestR9(r *uper.Reader) (RequestCapabilitiesR9IEs, error) {
 	if bits[0] {
 		return RequestCapabilitiesR9IEs{}, ErrUnsupportedCommon
 	}
-	if bits[1] {
-		return RequestCapabilitiesR9IEs{}, ErrUnsupportedAGNSS
-	}
-	if bits[2] {
-		return RequestCapabilitiesR9IEs{}, ErrUnsupportedOTDOA
-	}
 	if bits[4] {
 		return RequestCapabilitiesR9IEs{}, ErrUnsupportedEPDU
 	}
 	v := RequestCapabilitiesR9IEs{}
+	if bits[1] {
+		x, e := DecodeAGNSSRequestCapabilities(r)
+		if e != nil {
+			return v, e
+		}
+		v.AGNSS = &x
+	}
+	if bits[2] {
+		ext, e = r.ReadExtensionPresent()
+		if e != nil {
+			return v, e
+		}
+		if e = uper.RequireNoExtension(ext); e != nil {
+			return v, fmt.Errorf("%w: OTDOA request: %w", ErrUnsupportedExtension, e)
+		}
+		v.OTDOA = &OTDOARequestCapabilities{}
+	}
 	if bits[3] {
 		ext, e = r.ReadExtensionPresent()
 		if e != nil {
@@ -149,8 +209,21 @@ func encodeProvideR9(w *uper.Writer, v ProvideCapabilitiesR9IEs) error {
 	if e := w.WriteExtensionPresent(false); e != nil {
 		return e
 	}
-	if e := w.WriteOptionalBitmap([]bool{false, false, false, v.ECID != nil, false}); e != nil {
+	if e := w.WriteOptionalBitmap([]bool{false, v.AGNSS != nil, v.OTDOA != nil, v.ECID != nil, false}); e != nil {
 		return e
+	}
+	if v.AGNSS != nil {
+		if e := v.AGNSS.EncodeUPER(w); e != nil {
+			return e
+		}
+	}
+	if v.OTDOA != nil {
+		if e := w.WriteExtensionPresent(false); e != nil {
+			return e
+		}
+		if e := w.WriteBitString(v.OTDOA.Mode, 1, 8); e != nil {
+			return e
+		}
 	}
 	if v.ECID != nil {
 		if e := w.WriteExtensionPresent(false); e != nil {
@@ -175,16 +248,31 @@ func decodeProvideR9(r *uper.Reader) (ProvideCapabilitiesR9IEs, error) {
 	if bits[0] {
 		return ProvideCapabilitiesR9IEs{}, ErrUnsupportedCommon
 	}
-	if bits[1] {
-		return ProvideCapabilitiesR9IEs{}, ErrUnsupportedAGNSS
-	}
-	if bits[2] {
-		return ProvideCapabilitiesR9IEs{}, ErrUnsupportedOTDOA
-	}
 	if bits[4] {
 		return ProvideCapabilitiesR9IEs{}, ErrUnsupportedEPDU
 	}
 	v := ProvideCapabilitiesR9IEs{}
+	if bits[1] {
+		x, e := DecodeAGNSSProvideCapabilities(r)
+		if e != nil {
+			return v, e
+		}
+		v.AGNSS = &x
+	}
+	if bits[2] {
+		ext, e = r.ReadExtensionPresent()
+		if e != nil {
+			return v, e
+		}
+		if e = uper.RequireNoExtension(ext); e != nil {
+			return v, fmt.Errorf("%w: OTDOA provide: %w", ErrUnsupportedExtension, e)
+		}
+		s, e := r.ReadBitString(1, 8)
+		if e != nil {
+			return v, fmt.Errorf("%w: %w", ErrInvalidOTDOA, e)
+		}
+		v.OTDOA = &OTDOAProvideCapabilities{Mode: s}
+	}
 	if bits[3] {
 		ext, e = r.ReadExtensionPresent()
 		if e != nil {

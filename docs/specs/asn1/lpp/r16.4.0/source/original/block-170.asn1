@@ -1,7 +1,0 @@
-GNSS-IonosphericModelReq ::=SEQUENCE {
-klobucharModelReqBIT STRING (SIZE(2))OPTIONAL,-- Cond klobuchar
-neQuickModelReqNULLOPTIONAL,-- Condnequick
-...,
-[[klobucharModel2Req-r16 NULLOPTIONAL-- Cond klobuchar2
-]]
-}

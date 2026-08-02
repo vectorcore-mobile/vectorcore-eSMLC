@@ -1,9 +1,0 @@
-BT-TargetDeviceErrorCauses-r13 ::= SEQUENCE {
-cause-r13ENUMERATED {undefined,
-requestedMeasurementsNotAvailable,
-notAllrequestedMeasurementsPossible,
-...
-},
-bt-Beacon-rssiMeasurementNotPossible-r13NULLOPTIONAL,
-...
-}

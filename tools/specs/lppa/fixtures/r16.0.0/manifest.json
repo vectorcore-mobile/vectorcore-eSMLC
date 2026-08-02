@@ -1,0 +1,72 @@
+{
+  "specification": "3GPP TS 36.455 (ATIS reprint)",
+  "version": "16.0.0",
+  "encoding": "aligned PER",
+  "compiler": {
+    "name": "asn1tools",
+    "version": "0.167.0",
+    "role": "pinned leaf declaration compiler; complete PDU is independently composed because object-set OPEN TYPE dispatch is unsupported"
+  },
+  "fixtures": [
+    {
+      "name": "initiation-request-ondemand",
+      "file": "initiation-request-ondemand.aper",
+      "sha256": "5c0b988ab51f2760681b48363315c53e6aacfaa1836f84751e2a1b0ac0d9d5d3",
+      "hex": "000200000117000003000200011000030001000005000600000b000100"
+    },
+    {
+      "name": "initiation-request-periodic",
+      "file": "initiation-request-periodic.aper",
+      "sha256": "3ed829bf9214d18c1fd620d01e5bc3794febf96c8735f3906c7402ede1b3462d",
+      "hex": "00020000021c0000040002000120000300014000040001200005000600000b000100"
+    },
+    {
+      "name": "initiation-response-minimal",
+      "file": "initiation-response-minimal.aper",
+      "sha256": "4192ec1cff39bc42c9d16df18c0299b8f9edd627f9d4959d3c79a6c61fe785af",
+      "hex": "20020000010d00000200020001100006000140"
+    },
+    {
+      "name": "initiation-response-full",
+      "file": "initiation-response-full.aper",
+      "sha256": "2d98d7ad3f47d24fdbcaec68e5316f2824d2dc7eb7a20472485f8935fac7ee09",
+      "hex": "200200000231000004000200012000060001500007401a4000f1100abcdef0100120360b60804000000000781414b41c40000e4002000c"
+    },
+    {
+      "name": "initiation-failure-misc-unspecified",
+      "file": "initiation-failure-misc-unspecified.aper",
+      "sha256": "743dc65c1956a1dbf5b7c9ef6cd52b4f0da12d35dfcdb88e3019ebaf0bafe2c3",
+      "hex": "40020000010d00000200020001100000400140"
+    },
+    {
+      "name": "initiation-failure-radio-network-unspecified",
+      "file": "initiation-failure-radio-network-unspecified.aper",
+      "sha256": "6a541b6c014aa70129768c1ec6574118238daa1fcce2fe7cb75d8984e992e8df",
+      "hex": "40020000030d00000200020001300000400100"
+    },
+    {
+      "name": "failure-indication-protocol-semantic-error",
+      "file": "failure-indication-protocol-semantic-error.aper",
+      "sha256": "7f71b8b1d45c020f15c2e5bde91be7316b2613d20d68478ae2edd3b48adba4ff",
+      "hex": "000340000412000003000200014000060001500000400128"
+    },
+    {
+      "name": "report-with-cell-portion",
+      "file": "report-with-cell-portion.aper",
+      "sha256": "2bc3b820f8ede5fd6b7035499c65d1cb9421e2209778c0e8fa3f30da6f5b0e20",
+      "hex": "000440000521000004000200014000060001500007400a0000f1100abcdef01001000e400200c8"
+    },
+    {
+      "name": "report-without-cell-portion",
+      "file": "report-without-cell-portion.aper",
+      "sha256": "0b7e38dc82c1738e4645d365f76c504e67670efb1c88ad18c73dcd6b20ea737d",
+      "hex": "00044000062b000003000200011000060001400007401a4000f1100abcdef0100120360b60804000000000781414b41c40"
+    },
+    {
+      "name": "termination",
+      "file": "termination.aper",
+      "sha256": "0404f4c70dd33a2678ff7831b9267e623205670eb180fe082ed321944368d192",
+      "hex": "00050000010d00000200020001100006000140"
+    }
+  ]
+}

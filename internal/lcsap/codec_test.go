@@ -28,7 +28,7 @@ func TestMMECompatibleLocationRequestRoundTrip(t *testing.T) {
 
 func TestLocationRequestPreservesConditionalPriority(t *testing.T) {
 	p := request()
-	p.IEs = append(p.IEs, IE{IELCSPriority, aper.Ignore, []byte{0}})
+	p.IEs = append(p.IEs, IE{IELCSPriority, aper.Reject, []byte{0}})
 	v, err := DecodeLocationRequest(p)
 	if err != nil || v.Priority == nil || *v.Priority != 0 || v.LocationType != 0 {
 		t.Fatalf("decoded %#v: %v", v, err)
@@ -50,7 +50,7 @@ func TestLocationRequestPreservesQoSAndLPPAbility(t *testing.T) {
 		t.Fatal(err)
 	}
 	p := request()
-	p.IEs = append(p.IEs, IE{IELCSQoS, aper.Ignore, qos}, IE{IEUEPositioningCapability, aper.Ignore, capability})
+	p.IEs = append(p.IEs, IE{IELCSQoS, aper.Reject, qos}, IE{IEUEPositioningCapability, aper.Reject, capability})
 	v, err := DecodeLocationRequest(p)
 	if err != nil || v.QoS == nil || v.QoS.HorizontalAccuracy == nil || *v.QoS.HorizontalAccuracy != 4 || v.QoS.ResponseTime == nil || *v.QoS.ResponseTime != 0 || v.LPPSupported == nil || *v.LPPSupported {
 		t.Fatalf("decoded %#v: %v", v, err)
@@ -58,7 +58,7 @@ func TestLocationRequestPreservesQoSAndLPPAbility(t *testing.T) {
 }
 
 func TestSupportedLCSCauseEncodings(t *testing.T) {
-	for cause, wire := range map[Cause]byte{CauseRadioNetworkUnspecified: 0x00, CauseProtocolUnspecified: 0x94, CauseMiscUnspecified: 0xcc} {
+	for cause, wire := range map[Cause]byte{CauseRadioNetworkUnspecified: 0x00, CauseProtocolUnspecified: 0x94, CauseMiscUnspecified: 0xd8} {
 		encoded, err := FailureWithCause([4]byte{1}, cause)
 		if err != nil {
 			t.Fatal(err)
@@ -69,6 +69,25 @@ func TestSupportedLCSCauseEncodings(t *testing.T) {
 		}
 		if len(p.IEs) != 2 || p.IEs[1].ID != IELCSCause || len(p.IEs[1].Value) != 1 || p.IEs[1].Value[0] != wire {
 			t.Fatalf("cause %d encoded %#v", cause, p)
+		}
+	}
+}
+
+func TestLCSCauseRootBranches(t *testing.T) {
+	for _, cause := range []LCSCause{
+		{LCSCauseRadioNetwork, RadioNetworkUnspecified},
+		{LCSCauseTransport, TransportResourceUnavailable},
+		{LCSCauseTransport, TransportUnspecified},
+		{LCSCauseProtocol, ProtocolSemanticError},
+		{LCSCauseMisc, MiscHardwareFailure},
+	} {
+		encoded, err := EncodeLCSCause(cause)
+		if err != nil {
+			t.Fatal(err)
+		}
+		decoded, err := DecodeLCSCause(encoded)
+		if err != nil || decoded != cause {
+			t.Fatalf("%#v => %x => %#v: %v", cause, encoded, decoded, err)
 		}
 	}
 }
@@ -92,6 +111,40 @@ func TestLocationResponseAndMalformedInput(t *testing.T) {
 		}
 	}
 }
+
+func TestIndependentRootResultMetadataFixtures(t *testing.T) {
+	data := NewECIDPositioningData()
+	encoded, err := data.EncodeAPER()
+	if err != nil || !bytes.Equal(encoded, []byte{0x40, 0x13}) {
+		t.Fatalf("positioning data %x %v", encoded, err)
+	}
+	decoded, err := DecodePositioningData(encoded)
+	if err != nil || !bytes.Equal(decoded.Methods(), []byte{0x13}) {
+		t.Fatalf("positioning data decode %#v %v", decoded, err)
+	}
+	for value, fixture := range map[AccuracyFulfillmentIndicator]byte{AccuracyFulfilled: 0x00, AccuracyNotFulfilled: 0x40} {
+		encoded, err = EncodeAccuracyFulfillmentIndicator(value)
+		if err != nil || len(encoded) != 1 || encoded[0] != fixture {
+			t.Fatalf("accuracy %d: %x %v", value, encoded, err)
+		}
+		if decodedValue, err := DecodeAccuracyFulfillmentIndicator(encoded); err != nil || decodedValue != value {
+			t.Fatalf("accuracy decode %d %v", decodedValue, err)
+		}
+	}
+	if _, err := DecodeAccuracyFulfillmentIndicator([]byte{0x01}); err == nil {
+		t.Fatal("accepted non-zero APER padding")
+	}
+	response, err := LocationResponseWithMetadata([4]byte{1}, 38, -90, 40, &data, ptrAccuracy(AccuracyFulfilled))
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := Decode(response)
+	if err != nil || len(p.IEs) != 4 || p.IEs[2].ID != IEPositioningData || p.IEs[3].ID != IEAccuracyFulfillmentIndicator {
+		t.Fatalf("response %#v %v", p, err)
+	}
+}
+
+func ptrAccuracy(v AccuracyFulfillmentIndicator) *AccuracyFulfillmentIndicator { return &v }
 func TestUnknownRejectAndDuplicateRejected(t *testing.T) {
 	p := request()
 	p.IEs = append(p.IEs, IE{999, aper.Reject, []byte{1}})
@@ -102,6 +155,39 @@ func TestUnknownRejectAndDuplicateRejected(t *testing.T) {
 	p.IEs = append(p.IEs, p.IEs[0])
 	if _, e := ValidateLocationRequest(p); e == nil {
 		t.Fatal("duplicate accepted")
+	}
+}
+
+func TestMalformedLocationRequestRejectedBeforeDispatch(t *testing.T) {
+	for _, mutate := range []func(*PDU){
+		func(p *PDU) { p.IEs = p.IEs[:2] },                                      // missing mandatory ECGI
+		func(p *PDU) { p.IEs = append(p.IEs, p.IEs[0]) },                        // duplicate mandatory IE
+		func(p *PDU) { p.IEs[1].Criticality = aper.Ignore },                     // reject-criticality mismatch
+		func(p *PDU) { p.IEs = append(p.IEs, IE{999, aper.Reject, []byte{1}}) }, // unknown reject IE
+	} {
+		p := request()
+		p.IEs = append([]IE(nil), p.IEs...)
+		mutate(&p)
+		wire, err := Encode(p)
+		if err != nil {
+			t.Fatal(err)
+		}
+		decoded, err := Decode(wire)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err = DecodeLocationRequest(decoded); err == nil {
+			t.Fatal("malformed Location Request accepted")
+		}
+	}
+	valid, err := Encode(request())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for n := 0; n < len(valid); n++ {
+		if _, err := Decode(valid[:n]); err == nil {
+			t.Fatalf("accepted truncated Location Request at %d bytes", n)
+		}
 	}
 }
 

@@ -90,8 +90,12 @@ func TestAuthoritativeServingCellEstimateDeliveredAfterECIDMeasurements(t *testi
 	c.Positioning.ECID.Enabled = true
 	c.Positioning.ECID.RequestRSRP = true
 	c.Positioning.ECID.CellDataFile = "../positioning/testdata/serving-cells.yaml"
-	c.Positioning.ECID.CellDataMaxAge = 31 * 24 * time.Hour
-	s := New(c, nil)
+	c.Positioning.ECID.CellDataMaxAge = 32 * 24 * time.Hour
+	// The fixture's updated_at is fixed at 2026-07-01T00:00:00Z; the catalog
+	// clock must be fixed too, or this test becomes a time bomb that fails
+	// once real time drifts past CellDataMaxAge from that fixed timestamp.
+	fixedNow := time.Date(2026, 7, 15, 12, 0, 0, 0, time.UTC)
+	s := newServer(c, nil, func() time.Time { return fixedNow })
 	out, err := s.Handle("mme-a", locRequest())
 	if err != nil || len(out) != 1 {
 		t.Fatalf("start %d %v", len(out), err)
@@ -126,6 +130,26 @@ func TestAuthoritativeServingCellEstimateDeliveredAfterECIDMeasurements(t *testi
 	p, err = lcsap.Decode(out[0])
 	if err != nil || p.Category != lcsap.Successful || p.Procedure != lcsap.ProcedureLocationRequest {
 		t.Fatalf("authoritative estimate %#v %v", p, err)
+	}
+}
+
+func TestConfiguredCatalogReloadAndStatus(t *testing.T) {
+	c := config.Default()
+	c.Positioning.ECID.CellDataFile = "../positioning/testdata/serving-cells.yaml"
+	c.Positioning.ECID.CellDataMaxAge = 32 * 24 * time.Hour
+	// See TestAuthoritativeServingCellEstimateDeliveredAfterECIDMeasurements
+	// for why this must be a fixed clock rather than time.Now.
+	fixedNow := time.Date(2026, 7, 15, 12, 0, 0, 0, time.UTC)
+	s := newServer(c, nil, func() time.Time { return fixedNow })
+	status := s.CatalogStatus()
+	if !status.Configured || status.ActiveVersion != "operator-survey-2026-07" || status.RecordCount != 1 || status.ReloadSuccesses != 1 {
+		t.Fatalf("initial catalog status %#v", status)
+	}
+	if result := s.ReloadCellCatalog(); result.Error != "" || !result.ActiveChanged || result.ActiveVersion != status.ActiveVersion {
+		t.Fatalf("reload %#v", result)
+	}
+	if status = s.CatalogStatus(); status.ReloadSuccesses != 2 || status.LastReloadError != "" {
+		t.Fatalf("reloaded catalog status %#v", status)
 	}
 }
 func TestGNSSDoesNotFabricateResult(t *testing.T) {

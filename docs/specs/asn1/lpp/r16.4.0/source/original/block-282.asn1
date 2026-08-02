@@ -1,8 +1,0 @@
-Sensor-ProvideLocationInformation-r13 ::= SEQUENCE {
-sensor-MeasurementInformation-r13Sensor-MeasurementInformation-r13OPTIONAL,
-sensor-Error-r13Sensor-Error-r13OPTIONAL,
-...,
-[[
-sensor-MotionInformation-r15Sensor-MotionInformation-r15OPTIONAL
-]]
-}

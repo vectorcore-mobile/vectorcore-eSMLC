@@ -1,6 +1,0 @@
-GNSS-Link-CombinationsList-r15 ::= SEQUENCE (SIZE(1..8)) OF GNSS-Link-Combinations-r15
-GNSS-Link-Combinations-r15 ::= SEQUENCE {
-	l1-r15		GNSS-FrequencyID-r15,
-	l2-r15		GNSS-FrequencyID-r15,
-	...
-}

@@ -1,7 +1,0 @@
-NR-Multi-RTT-ProvideLocationInformation-r16 ::= SEQUENCE {
-nr-Multi-RTT-SignalMeasurementInformation-r16
-NR-Multi-RTT-SignalMeasurementInformation-r16
-OPTIONAL,
-nr-Multi-RTT-Error-r16NR-Multi-RTT-Error-r16OPTIONAL,
-...
-}

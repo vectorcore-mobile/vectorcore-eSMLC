@@ -1,4 +1,0 @@
-GLO-RTK-BiasInformationReq-r15 ::= SEQUENCE {
-stationID-r15GNSS-ReferenceStationID-r15OPTIONAL,
-...
-}

@@ -1,8 +1,0 @@
-CommonIEsProvideCapabilities ::= SEQUENCE {
-...,
-[[
-segmentationInfo-r14SegmentationInfo-r14OPTIONAL,-- Cond Segmentation
-lpp-message-segmentation-r14BIT STRING { serverToTarget(0),
-targetToServer(1) }OPTIONAL
-]]
-}

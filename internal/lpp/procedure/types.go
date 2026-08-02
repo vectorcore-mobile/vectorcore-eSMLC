@@ -77,14 +77,22 @@ type Result struct {
 type StartOptions struct {
 	RequestAcknowledgement *bool
 	RequestECID            bool
+	RequestOTDOA           bool
+	RequestAGNSS           bool
 }
 
 // StartLocationInformationOptions carries the only supported typed location
-// request. A nil ECID value intentionally retains the established empty R9
-// request envelope; no measurements are inferred by the procedure layer.
+// requests. A nil Common/AGNSS/OTDOA/ECID value intentionally retains the
+// established empty R9 request envelope; no measurements are inferred by the
+// procedure layer. Common is separate from AGNSS because TS 37.355 carries
+// the actual requested-report-type signal (locationInformationType) in the
+// method-agnostic common IEs, not in any method-specific branch.
 type StartLocationInformationOptions struct {
 	RequestAcknowledgement *bool
+	Common                 *location.CommonRequestLocationInformation
+	AGNSS                  *location.AGNSSRequestLocationInformation
 	ECID                   *location.ECIDRequestLocationInformation
+	OTDOA                  *location.OTDOARequestLocationInformation
 }
 type ProvideCapabilitiesOptions struct {
 	Capabilities capability.ProvideCapabilitiesR9IEs
@@ -104,6 +112,8 @@ type ProcedureSnapshot struct {
 	Transaction     transaction.Snapshot
 	Waiting         ApplicationWait
 	RequestedECID   bool
+	RequestedOTDOA  bool
+	RequestedAGNSS  bool
 	LocationRequest *location.RequestLocationInformationR9IEs
 }
 type Orchestrator struct {
@@ -115,5 +125,7 @@ type Orchestrator struct {
 type pendingWait struct {
 	kind            ApplicationWait
 	requestedECID   bool
+	requestedOTDOA  bool
+	requestedAGNSS  bool
 	locationRequest *location.RequestLocationInformationR9IEs
 }

@@ -1,4 +1,0 @@
-BT-LocationServerErrorCauses-r13 ::= SEQUENCE {
-	cause-r13								ENUMERATED	{undefined,	...},
-	...
-}

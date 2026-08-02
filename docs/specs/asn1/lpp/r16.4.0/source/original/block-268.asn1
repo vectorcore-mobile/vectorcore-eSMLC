@@ -1,5 +1,0 @@
-TBS-MeasurementInformation-r13 ::= SEQUENCE {
-measurementReferenceTime-r13UTCTimeOPTIONAL,
-mbs-SgnMeasList-r13MBS-BeaconMeasList-r13OPTIONAL,-- Cond MBS
-...
-}

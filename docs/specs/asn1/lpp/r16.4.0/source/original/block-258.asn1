@@ -1,4 +1,0 @@
-SV-ID ::= SEQUENCE {
-satellite-idINTEGER(0..63),
-...
-}

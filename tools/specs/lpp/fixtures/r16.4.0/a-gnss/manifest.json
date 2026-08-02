@@ -1,0 +1,197 @@
+{
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "bit_length": 13,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "requestCapabilities-r9",
+            {
+              "a-gnss-RequestCapabilities": {
+                "assistanceDataSupportListReq": false,
+                "gnss-SupportListReq": true,
+                "locationVelocityTypesReq": false
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "0420",
+      "name": "request-capabilities-r9-agnss",
+      "purpose": "requests the A-GNSS capability group, asking only for the GNSS support list",
+      "top_level_type": "RequestCapabilities",
+      "unused_trailing_bits": 3
+    },
+    {
+      "bit_length": 43,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideCapabilities-r9",
+            {
+              "a-gnss-ProvideCapabilities": {
+                "gnss-SupportList": [
+                  {
+                    "adr-Support": false,
+                    "agnss-Modes": {
+                      "posModes": [
+                        {
+                          "hex": "40"
+                        },
+                        2
+                      ]
+                    },
+                    "gnss-ID": {
+                      "gnss-id": "gps"
+                    },
+                    "gnss-Signals": {
+                      "gnss-SignalIDs": [
+                        {
+                          "hex": "80"
+                        },
+                        8
+                      ]
+                    },
+                    "velocityMeasurementSupport": false
+                  }
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "042000054000",
+      "name": "provide-capabilities-r9-agnss-gps-ue-based",
+      "purpose": "target device supports GPS in ue-based mode only",
+      "top_level_type": "ProvideCapabilities",
+      "unused_trailing_bits": 5
+    },
+    {
+      "bit_length": 32,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "requestLocationInformation-r9",
+            {
+              "a-gnss-RequestLocationInformation": {
+                "gnss-PositioningInstructions": {
+                  "adrMeasReq": false,
+                  "assistanceAvailability": false,
+                  "fineTimeAssistanceMeasReq": false,
+                  "gnss-Methods": {
+                    "gnss-ids": [
+                      {
+                        "hex": "80"
+                      },
+                      1
+                    ]
+                  },
+                  "multiFreqMeasReq": false
+                }
+              },
+              "commonIEsRequestLocationInformation": {
+                "locationInformationType": "locationEstimateRequired"
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "0c000010",
+      "name": "request-location-information-r9-agnss-ue-based",
+      "purpose": "server requests a UE-computed GPS position estimate, no assistance data offered",
+      "top_level_type": "RequestLocationInformation",
+      "unused_trailing_bits": 0
+    },
+    {
+      "bit_length": 114,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideLocationInformation-r9",
+            {
+              "a-gnss-ProvideLocationInformation": {
+                "gnss-LocationInformation": {
+                  "agnss-List": {
+                    "gnss-ids": [
+                      {
+                        "hex": "80"
+                      },
+                      1
+                    ]
+                  },
+                  "measurementReferenceTime": {
+                    "gnss-TOD-msec": 1000,
+                    "gnss-TimeID": {
+                      "gnss-id": "gps"
+                    }
+                  }
+                }
+              },
+              "commonIEsProvideLocationInformation": {
+                "locationEstimate": [
+                  "ellipsoidPointWithUncertaintyCircle",
+                  {
+                    "degreesLatitude": 3541856,
+                    "degreesLongitude": -4194304,
+                    "latitudeSign": "north",
+                    "uncertainty": 30
+                  }
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "0c209b05b02000001e200007d00040",
+      "name": "provide-location-information-r9-agnss-estimate",
+      "purpose": "target device reports its own computed GPS position via the common location estimate",
+      "top_level_type": "ProvideLocationInformation",
+      "unused_trailing_bits": 6
+    },
+    {
+      "bit_length": 22,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideLocationInformation-r9",
+            {
+              "a-gnss-ProvideLocationInformation": {
+                "gnss-Error": [
+                  "targetDeviceErrorCauses",
+                  {
+                    "cause": "assistanceDataMissing"
+                  }
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "040a08",
+      "name": "provide-location-information-r9-agnss-error",
+      "purpose": "target device reports it is missing GNSS assistance data",
+      "top_level_type": "ProvideLocationInformation",
+      "unused_trailing_bits": 2
+    }
+  ],
+  "module": "docs/specs/asn1/lpp/r16.4.0/modules_v2/normalized/LPP-PDU-Definitions.asn1",
+  "module_sha256": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724",
+  "negative_cases": [
+    {
+      "bit_length": 65,
+      "hex": "08201b05b020000000",
+      "name": "agnss-common-location-estimate-unsupported-shape",
+      "note": "valid per spec; rejected by this implementation's bounded shape scope, not by the compiler"
+    }
+  ],
+  "scope": "A-GNSS root-only, GPS + UE-based (MS-based) mode: common location-estimate request/provide, A-GNSS capability/instructions/error",
+  "specification": "3GPP TS 37.355 V16.4.0"
+}

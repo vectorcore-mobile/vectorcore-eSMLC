@@ -103,8 +103,6 @@ func TestUnsupportedAndMalformed(t *testing.T) {
 		want error
 	}{
 		{[]bool{true, false, false, false, false}, ErrUnsupportedCommon},
-		{[]bool{false, true, false, false, false}, ErrUnsupportedAGNSS},
-		{[]bool{false, false, true, false, false}, ErrUnsupportedOTDOA},
 		{[]bool{false, false, false, false, true}, ErrUnsupportedEPDU},
 	} {
 		w := uper.NewWriter()

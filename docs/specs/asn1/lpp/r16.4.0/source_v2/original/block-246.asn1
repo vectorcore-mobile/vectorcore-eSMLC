@@ -1,4 +1,0 @@
-GNSS-ID ::= SEQUENCE {
-	gnss-id				ENUMERATED{ gps, sbas, qzss, galileo, glonass, ..., bds, navic-v1610 },
-	...
-}

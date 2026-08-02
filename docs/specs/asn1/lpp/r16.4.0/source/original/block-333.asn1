@@ -1,5 +1,0 @@
-NR-DL-TDOA-Error-r16 ::= CHOICE {
-locationServerErrorCauses-r16NR-DL-TDOA-LocationServerErrorCauses-r16,
-targetDeviceErrorCauses-r16NR-DL-TDOA-TargetDeviceErrorCauses-r16,
-...
-}

@@ -85,9 +85,6 @@ func TestRejectUnsupportedAndInvalidRequest(t *testing.T) {
 		bits []bool
 		want error
 	}{
-		{"common", []bool{true, false, false, false, false}, ErrUnsupportedCommon},
-		{"agnss", []bool{false, true, false, false, false}, ErrUnsupportedAGNSS},
-		{"otdoa", []bool{false, false, true, false, false}, ErrUnsupportedOTDOA},
 		{"epdu", []bool{false, false, false, false, true}, ErrUnsupportedEPDU},
 	} {
 		t.Run(tc.name, func(t *testing.T) {

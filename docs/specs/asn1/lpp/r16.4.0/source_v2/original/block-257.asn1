@@ -1,7 +1,0 @@
-SBAS-IDs ::= SEQUENCE {
-	sbas-IDs		BIT STRING {	waas		(0),	
-									egnos		(1),
-									msas		(2),
-									gagan		(3)	} (SIZE (1..8)),
-	...
-}

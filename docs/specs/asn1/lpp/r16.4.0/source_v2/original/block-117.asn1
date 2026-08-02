@@ -1,6 +1,0 @@
-SBAS-ClockModel ::= SEQUENCE {
-	sbasTo			INTEGER (0..5399),
-	sbasAgfo		INTEGER (-2048..2047),
-	sbasAgf1		INTEGER (-128..127),
-	...
-}

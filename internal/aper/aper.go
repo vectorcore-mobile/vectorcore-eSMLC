@@ -1,4 +1,4 @@
-// Package aper contains the bounded APER primitives used by LCS-AP.
+// Package aper contains the bounded APER primitives shared by LCS-AP and LPPa.
 package aper
 
 import (
@@ -24,6 +24,18 @@ type Reader struct {
 
 func NewReader(b []byte) *Reader { return &Reader{data: b} }
 func (r *Reader) Remaining() int { return len(r.data)*8 - r.pos }
+
+// RemainingZero reports whether unread alignment padding contains only zero
+// bits. APER encoders must write zero padding; accepting non-zero padding can
+// turn malformed protocol data into a valid PDU.
+func (r *Reader) RemainingZero() bool {
+	for i := r.pos; i < len(r.data)*8; i++ {
+		if (r.data[i/8]>>uint(7-i%8))&1 != 0 {
+			return false
+		}
+	}
+	return true
+}
 func (r *Reader) align() {
 	if m := r.pos % 8; m != 0 {
 		r.pos += 8 - m
@@ -104,31 +116,98 @@ func width(n int64) int {
 	}
 	return bits.Len64(uint64(n - 1))
 }
+
+// octetsForWidth is ceil(bitWidth/8): the whole-octet count X.691 aligned PER
+// uses for any constrained whole number field wider than 255 values.
+func octetsForWidth(bitWidth int) int { return (bitWidth + 7) / 8 }
+
+// minOctets is the minimum number of octets needed to hold off in unsigned
+// big-endian form, with a floor of one octet (off == 0 still takes 1 octet).
+func minOctets(off uint64) int {
+	n := 1
+	for off>>uint(8*n) != 0 {
+		n++
+	}
+	return n
+}
+
+// PutConstrained writes a constrained whole number per X.691 10.5.7 (aligned
+// variant). There are three regimes, keyed on the number of values the range
+// spans:
+//   - span <= 255: a non-aligned bit-field of the minimum width.
+//   - 255 < span <= 65536: octet-aligned, a fixed whole-octet width
+//     (ceil(bitWidth/8) octets, zero-extended) — not the raw bit width.
+//   - span > 65536: octet-aligned, but the octet count varies with the
+//     specific value. A length determinant (itself a small, therefore
+//     non-aligned, constrained whole number selecting 1..maxOctets) precedes
+//     the value, which is then written in exactly that many octets.
 func PutConstrained(w *Writer, v, lo, hi int64) error {
 	if v < lo || v > hi {
 		return fmt.Errorf("aper: integer out of range")
 	}
 	span := hi - lo + 1
-	n := width(span)
-	if n == 0 {
+	bitWidth := width(span)
+	if bitWidth == 0 {
 		return nil
 	}
-	if span > 255 {
-		w.align()
+	off := uint64(v - lo)
+	if span <= 255 {
+		w.bits(off, bitWidth)
+		return nil
 	}
-	w.bits(uint64(v-lo), n)
+	if span <= 65536 {
+		w.align()
+		w.bits(off, octetsForWidth(bitWidth)*8)
+		return nil
+	}
+	maxOctets := int64(octetsForWidth(bitWidth))
+	need := int64(minOctets(off))
+	if err := PutConstrained(w, need, 1, maxOctets); err != nil {
+		return err
+	}
+	w.align()
+	w.bits(off, int(need)*8)
 	return nil
 }
+
+// GetConstrained is the PutConstrained inverse; see its doc comment for the
+// three regimes.
 func GetConstrained(r *Reader, lo, hi int64) (int64, error) {
 	span := hi - lo + 1
-	n := width(span)
-	if n == 0 {
+	bitWidth := width(span)
+	if bitWidth == 0 {
 		return lo, nil
 	}
-	if span > 255 {
-		r.align()
+	if span <= 255 {
+		v, e := r.bits(bitWidth)
+		if e != nil {
+			return 0, e
+		}
+		out := lo + int64(v)
+		if out > hi {
+			return 0, fmt.Errorf("aper: constrained value out of range")
+		}
+		return out, nil
 	}
-	v, e := r.bits(n)
+	if span <= 65536 {
+		r.align()
+		v, e := r.bits(octetsForWidth(bitWidth) * 8)
+		if e != nil {
+			return 0, e
+		}
+		out := lo + int64(v)
+		if out > hi {
+			return 0, fmt.Errorf("aper: constrained value out of range")
+		}
+		return out, nil
+	}
+	maxOctets := int64(octetsForWidth(bitWidth))
+	need, e := GetConstrained(r, 1, maxOctets)
+	if e != nil {
+		return 0, e
+	}
+	r.align()
+	v, e := r.bits(int(need) * 8)
 	if e != nil {
 		return 0, e
 	}
@@ -137,6 +216,49 @@ func GetConstrained(r *Reader, lo, hi int64) (int64, error) {
 		return 0, fmt.Errorf("aper: constrained value out of range")
 	}
 	return out, nil
+}
+
+// PutFixedOctets writes a fixed-size OCTET STRING. APER aligns the contents
+// but emits no length determinant for a fixed size.
+func PutFixedOctets(w *Writer, b []byte, size int) error {
+	if len(b) != size {
+		return fmt.Errorf("aper: invalid fixed octet string size")
+	}
+	w.octets(b)
+	return nil
+}
+
+func GetFixedOctets(r *Reader, size int) ([]byte, error) {
+	if size < 0 {
+		return nil, fmt.Errorf("aper: invalid fixed octet string size")
+	}
+	return r.octets(size)
+}
+
+// PutFixedBitString writes a fixed-length BIT STRING per X.691 aligned PER:
+// strings longer than 16 bits are octet-aligned before their content; 16
+// bits or fewer are not aligned. value holds the bits right-justified (the
+// low size bits), written most-significant-bit first.
+func PutFixedBitString(w *Writer, value uint64, size int) error {
+	if size < 1 || size > 64 {
+		return fmt.Errorf("aper: invalid fixed bit string size")
+	}
+	if size > 16 {
+		w.align()
+	}
+	w.bits(value, size)
+	return nil
+}
+
+// GetFixedBitString is the PutFixedBitString inverse.
+func GetFixedBitString(r *Reader, size int) (uint64, error) {
+	if size < 1 || size > 64 {
+		return 0, fmt.Errorf("aper: invalid fixed bit string size")
+	}
+	if size > 16 {
+		r.align()
+	}
+	return r.bits(size)
 }
 func PutCriticality(w *Writer, c Criticality) error {
 	if c > Notify {

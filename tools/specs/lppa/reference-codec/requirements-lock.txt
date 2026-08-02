@@ -1,0 +1,2 @@
+asn1tools==0.167.0
+bitstruct==8.21.0

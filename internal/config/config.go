@@ -9,9 +9,10 @@ import (
 )
 
 type Config struct {
-	Service     Service     `yaml:"service"`
-	SLs         SLs         `yaml:"sls"`
-	Positioning Positioning `yaml:"positioning"`
+	Service       Service       `yaml:"service"`
+	SLs           SLs           `yaml:"sls"`
+	Positioning   Positioning   `yaml:"positioning"`
+	Observability Observability `yaml:"observability"`
 }
 type Service struct {
 	Name     string `yaml:"name"`
@@ -27,10 +28,28 @@ type SLs struct {
 	SessionTimeout  time.Duration `yaml:"session_timeout"`
 	MaxMessageSize  int           `yaml:"max_message_size"`
 }
+
+// Observability is a small HTTP listener separate from the SCTP transport,
+// exposing Prometheus-format metrics, health/readiness endpoints, and a
+// POST /admin/reload-catalog action. It is disabled by default: existing
+// deployments are unaffected until an operator opts in. The default listen
+// address is loopback-only, not 0.0.0.0: unlike a read-only metrics
+// endpoint, this listener also carries a mutating admin action with no
+// authentication of its own, so binding wider than localhost is an
+// explicit operator choice, not the default.
+type Observability struct {
+	Enabled       bool   `yaml:"enabled"`
+	ListenAddress string `yaml:"listen_address"`
+	Port          int    `yaml:"port"`
+}
+
 type Positioning struct {
-	Method     string     `yaml:"method"`
-	ECID       ECIDPolicy `yaml:"ecid"`
-	Simulation Simulation `yaml:"simulation"`
+	Method     string         `yaml:"method"`
+	ECID       ECIDPolicy     `yaml:"ecid"`
+	OTDOA      OTDOAPolicy    `yaml:"otdoa"`
+	AGNSS      AGNSSPolicy    `yaml:"agnss"`
+	LPPaECID   LPPaECIDPolicy `yaml:"lppa_ecid"`
+	Simulation Simulation     `yaml:"simulation"`
 }
 
 // ECIDPolicy is local operator authorization only. It never asserts UE
@@ -43,6 +62,41 @@ type ECIDPolicy struct {
 	CellDataFile          string        `yaml:"cell_data_file"`
 	CellDataMaxAge        time.Duration `yaml:"cell_data_max_age"`
 }
+
+// OTDOAPolicy is local operator authorization only, mirroring ECIDPolicy's
+// intent. It has no requested-measurements field: OTDOA's bounded
+// RequestLocationInformation form carries only assistanceAvailability, which
+// this service always sends false (no assistance-data source exists). The
+// multilateration estimator reuses ECIDPolicy.CellDataFile/CellDataMaxAge —
+// the same operator-maintained cell catalog gives ECID a serving-cell
+// reference point and gives OTDOA the reference/neighbour cell positions its
+// solver needs, so a second catalog file is not introduced here.
+type OTDOAPolicy struct {
+	Enabled bool `yaml:"enabled"`
+}
+
+// AGNSSPolicy is local operator authorization only, mirroring
+// ECIDPolicy/OTDOAPolicy's intent. This service only ever requests GPS in
+// UE-based (MS-based) mode: the UE reports its own already-computed
+// position, so there is no requested-measurements field and no cell catalog
+// dependency (unlike ECID/OTDOA, the estimator here does no computation of
+// its own). There is no assistance-data source, so a real UE may be unable
+// to produce a position at all without one — see docs/limitations.md.
+type AGNSSPolicy struct {
+	Enabled bool `yaml:"enabled"`
+}
+
+// LPPaECIDPolicy is local operator authorization only, mirroring
+// ECIDPolicy/OTDOAPolicy/AGNSSPolicy's intent. Unlike those methods this one
+// needs no UE round trip at all: the E-SMLC asks the eNB directly, over
+// LPPa, for the serving cell's identity and (if the eNB has it) its own
+// known antenna position. When enabled, it takes priority over every
+// UE-based method (ECID/OTDOA/A-GNSS) since it is faster and does not depend
+// on UE LPP support; it reuses ECIDPolicy.CellDataFile/CellDataMaxAge as a
+// fallback when the eNB does not report its own antenna position.
+type LPPaECIDPolicy struct {
+	Enabled bool `yaml:"enabled"`
+}
 type Simulation struct {
 	Enabled           bool          `yaml:"enabled"`
 	Latitude          float64       `yaml:"latitude"`
@@ -53,7 +107,12 @@ type Simulation struct {
 }
 
 func Default() Config {
-	return Config{Service: Service{Name: "vectorcore-esmlc", LogLevel: "info"}, SLs: SLs{Enabled: true, ListenAddress: "0.0.0.0", Port: 9082, ExpectedPPID: 29, MaxAssociations: 32, MaxSessions: 10000, SessionTimeout: 10 * time.Second, MaxMessageSize: 1 << 20}, Positioning: Positioning{Method: "gnss", Simulation: Simulation{Enabled: false}}}
+	return Config{
+		Service:       Service{Name: "vectorcore-esmlc", LogLevel: "info"},
+		SLs:           SLs{Enabled: true, ListenAddress: "0.0.0.0", Port: 9082, ExpectedPPID: 29, MaxAssociations: 32, MaxSessions: 10000, SessionTimeout: 10 * time.Second, MaxMessageSize: 1 << 20},
+		Positioning:   Positioning{Method: "gnss", Simulation: Simulation{Enabled: false}},
+		Observability: Observability{Enabled: false, ListenAddress: "127.0.0.1", Port: 9090},
+	}
 }
 func Load(path string) (Config, error) {
 	c := Default()
@@ -72,6 +131,20 @@ func (c Config) Validate() error {
 	}
 	if c.Service.LogLevel != "" && c.Service.LogLevel != "debug" && c.Service.LogLevel != "info" && c.Service.LogLevel != "warn" && c.Service.LogLevel != "error" {
 		return fmt.Errorf("config: invalid log level")
+	}
+	// Validated regardless of sls.enabled: observability is an independent
+	// HTTP listener, not part of the SCTP transport.
+	if c.Observability.Enabled {
+		o := c.Observability
+		if net.ParseIP(o.ListenAddress) == nil {
+			return fmt.Errorf("config: observability.listen_address must be an IP address")
+		}
+		if o.Port < 1 || o.Port > 65535 {
+			return fmt.Errorf("config: observability.port must be 1..65535")
+		}
+		if c.SLs.Enabled && o.Port == c.SLs.Port {
+			return fmt.Errorf("config: observability.port must differ from sls.port")
+		}
 	}
 	s := c.SLs
 	if !s.Enabled {

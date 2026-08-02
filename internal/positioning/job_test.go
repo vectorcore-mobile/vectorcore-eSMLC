@@ -162,6 +162,16 @@ func TestRequestConstraintsExcludeLPPAndRejectUnsuitableEstimate(t *testing.T) {
 	if !acceptsQoS(nil, GeographicEstimate{}) {
 		t.Fatal("absent QoS was not treated as unevaluated")
 	}
+	if got := evaluateQoS(nil, GeographicEstimate{}); got != AccuracyUnevaluated {
+		t.Fatalf("absent QoS fulfilment %d", got)
+	}
+	accuracy = 4
+	if got := evaluateQoS(&QoS{HorizontalAccuracy: &accuracy}, GeographicEstimate{HorizontalUncertainty: 4}); got != AccuracyFulfilled {
+		t.Fatalf("fulfilled QoS %d", got)
+	}
+	if got := evaluateQoS(&QoS{HorizontalAccuracy: &accuracy}, GeographicEstimate{HorizontalUncertainty: 5}); got != AccuracyNotFulfilled {
+		t.Fatalf("unfulfilled QoS %d", got)
+	}
 }
 
 func TestSimulationEstimateCanBeRejectedByQoS(t *testing.T) {

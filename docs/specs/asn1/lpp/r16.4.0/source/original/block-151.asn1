@@ -1,9 +1,0 @@
-GLO-RTK-BiasInformation-r15 ::= SEQUENCE{
-referenceStationID-r15GNSS-ReferenceStationID-r15,
-cpbIndicator-r15BIT STRING (SIZE(1)),
-l1-ca-cpBias-r15INTEGER (-32768..32767)OPTIONAL,-- Need ON
-l1-p-cpBias-r15INTEGER (-32768..32767)OPTIONAL, -- Need ON
-l2-ca-cpBias-r15INTEGER (-32768..32767)OPTIONAL, -- Need ON
-l2-p-cpBias-r15INTEGER (-32768..32767)OPTIONAL, -- Need ON
-...
-}

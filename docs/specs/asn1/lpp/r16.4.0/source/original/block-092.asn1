@@ -1,9 +1,0 @@
-A-GNSS-ProvideAssistanceData ::= SEQUENCE {
-gnss-CommonAssistDataGNSS-CommonAssistDataOPTIONAL,-- Need ON
-gnss-GenericAssistDataGNSS-GenericAssistDataOPTIONAL,-- Need ON
-gnss-ErrorA-GNSS-ErrorOPTIONAL,-- Need ON
-...,
-[[
-gnss-PeriodicAssistData-r15GNSS-PeriodicAssistData-r15OPTIONAL-- Cond CtrTrans
-]]
-}

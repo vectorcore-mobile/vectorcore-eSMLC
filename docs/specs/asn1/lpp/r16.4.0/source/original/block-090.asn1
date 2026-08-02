@@ -1,8 +1,0 @@
-OTDOA-LocationServerErrorCauses ::= SEQUENCE {
-causeENUMERATED{undefined,
-assistanceDataNotSupportedByServer,
-assistanceDataSupportedButCurrentlyNotAvailableByServer,
-...
-},
-...
-}

@@ -1,5 +1,0 @@
-GNSS-SignalMeasurementInformation ::= SEQUENCE {
-measurementReferenceTimeMeasurementReferenceTime,
-gnss-MeasurementListGNSS-MeasurementList,
-...
-}

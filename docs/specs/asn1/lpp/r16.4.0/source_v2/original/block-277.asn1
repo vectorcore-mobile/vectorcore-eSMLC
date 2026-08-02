@@ -1,5 +1,0 @@
-TBS-ProvideAssistanceData-r14 ::= SEQUENCE {
-	tbs-AssistanceDataList-r14	TBS-AssistanceDataList-r14	OPTIONAL,	-- Need ON
-	tbs-Error-r14				TBS-Error-r13				OPTIONAL,	-- Need ON
-	...
-}

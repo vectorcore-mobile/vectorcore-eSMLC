@@ -1,5 +1,0 @@
-ECGI ::= SEQUENCE {
-mccSEQUENCE (SIZE (3))OF INTEGER (0..9),
-mncSEQUENCE (SIZE (2..3))OF INTEGER (0..9),
-cellidentityBIT STRING (SIZE (28))
-}

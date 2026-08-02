@@ -1,5 +1,0 @@
-ECID-Error ::= CHOICE {
-	locationServerErrorCauses		ECID-LocationServerErrorCauses,
-	targetDeviceErrorCauses			ECID-TargetDeviceErrorCauses,
-	...
-}

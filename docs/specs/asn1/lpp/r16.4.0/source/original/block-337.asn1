@@ -1,6 +1,0 @@
-NR-DL-AoD-RequestAssistanceData-r16 ::= SEQUENCE {
-nr-PhysCellID-r16NR-PhysCellID-r16OPTIONAL,
-nr-AdType-r16BIT STRING { dl-prs (0),
-posCalc (1) } (SIZE (1..8)),
-...
-}

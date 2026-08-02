@@ -1,6 +1,0 @@
-OTDOA-MeasQuality ::= SEQUENCE {
-	error-Resolution		BIT STRING (SIZE (2)),
-	error-Value				BIT STRING (SIZE (5)),
-	error-NumSamples		BIT STRING (SIZE (3))				OPTIONAL,
-	...
-}

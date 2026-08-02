@@ -15,6 +15,7 @@ const (
 	ProcedureReset                         uint8  = 4
 	ProcedureErrorIndication               uint8  = 5
 	IECorrelationID                        uint16 = 2
+	IEAccuracyFulfillmentIndicator         uint16 = 0
 	IEECGI                                 uint16 = 4
 	IELCSPriority                          uint16 = 9
 	IELCSQoS                               uint16 = 10
@@ -23,7 +24,9 @@ const (
 	IELocationType                         uint16 = 13
 	IEPayload                              uint16 = 1
 	IEPayloadType                          uint16 = 15
+	IEPositioningData                      uint16 = 16
 	IEUEPositioningCapability              uint16 = 20
+	IEVelocityEstimate                     uint16 = 21
 )
 
 type Category uint8
@@ -89,7 +92,7 @@ type ConnectionOriented struct {
 
 func known(id uint16) bool {
 	switch id {
-	case IECorrelationID, IEECGI, IELCSPriority, IELCSQoS, IELCSCause, IELocationEstimate, IELocationType, IEPayload, IEPayloadType, IEUEPositioningCapability:
+	case IECorrelationID, IEECGI, IELCSPriority, IELCSQoS, IELCSCause, IELocationEstimate, IELocationType, IEPayload, IEPayloadType, IEPositioningData, IEAccuracyFulfillmentIndicator, IEUEPositioningCapability:
 		return true
 	}
 	return false
@@ -99,6 +102,9 @@ func Encode(p PDU) ([]byte, error) {
 		return nil, fmt.Errorf("lcsap: invalid PDU")
 	}
 	body := aper.NewWriter()
+	// Every supported procedure body is an extensible SEQUENCE with one
+	// root OPTIONAL protocolExtensions field.  Neither is used here.
+	wbits(body, 0, 2)
 	if e := aper.PutConstrained(body, int64(len(p.IEs)), 0, 65535); e != nil {
 		return nil, e
 	}
@@ -114,6 +120,9 @@ func Encode(p PDU) ([]byte, error) {
 		}
 	}
 	w := aper.NewWriter()
+	// LCS-AP-PDU is an extensible CHOICE.  The first bit is its extension
+	// indicator, followed by the three-root-alternative choice index.
+	wBit(w, 0)
 	wbits(w, uint64(p.Category), 2)
 	wOctet(w, p.Procedure)
 	if e := aper.PutCriticality(w, p.Criticality); e != nil {
@@ -145,6 +154,10 @@ func Decode(b []byte) (PDU, error) {
 		return PDU{}, fmt.Errorf("lcsap: invalid size")
 	}
 	r := aper.NewReader(b)
+	ext, e := aper.GetConstrained(r, 0, 1)
+	if e != nil || ext != 0 {
+		return PDU{}, fmt.Errorf("lcsap: PDU extensions unsupported")
+	}
 	cat, e := aper.GetConstrained(r, 0, 3)
 	if e != nil || cat > 2 {
 		return PDU{}, fmt.Errorf("lcsap: invalid PDU choice")
@@ -165,6 +178,14 @@ func Decode(b []byte) (PDU, error) {
 		return PDU{}, fmt.Errorf("lcsap: trailing PDU data")
 	}
 	br := aper.NewReader(body)
+	ext, e = aper.GetConstrained(br, 0, 1)
+	if e != nil || ext != 0 {
+		return PDU{}, fmt.Errorf("lcsap: procedure extensions unsupported")
+	}
+	hasExtensions, e := aper.GetConstrained(br, 0, 1)
+	if e != nil || hasExtensions != 0 {
+		return PDU{}, fmt.Errorf("lcsap: protocol extensions unsupported")
+	}
 	n, e := aper.GetConstrained(br, 0, 65535)
 	if e != nil || n > 1024 {
 		return PDU{}, fmt.Errorf("lcsap: invalid IE count")
@@ -185,7 +206,7 @@ func Decode(b []byte) (PDU, error) {
 		}
 		p.IEs = append(p.IEs, IE{uint16(id), c, v})
 	}
-	if br.Remaining() > 7 {
+	if br.Remaining() > 7 || !br.RemainingZero() {
 		return PDU{}, fmt.Errorf("lcsap: trailing procedure data")
 	}
 	return p, nil
@@ -253,13 +274,13 @@ func DecodeLocationRequest(p PDU) (LocationRequest, error) {
 			copy(out.ECGI[:], ie.Value)
 			hasECGI = true
 		case IELCSPriority:
-			if ie.Criticality != aper.Ignore || len(ie.Value) != 1 {
+			if ie.Criticality != aper.Reject || len(ie.Value) != 1 {
 				return out, fmt.Errorf("lcsap: invalid LCS priority")
 			}
 			priority := ie.Value[0]
 			out.Priority = &priority
 		case IELCSQoS:
-			if ie.Criticality != aper.Ignore {
+			if ie.Criticality != aper.Reject {
 				return out, fmt.Errorf("lcsap: invalid LCS QoS criticality")
 			}
 			qos, err := DecodeQoS(ie.Value)
@@ -268,7 +289,7 @@ func DecodeLocationRequest(p PDU) (LocationRequest, error) {
 			}
 			out.QoS = &qos
 		case IEUEPositioningCapability:
-			if ie.Criticality != aper.Ignore {
+			if ie.Criticality != aper.Reject {
 				return out, fmt.Errorf("lcsap: invalid UE positioning capability criticality")
 			}
 			supported, err := DecodeUEPositioningCapability(ie.Value)
@@ -343,7 +364,7 @@ func DecodeQoS(b []byte) (QoS, error) {
 		x := uint8(v)
 		out.ResponseTime = &x
 	}
-	if r.Remaining() > 7 {
+	if r.Remaining() > 7 || !r.RemainingZero() {
 		return QoS{}, fmt.Errorf("trailing QoS data")
 	}
 	return out, nil
@@ -404,7 +425,7 @@ func DecodeUEPositioningCapability(b []byte) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	if r.Remaining() > 7 {
+	if r.Remaining() > 7 || !r.RemainingZero() {
 		return false, fmt.Errorf("trailing capability data")
 	}
 	return v != 0, nil
@@ -420,13 +441,42 @@ func EncodeUEPositioningCapability(lpp bool) ([]byte, error) {
 	}
 	return w.Bytes(), nil
 }
-func LocationEstimate(lat, lon float64, uncertainty uint8) ([]byte, error) {
+
+// writeGeographicalCoordinates encodes Geographical-Coordinates: an
+// extensible SEQUENCE with one absent OPTIONAL member (iE-Extensions),
+// followed by LatitudeSign, the 23-bit DegreesLatitude magnitude, and the
+// 24-bit signed DegreesLongitude.
+func writeGeographicalCoordinates(w *aper.Writer, lat, lon float64) error {
 	if math.IsNaN(lat) || math.IsNaN(lon) || math.IsInf(lat, 0) || math.IsInf(lon, 0) || math.Abs(lat) > 90 || math.Abs(lon) > 180 {
-		return nil, fmt.Errorf("lcsap: invalid coordinates")
+		return fmt.Errorf("lcsap: invalid coordinates")
 	}
-	la := uint32(math.Round(math.Abs(lat) * (1 << 23) / 90))
-	lo := int32(math.Round(lon * (1 << 23) / 360))
-	return []byte{0, byte((boolByte(lat < 0) << 7) | byte(la>>16&0x7f)), byte(la >> 8), byte(la), byte(uint32(lo) >> 16), byte(uint32(lo) >> 8), byte(lo), uncertainty}, nil
+	la := int64(math.Round(math.Abs(lat) * ((1 << 23) - 1) / 90))
+	lo := int64(math.Round(lon * ((1 << 23) - 1) / 180))
+	wbits(w, 0, 2)
+	if err := aper.PutConstrained(w, boolInt(lat < 0), 0, 1); err != nil {
+		return err
+	}
+	if err := aper.PutConstrained(w, la, 0, (1<<23)-1); err != nil {
+		return err
+	}
+	return aper.PutConstrained(w, lo, -(1 << 23), (1<<23)-1)
+}
+
+func LocationEstimate(lat, lon float64, uncertainty uint8) ([]byte, error) {
+	w := aper.NewWriter()
+	// Geographical-Area ::= CHOICE { point, point-With-Uncertainty, ... }.
+	// Point-With-Uncertainty is an extensible SEQUENCE with an absent
+	// extension container.
+	wBit(w, 0)
+	wbits(w, 1, 3)
+	wbits(w, 0, 2)
+	if err := writeGeographicalCoordinates(w, lat, lon); err != nil {
+		return nil, err
+	}
+	if err := aper.PutConstrained(w, int64(uncertainty), 0, 127); err != nil {
+		return nil, err
+	}
+	return w.Bytes(), nil
 }
 func boolByte(b bool) byte {
 	if b {
@@ -441,29 +491,56 @@ func boolInt(b bool) int64 {
 	return 0
 }
 func LocationResponse(id [4]byte, lat, lon float64, uncertainty uint8) ([]byte, error) {
+	return LocationResponseWithMetadata(id, lat, lon, uncertainty, nil, nil)
+}
+
+func LocationResponseWithMetadata(id [4]byte, lat, lon float64, uncertainty uint8, positioningData *PositioningData, accuracy *AccuracyFulfillmentIndicator) ([]byte, error) {
 	v, e := LocationEstimate(lat, lon, uncertainty)
 	if e != nil {
 		return nil, e
 	}
-	return Encode(PDU{Successful, ProcedureLocationRequest, aper.Reject, []IE{{IECorrelationID, aper.Reject, id[:]}, {IELocationEstimate, aper.Reject, v}}})
+	ies := []IE{{IECorrelationID, aper.Reject, id[:]}, {IELocationEstimate, aper.Reject, v}}
+	if positioningData != nil {
+		encoded, err := positioningData.EncodeAPER()
+		if err != nil {
+			return nil, err
+		}
+		ies = append(ies, IE{IEPositioningData, aper.Reject, encoded})
+	}
+	if accuracy != nil {
+		encoded, err := EncodeAccuracyFulfillmentIndicator(*accuracy)
+		if err != nil {
+			return nil, err
+		}
+		ies = append(ies, IE{IEAccuracyFulfillmentIndicator, aper.Reject, encoded})
+	}
+	return Encode(PDU{Successful, ProcedureLocationRequest, aper.Reject, ies})
 }
 func Failure(id [4]byte, cause byte) ([]byte, error) {
 	return Encode(PDU{Unsuccessful, ProcedureLocationRequest, aper.Reject, []IE{{IECorrelationID, aper.Reject, id[:]}, {IELCSCause, aper.Ignore, []byte{cause}}}})
 }
 
 func FailureWithCause(id [4]byte, cause Cause) ([]byte, error) {
-	var wire byte
+	var detailed LCSCause
 	switch cause {
 	case CauseRadioNetworkUnspecified:
-		wire = 0x00 // CHOICE radio-network-layer, extension false, unspecified
+		detailed = LCSCause{Branch: LCSCauseRadioNetwork, Value: RadioNetworkUnspecified}
 	case CauseProtocolUnspecified:
-		wire = 0x94 // CHOICE protocol, extension false, root enum unspecified
+		detailed = LCSCause{Branch: LCSCauseProtocol, Value: ProtocolUnspecified}
 	case CauseMiscUnspecified:
-		wire = 0xcc // CHOICE misc, extension false, root enum unspecified
+		detailed = LCSCause{Branch: LCSCauseMisc, Value: MiscUnspecified}
 	default:
 		return nil, fmt.Errorf("lcsap: unsupported LCS cause")
 	}
-	return Failure(id, wire)
+	return FailureWithDetailedCause(id, detailed)
+}
+
+func FailureWithDetailedCause(id [4]byte, cause LCSCause) ([]byte, error) {
+	w, err := EncodeLCSCause(cause)
+	if err != nil {
+		return nil, err
+	}
+	return Encode(PDU{Unsuccessful, ProcedureLocationRequest, aper.Reject, []IE{{IECorrelationID, aper.Reject, id[:]}, {IELCSCause, aper.Ignore, w}}})
 }
 
 // EncodeConnectionOriented creates the Release-16 initiating PDU. TS 29.171

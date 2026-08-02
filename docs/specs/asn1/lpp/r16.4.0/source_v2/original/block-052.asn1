@@ -1,6 +1,0 @@
-DL-PRS-ID-Info-r16 ::= SEQUENCE {
-	dl-PRS-ID-r16					INTEGER (0..255),
-	nr-DL-PRS-ResourceID-List-r16	SEQUENCE (SIZE (1..nrMaxResourceIDs-r16)) OF
-													NR-DL-PRS-ResourceID-r16			OPTIONAL,
-	nr-DL-PRS-ResourceSetID-r16		NR-DL-PRS-ResourceSetID-r16 						OPTIONAL
-}

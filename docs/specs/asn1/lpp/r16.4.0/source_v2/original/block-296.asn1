@@ -1,8 +1,0 @@
-WLAN-RequestLocationInformation-r13 ::= SEQUENCE {
-	requestedMeasurements-r13	BIT STRING {	
-											rssi		(0),
-											rtt			(1)} (SIZE(1..8)),
-	...,
-	[[	assistanceAvailability-r14	BOOLEAN			OPTIONAL	-- Need ON
-	]]
-}

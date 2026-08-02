@@ -1,0 +1,2 @@
+# Generated fixture source value; Python tuple denotes ASN.1 CHOICE.
+VALUE = {'criticalExtensions': ('c1', ('provideLocationInformation-r9', {'commonIEsProvideLocationInformation': {'locationEstimate': ('ellipsoidPointWithUncertaintyCircle', {'latitudeSign': 'north', 'degreesLatitude': 3541856, 'degreesLongitude': -4194304, 'uncertainty': 30})}, 'a-gnss-ProvideLocationInformation': {'gnss-LocationInformation': {'measurementReferenceTime': {'gnss-TOD-msec': 1000, 'gnss-TimeID': {'gnss-id': 'gps'}}, 'agnss-List': {'gnss-ids': (b'\x80', 1)}}}}))}

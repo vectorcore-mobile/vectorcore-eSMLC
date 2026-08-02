@@ -1,4 +1,0 @@
-GNSS-SubNetworkID-r15 ::= SEQUENCE {
-	subNetworkID-r15				INTEGER (0..15),
-	...
-}

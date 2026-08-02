@@ -1,6 +1,0 @@
-GNSS-NavListInfo-r15 ::= SEQUENCE (SIZE (1..64)) OF SatListElement-r15
-SatListElement-r15 ::= SEQUENCE {
-	svID-r15		SV-ID,
-	iod-r15			BIT STRING (SIZE(11)),
-	...
-}

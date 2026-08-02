@@ -1,7 +1,0 @@
-MBS-AcquisitionAssistance-r14 ::= SEQUENCE {
-	transmitterID-r14				INTEGER (0..32767)						OPTIONAL,	-- Need ON
-																									mbsConfiguration-r14			ENUMERATED {tb1, tb2, tb3, tb4, ...}	OPTIONAL,	-- Need ON
-																									pnCodeIndex-r14					INTEGER (1..128)						OPTIONAL,	-- Need ON
-																									freq-r14						INTEGER (919750000..927250000)			OPTIONAL,	-- Need ON
-																									...
-}

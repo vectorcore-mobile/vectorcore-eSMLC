@@ -1,8 +1,0 @@
-TBS-RequestLocationInformation-r13 ::= SEQUENCE {
-mbsSgnMeasListReq-r13BOOLEAN,
-...,
-[[mbsAssistanceAvailability-r14BOOLEANOPTIONAL,-- Need ON
-mbsRequestedMeasurements-r14BIT STRING {
-rssi(0)} (SIZE(1..8))OPTIONAL-- Need ON
-]]
-}

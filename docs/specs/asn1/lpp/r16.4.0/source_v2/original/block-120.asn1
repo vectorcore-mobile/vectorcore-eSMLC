@@ -1,8 +1,0 @@
-NavIC-ClockModel-r16 ::= SEQUENCE {
-	navic-Toc-r16			INTEGER (0..65535),
-	navic-af2-r16			INTEGER (-128..127),
-	navic-af1-r16			INTEGER (-32768..32767),
-	navic-af0-r16			INTEGER (-2097152..2097151),
-	navic-Tgd-r16			INTEGER (-128..127),
-	...
-}

@@ -1,5 +1,0 @@
-AdditionalPath-r14 ::= SEQUENCE {
-	relativeTimeDifference-r14	INTEGER (-256..255),
-	path-Quality-r14			OTDOA-MeasQuality				OPTIONAL,
-	...
-}

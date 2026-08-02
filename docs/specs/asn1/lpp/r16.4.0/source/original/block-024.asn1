@@ -1,9 +1,0 @@
-EllipsoidPointWithUncertaintyEllipse ::= SEQUENCE {
-latitudeSignENUMERATED {north, south},
-degreesLatitudeINTEGER (0..8388607),-- 23 bit field
-degreesLongitudeINTEGER (-8388608..8388607),-- 24 bit field
-uncertaintySemiMajorINTEGER (0..127),
-uncertaintySemiMinorINTEGER (0..127),
-orientationMajorAxisINTEGER (0..179),
-confidenceINTEGER (0..100)
-}

@@ -1,4 +1,0 @@
-GNSS-AcquisitionAssistanceReq ::=	SEQUENCE {
-	gnss-SignalID-Req		GNSS-SignalID,
-	...
-}

@@ -1,0 +1,144 @@
+{
+  "specification": "3GPP TS 29.171",
+  "version": "16.4.0",
+  "encoding": "aligned PER",
+  "compiler": {
+    "name": "asn1tools",
+    "version": "0.167.0",
+    "role": "pinned leaf declaration compiler; complete PDU is independently composed because object-set OPEN TYPE dispatch is unsupported"
+  },
+  "source_correct_values": {
+    "ecid_positioning_data": "4013",
+    "accuracy_fulfilled": "00",
+    "accuracy_not_fulfilled": "40",
+    "lcs_cause_misc_unspecified": "d8"
+  },
+  "fixtures": [
+    {
+      "name": "success-location-estimate",
+      "file": "success-location-estimate.aper",
+      "sha256": "a561115d7e5363ee5cd07729d1e332e4be6a4828992ec39785b05ad49f5ac73d",
+      "hex": "200000190000020002000400000001000c000a1040360b608040000008"
+    },
+    {
+      "name": "success-positioning-data",
+      "file": "success-positioning-data.aper",
+      "sha256": "29335cea264d721a4fd1f24081cac583b0baba889f381c23036a357fccc0c0c0",
+      "hex": "200000110000020002000400000001001000024013"
+    },
+    {
+      "name": "success-accuracy-fulfilled",
+      "file": "success-accuracy-fulfilled.aper",
+      "sha256": "0eb1f815240f4a94aa6b5abaaafc813e46d9fee9835773373a1911ff32016cec",
+      "hex": "2000001000000200020004000000010000000100"
+    },
+    {
+      "name": "success-accuracy-not-fulfilled",
+      "file": "success-accuracy-not-fulfilled.aper",
+      "sha256": "17d126336a3f7984c2b2855d1eb95728b0519c34f20ce37d8e6f2da9c4416c92",
+      "hex": "2000001000000200020004000000010000000140"
+    },
+    {
+      "name": "success-estimate-positioning-data",
+      "file": "success-estimate-positioning-data.aper",
+      "sha256": "7d58f5f049d3309175821e5ec1d04aac61991c2fb0629df71907444b912393e1",
+      "hex": "2000001f0000030002000400000001000c000a1040360b608040000008001000024013"
+    },
+    {
+      "name": "success-authoritative-serving-cell-ecid",
+      "file": "success-authoritative-serving-cell-ecid.aper",
+      "sha256": "d4157e681c8b3d94b3f252da061e0c8885f576e54e3d1cb88bfd35a69c86a085",
+      "hex": "200000240000040002000400000001000c000a1040360b6080400000080010000240130000000100"
+    },
+    {
+      "name": "failure-radio-network-unspecified",
+      "file": "failure-radio-network-unspecified.aper",
+      "sha256": "34215628f30364c5b3c1e6a29725bcdd41003ec13c6e74c59a32accec88ddc7c",
+      "hex": "400000100000020002000400000001000b400100"
+    },
+    {
+      "name": "failure-transport-resource-unavailable",
+      "file": "failure-transport-resource-unavailable.aper",
+      "sha256": "80671f26fe79ce915e4e51577c53254380f917082f6829281ca42ab8a75ce687",
+      "hex": "400000100000020002000400000001000b400140"
+    },
+    {
+      "name": "failure-protocol-semantic-error",
+      "file": "failure-protocol-semantic-error.aper",
+      "sha256": "505f6e2b4108e28a8cdf968eda02f346ae44737bc88d9907c1ec903f2ba1918a",
+      "hex": "400000100000020002000400000001000b400190"
+    },
+    {
+      "name": "failure-misc-unspecified",
+      "file": "failure-misc-unspecified.aper",
+      "sha256": "81608e30274044da4c40a780ae82f66ce3c3948dfb51db527308db7f018e1e60",
+      "hex": "400000100000020002000400000001000b4001d8"
+    },
+    {
+      "name": "failure-misc-om-intervention",
+      "file": "failure-misc-om-intervention.aper",
+      "sha256": "ad82e8bb713555e331b4b1fb0e570a94b3a7ddaef941bfe8e28aea92bc34373b",
+      "hex": "400000100000020002000400000001000b4001d0"
+    },
+    {
+      "name": "geo-area-point",
+      "file": "geo-area-point.aper",
+      "sha256": "8c5434095b0f2a38cdc538464842d2df8165b0ebdc49cc205ae1d5d799f9c46f",
+      "hex": "0040360b6080400000"
+    },
+    {
+      "name": "geo-area-ellipse",
+      "file": "geo-area-ellipse.aper",
+      "sha256": "d6f82504469f2435476fb700f6d7e98fdf0c68929ae7bd825e90ef46643e4ede",
+      "hex": "2040360b608040000014156c40"
+    },
+    {
+      "name": "geo-area-polygon",
+      "file": "geo-area-polygon.aper",
+      "sha256": "9f3e4bea2cea308bc595627256a9b5979ffa4fe390113af1bec4e3adc2704716",
+      "hex": "3204360b608040000004377777803f49f504349f4a8040b60c"
+    },
+    {
+      "name": "geo-area-altitude",
+      "file": "geo-area-altitude.aper",
+      "sha256": "da9bbe831a6db8c6f2c419dbf64c75fff8e3187de2d83771fef8490518112a5c",
+      "hex": "4040360b6080400000000078"
+    },
+    {
+      "name": "geo-area-altitude-ellipsoid",
+      "file": "geo-area-altitude-ellipsoid.aper",
+      "sha256": "2a17f8f4175545c308d54820eaf08e52780365da66e808c24eeaad9f6178a56a",
+      "hex": "5040360b60804000000000781415683880"
+    },
+    {
+      "name": "geo-area-arc",
+      "file": "geo-area-arc.aper",
+      "sha256": "a16c8c5a4600d7af91e384cb4d25f420514c577fbcca41190624d44038ce44a4",
+      "hex": "6040360b60804000000064143cb510"
+    },
+    {
+      "name": "velocity-horizontal",
+      "file": "velocity-horizontal.aper",
+      "sha256": "5d07faabcdedb57b949a534dc1ce1d9f140ca7a3ed3ee8dcd1b528cc5084a693",
+      "hex": "00002d001e"
+    },
+    {
+      "name": "velocity-horizontal-with-vertical",
+      "file": "velocity-horizontal-with-vertical.aper",
+      "sha256": "c7ef6a9dde3fb1c5e70d60a23aa2278cea27ab56bc185da591e18e792b6f823a",
+      "hex": "20002d001e0500"
+    },
+    {
+      "name": "velocity-horizontal-with-uncertainty",
+      "file": "velocity-horizontal-with-uncertainty.aper",
+      "sha256": "73ad51f6f1a8726e85baef2e25c6d95042bc905bc494ff430f6993d03712c6ac",
+      "hex": "40002d001e07"
+    },
+    {
+      "name": "velocity-horizontal-with-vertical-and-uncertainty",
+      "file": "velocity-horizontal-with-vertical-and-uncertainty.aper",
+      "sha256": "fe6d709a07d06b0af0a375d215a2079de860a74a2a0bd4ad5f43dde66d9e5737",
+      "hex": "60002d001e05000703"
+    }
+  ]
+}

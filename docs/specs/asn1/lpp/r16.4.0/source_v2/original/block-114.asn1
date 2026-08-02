@@ -1,8 +1,0 @@
-NAV-ClockModel ::= SEQUENCE {
-	navToc			INTEGER (0..37799),
-	navaf2			INTEGER (-128..127),
-	navaf1			INTEGER (-32768..32767),
-	navaf0			INTEGER (-2097152..2097151),
-	navTgd			INTEGER (-128..127),
-	...
-}

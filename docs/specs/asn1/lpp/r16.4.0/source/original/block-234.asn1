@@ -1,4 +1,0 @@
-GNSS-SSR-CodeBiasSupport-r15 ::= SEQUENCE {
-signal-and-tracking-mode-ID-Sup-r15GNSS-SignalIDs,
-...
-}

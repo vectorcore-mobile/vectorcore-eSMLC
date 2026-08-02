@@ -1,9 +1,0 @@
-A-GNSS-RequestAssistanceData ::= SEQUENCE {
-	gnss-CommonAssistDataReq		GNSS-CommonAssistDataReq		OPTIONAL, -- Cond CommonADReq
-	gnss-GenericAssistDataReq		GNSS-GenericAssistDataReq		OPTIONAL, -- Cond GenADReq
-	...,
-	[[
-		gnss-PeriodicAssistDataReq-r15
-									GNSS-PeriodicAssistDataReq-r15	OPTIONAL -- Cond PerADReq
-	]]
-}

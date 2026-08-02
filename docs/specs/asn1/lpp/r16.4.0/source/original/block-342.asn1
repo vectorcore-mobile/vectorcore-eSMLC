@@ -1,9 +1,0 @@
-NR-DL-AoD-ProvideCapabilities-r16 ::= SEQUENCE {
-nr-DL-AoD-Mode-r16PositioningModes,
-nr-DL-AoD-PRS-Capability-r16NR-DL-PRS-ResourcesCapability-r16,
-nr-DL-AoD-MeasurementCapability-r16NR-DL-AoD-MeasurementCapability-r16,
-nr-DL-PRS-QCL-ProcessingCapability-r16NR-DL-PRS-QCL-ProcessingCapability-r16,
-nr-DL-PRS-ProcessingCapability-r16NR-DL-PRS-ProcessingCapability-r16,
-periodicalReporting-r16PositioningModesOPTIONAL,
-...
-}

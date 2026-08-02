@@ -15,6 +15,9 @@ type Method uint8
 
 const (
 	MethodECID Method = iota + 1
+	MethodOTDOA
+	MethodAGNSS
+	MethodLPPaECID
 )
 
 // RawECIDMeasurements preserves ECID radio measurements as method output. It
@@ -24,11 +27,33 @@ type RawECIDMeasurements struct {
 	Results []result.MeasuredResultsElement
 }
 
+// RawOTDOAMeasurements preserves the RSTD reference-cell and neighbour-cell
+// measurement report as method output. It deliberately contains no computed
+// position; converting RSTD values into a geographic estimate is the
+// estimator boundary's job (see Estimator), not this package's decode path.
+type RawOTDOAMeasurements struct {
+	Signal location.OTDOASignalMeasurementInformation
+}
+
+// RawAGNSSMeasurements preserves the UE's own already-computed position
+// report as method output. Unlike ECID/OTDOA this is not raw measurement
+// data needing further estimation — MS-based (UE-based) A-GNSS means the
+// target device solved its own fix and reported it via the common
+// LocationCoordinates IE (see internal/lpp/location's CommonProvideLocationInformation);
+// there is no E-SMLC-side computation for this implementation to do beyond
+// validating and relaying it.
+type RawAGNSSMeasurements struct {
+	Estimate location.LocationCoordinates
+}
+
 // MethodResult records a completed protocol-method attempt. Measurements may
 // be available even when no geographic estimate can be calculated.
 type MethodResult struct {
 	Method      Method
 	ECID        *RawECIDMeasurements
+	OTDOA       *RawOTDOAMeasurements
+	AGNSS       *RawAGNSSMeasurements
+	LPPaECID    *RawLPPaECIDMeasurement
 	CompletedAt time.Time
 }
 
@@ -39,6 +64,9 @@ type EstimateSource uint8
 const (
 	EstimateSourceSimulation EstimateSource = iota + 1
 	EstimateSourceAuthoritativeServingCell
+	EstimateSourceOTDOAMultilateration
+	EstimateSourceAGNSSUEReported
+	EstimateSourceLPPaAccessPointPosition
 )
 
 // GeographicEstimate is the bounded point-with-uncertainty representation the
@@ -50,6 +78,11 @@ type GeographicEstimate struct {
 	HorizontalUncertainty uint8
 	Source                EstimateSource
 	Timestamp             time.Time
+	// CatalogVersion, DataSource, and RecordUpdatedAt are internal provenance
+	// only. They are deliberately not overloaded into LCS-AP result IEs.
+	CatalogVersion  string
+	DataSource      string
+	RecordUpdatedAt time.Time
 }
 
 func (v GeographicEstimate) Validate() error {
@@ -75,10 +108,78 @@ type EstimationResult struct {
 	Failure  EstimationFailure
 }
 
+// AccuracyFulfilment retains the result of the supported QoS evaluation even
+// when the current recovered LCS-AP subset cannot yet encode the corresponding
+// Accuracy-Fulfilment-Indicator IE.
+type AccuracyFulfilment uint8
+
+const (
+	AccuracyUnevaluated AccuracyFulfilment = iota
+	AccuracyFulfilled
+	AccuracyNotFulfilled
+)
+
 // Estimator is a synchronous, job-scoped boundary. Implementations receive
 // only the verified request and method output belonging to that job.
 type Estimator interface {
 	Estimate(Request, MethodResult, time.Time) EstimationResult
+}
+
+// CombinedEstimator dispatches to the estimator matching the job's completed
+// method, so ECID and OTDOA can share one Manager while using different
+// estimation logic (and, typically, the same underlying operator catalog).
+// A nil branch for the completed method's kind is EstimatorUnavailable, the
+// same failure a nil Manager.estimator produces for every method.
+type CombinedEstimator struct {
+	ECID     Estimator
+	OTDOA    Estimator
+	AGNSS    Estimator
+	LPPaECID Estimator
+}
+
+func (e CombinedEstimator) Estimate(request Request, method MethodResult, now time.Time) EstimationResult {
+	var next Estimator
+	switch method.Method {
+	case MethodECID:
+		next = e.ECID
+	case MethodOTDOA:
+		next = e.OTDOA
+	case MethodAGNSS:
+		next = e.AGNSS
+	case MethodLPPaECID:
+		next = e.LPPaECID
+	}
+	if next == nil {
+		return EstimationResult{Failure: EstimatorUnavailable}
+	}
+	return next.Estimate(request, method, now)
+}
+
+// AGNSSEstimator validates and relays the UE's own already-computed
+// position (MS-based/UE-based A-GNSS): unlike ECID's catalog lookup or
+// OTDOA's multilateration solve, there is no E-SMLC-side computation here.
+// It needs no configuration and does not depend on a cell catalog.
+type AGNSSEstimator struct{}
+
+func (AGNSSEstimator) Estimate(_ Request, method MethodResult, now time.Time) EstimationResult {
+	if method.Method != MethodAGNSS || method.AGNSS == nil {
+		return EstimationResult{Failure: InsufficientNetworkData}
+	}
+	reported := method.AGNSS.Estimate
+	if err := reported.Validate(); err != nil {
+		return EstimationResult{Failure: InsufficientNetworkData}
+	}
+	estimate := GeographicEstimate{
+		Latitude:              reported.Point.Latitude,
+		Longitude:             reported.Point.Longitude,
+		HorizontalUncertainty: reported.UncertaintyCircle,
+		Source:                EstimateSourceAGNSSUEReported,
+		Timestamp:             now,
+	}
+	if err := estimate.Validate(); err != nil {
+		return EstimationResult{Failure: InsufficientNetworkData}
+	}
+	return EstimationResult{Estimate: &estimate}
 }
 
 // SimulationEstimator is an explicitly labelled development estimator. It is
@@ -120,6 +221,7 @@ type FinalOutcome struct {
 	MethodResult *MethodResult
 	Estimate     *GeographicEstimate
 	Failure      EstimationFailure
+	Accuracy     AccuracyFulfilment
 }
 
 func rawECID(v *location.ProvideLocationInformationR9IEs) (*RawECIDMeasurements, bool) {
@@ -135,6 +237,29 @@ func rawECID(v *location.ProvideLocationInformationR9IEs) (*RawECIDMeasurements,
 		out.Primary = &primary
 	}
 	return out, true
+}
+
+func rawOTDOA(v *location.ProvideLocationInformationR9IEs) (*RawOTDOAMeasurements, bool) {
+	if v == nil || v.OTDOA == nil {
+		return nil, false
+	}
+	signal, ok := v.OTDOA.SignalMeasurementInformation()
+	if !ok {
+		return nil, false
+	}
+	return &RawOTDOAMeasurements{Signal: signal}, true
+}
+
+// rawAGNSS extracts the UE-reported position from the common IE, not from
+// v.AGNSS: TS 37.355 carries the actual coordinates in
+// CommonProvideLocationInformation.LocationEstimate regardless of which
+// method produced them; the A-GNSS-specific branch is supplementary
+// reference-time/constellation metadata only.
+func rawAGNSS(v *location.ProvideLocationInformationR9IEs) (*RawAGNSSMeasurements, bool) {
+	if v == nil || v.Common == nil || v.Common.LocationEstimate == nil {
+		return nil, false
+	}
+	return &RawAGNSSMeasurements{Estimate: *v.Common.LocationEstimate}, true
 }
 
 // UncertaintyCodeFromMeters retains the existing bounded simulation mapping

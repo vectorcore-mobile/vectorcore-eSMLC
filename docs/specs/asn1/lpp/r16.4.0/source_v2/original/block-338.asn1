@@ -1,9 +1,0 @@
-NR-DL-AoD-ProvideLocationInformation-r16 ::= SEQUENCE {
-	nr-DL-AoD-SignalMeasurementInformation-r16
-											NR-DL-AoD-SignalMeasurementInformation-r16
-																			OPTIONAL,
-	nr-dl-AoD-LocationInformation-r16		NR-DL-AoD-LocationInformation-r16
-																			OPTIONAL, -- Cond UEB
-	nr-DL-AoD-Error-r16						NR-DL-AoD-Error-r16				OPTIONAL,
-	...
-}

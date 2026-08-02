@@ -26,6 +26,12 @@ func (o *Orchestrator) StartCapabilities(options StartOptions, now time.Time) (R
 		ack = *options.RequestAcknowledgement
 	}
 	payload := capability.RequestCapabilitiesR9IEs{}
+	if options.RequestAGNSS {
+		payload.AGNSS = &capability.AGNSSRequestCapabilities{GNSSSupportListReq: true}
+	}
+	if options.RequestOTDOA {
+		payload.OTDOA = &capability.OTDOARequestCapabilities{}
+	}
 	if options.RequestECID {
 		payload.ECID = &capability.ECIDRequestCapabilities{}
 	}
@@ -39,6 +45,15 @@ func (o *Orchestrator) StartCapabilities(options StartOptions, now time.Time) (R
 }
 func (o *Orchestrator) StartLocationInformation(options StartLocationInformationOptions, now time.Time) (Result, error) {
 	payload := location.RequestLocationInformationR9IEs{}
+	if options.Common != nil {
+		payload.Common = cloneCommonRequestLocationInformation(options.Common)
+	}
+	if options.AGNSS != nil {
+		payload.AGNSS = cloneAGNSSRequestLocationInformation(options.AGNSS)
+	}
+	if options.OTDOA != nil {
+		payload.OTDOA = cloneOTDOARequestLocationInformation(options.OTDOA)
+	}
 	if options.ECID != nil {
 		payload.ECID = cloneECIDRequest(options.ECID)
 	}
@@ -88,6 +103,12 @@ func (o *Orchestrator) ProvideCapabilitiesResult(key transaction.Key, options Pr
 	o.mu.Unlock()
 	if pending.kind != WaitCapabilities {
 		return Result{}, ErrApplicationNotPending
+	}
+	if options.Capabilities.AGNSS != nil && !pending.requestedAGNSS {
+		return Result{}, ErrUnrequestedAGNSS
+	}
+	if options.Capabilities.OTDOA != nil && !pending.requestedOTDOA {
+		return Result{}, ErrUnrequestedOTDOA
 	}
 	if options.Capabilities.ECID != nil && !pending.requestedECID {
 		return Result{}, ErrUnrequestedECID
@@ -211,7 +232,9 @@ func (o *Orchestrator) HandleInbound(m lpp.Message, now time.Time) (Result, erro
 	if isRequest(m.Body) {
 		wait := waitFor(m.Body)
 		reqECID := wait == WaitCapabilities && m.Body.RequestCapabilities != nil && m.Body.RequestCapabilities.ECID != nil
-		pending := pendingWait{kind: wait, requestedECID: reqECID}
+		reqOTDOA := wait == WaitCapabilities && m.Body.RequestCapabilities != nil && m.Body.RequestCapabilities.OTDOA != nil
+		reqAGNSS := wait == WaitCapabilities && m.Body.RequestCapabilities != nil && m.Body.RequestCapabilities.AGNSS != nil
+		pending := pendingWait{kind: wait, requestedECID: reqECID, requestedOTDOA: reqOTDOA, requestedAGNSS: reqAGNSS}
 		if wait == WaitLocationInformation && m.Body.RequestLocationInformation != nil {
 			pending.locationRequest = cloneLocationRequest(m.Body.RequestLocationInformation)
 		}
@@ -271,7 +294,7 @@ func (o *Orchestrator) Snapshot(key transaction.Key) (ProcedureSnapshot, bool) {
 	o.mu.Lock()
 	w := o.waits[key]
 	o.mu.Unlock()
-	return ProcedureSnapshot{Transaction: s, Waiting: w.kind, RequestedECID: w.requestedECID, LocationRequest: cloneLocationRequest(w.locationRequest)}, true
+	return ProcedureSnapshot{Transaction: s, Waiting: w.kind, RequestedECID: w.requestedECID, RequestedOTDOA: w.requestedOTDOA, RequestedAGNSS: w.requestedAGNSS, LocationRequest: cloneLocationRequest(w.locationRequest)}, true
 }
 func (o *Orchestrator) addWait(k transaction.Key, w pendingWait) error {
 	o.mu.Lock()
@@ -341,10 +364,34 @@ func cloneLocationRequest(v *location.RequestLocationInformationR9IEs) *location
 		return nil
 	}
 	out := *v
+	out.Common = cloneCommonRequestLocationInformation(v.Common)
+	out.AGNSS = cloneAGNSSRequestLocationInformation(v.AGNSS)
 	out.ECID = cloneECIDRequest(v.ECID)
+	out.OTDOA = cloneOTDOARequestLocationInformation(v.OTDOA)
 	return &out
 }
 func cloneECIDRequest(v *location.ECIDRequestLocationInformation) *location.ECIDRequestLocationInformation {
+	if v == nil {
+		return nil
+	}
+	out := *v
+	return &out
+}
+func cloneOTDOARequestLocationInformation(v *location.OTDOARequestLocationInformation) *location.OTDOARequestLocationInformation {
+	if v == nil {
+		return nil
+	}
+	out := *v
+	return &out
+}
+func cloneCommonRequestLocationInformation(v *location.CommonRequestLocationInformation) *location.CommonRequestLocationInformation {
+	if v == nil {
+		return nil
+	}
+	out := *v
+	return &out
+}
+func cloneAGNSSRequestLocationInformation(v *location.AGNSSRequestLocationInformation) *location.AGNSSRequestLocationInformation {
 	if v == nil {
 		return nil
 	}

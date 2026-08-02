@@ -1,9 +1,0 @@
-NR-DL-AoD-RequestLocationInformation-r16 ::= SEQUENCE {
-	nr-AssistanceAvailability-r16				BOOLEAN,
-	nr-DL-AoD-ReportConfig-r16					NR-DL-AoD-ReportConfig-r16,
-	...
-}
-NR-DL-AoD-ReportConfig-r16 ::= SEQUENCE {
-	maxDL-PRS-RSRP-MeasurementsPerTRP-r16		INTEGER (1..8)					OPTIONAL,
-	...
-}

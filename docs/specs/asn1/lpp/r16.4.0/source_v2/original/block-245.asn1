@@ -1,4 +1,0 @@
-GNSS-FrequencyID-r15	::= SEQUENCE {
-	gnss-FrequencyID-r15		INTEGER (0 .. 7),
-	...
-}

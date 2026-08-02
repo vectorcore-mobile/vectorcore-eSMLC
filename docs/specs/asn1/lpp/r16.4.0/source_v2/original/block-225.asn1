@@ -1,4 +1,0 @@
-BDS-DifferentialCorrectionsSupport-r12 ::=	SEQUENCE {
-	gnssSignalIDs			GNSS-SignalIDs,
-	...
-}

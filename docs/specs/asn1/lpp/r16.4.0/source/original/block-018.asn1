@@ -1,4 +1,0 @@
-CarrierFreqOffsetNB-r14 ::=ENUMERATED {
-v-10, v-9, v-8,v-7, v-6, v-5, v-4, v-3, v-2, v-1, v-0dot5,
-v0, v1, v2, v3, v4, v5, v6, v7, v8, v9
-}

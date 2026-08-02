@@ -1,5 +1,0 @@
-HorizontalVelocityWithUncertainty ::= SEQUENCE {
-bearingINTEGER(0..359),
-horizontalSpeedINTEGER(0..2047),
-uncertaintySpeedINTEGER(0..255)
-}

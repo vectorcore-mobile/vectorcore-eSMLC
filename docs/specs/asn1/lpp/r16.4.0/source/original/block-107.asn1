@@ -1,8 +1,0 @@
-GNSS-RTK-CommonObservationInfo-r15 ::= SEQUENCE {
-referenceStationID-r15GNSS-ReferenceStationID-r15,
-clockSteeringIndicator-r15INTEGER (0..3),
-externalClockIndicator-r15INTEGER (0..3),
-smoothingIndicator-r15BIT STRING (SIZE(1)),
-smoothingInterval-r15BIT STRING (SIZE(3)),
-...
-}

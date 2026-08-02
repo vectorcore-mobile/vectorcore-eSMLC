@@ -7,10 +7,25 @@ import (
 )
 
 // RequestLocationInformationR9IEs represents the supported root form of
-// RequestLocationInformation-r9-IEs. ECID is the only supported optional
-// field; nil represents the normative empty R9 payload.
+// RequestLocationInformation-r9-IEs. Common, A-GNSS, OTDOA, and ECID are the
+// only supported optional fields; nil represents the normative empty R9
+// payload.
 type RequestLocationInformationR9IEs struct {
-	ECID *ECIDRequestLocationInformation
+	Common *CommonRequestLocationInformation
+	AGNSS  *AGNSSRequestLocationInformation
+	OTDOA  *OTDOARequestLocationInformation
+	ECID   *ECIDRequestLocationInformation
+}
+
+// OTDOARequestLocationInformation is the bounded TS 37.355 root of
+// OTDOA-RequestLocationInformation: only the mandatory assistanceAvailability
+// BOOLEAN. multipathRSTD, maxNoOfRSTDmeas, and motionMeasurements are
+// Release 14/15 extension additions and are not representable here.
+type OTDOARequestLocationInformation struct {
+	// AssistanceAvailability indicates whether the target device may request
+	// additional OTDOA assistance data from the server. This implementation
+	// has no assistance-data source, so callers should not set this true.
+	AssistanceAvailability bool
 }
 
 // ECIDRequestLocationInformation contains the TS 37.355 named BIT STRING
@@ -36,15 +51,24 @@ func requestedBit(v uper.BitString, n int) bool {
 }
 
 func (v RequestLocationInformationR9IEs) Validate() error {
-	if v.ECID == nil {
-		return nil
+	if v.Common != nil {
+		if err := v.Common.Validate(); err != nil {
+			return err
+		}
 	}
-	n := v.ECID.RequestedMeasurements.BitLen()
-	if n == 0 {
-		return ErrMissingRequestedMeasurements
+	if v.AGNSS != nil {
+		if err := v.AGNSS.Validate(); err != nil {
+			return err
+		}
 	}
-	if n > 8 {
-		return fmt.Errorf("%w: requestedMeasurements length %d", ErrInvalidECIDRequest, n)
+	if v.ECID != nil {
+		n := v.ECID.RequestedMeasurements.BitLen()
+		if n == 0 {
+			return ErrMissingRequestedMeasurements
+		}
+		if n > 8 {
+			return fmt.Errorf("%w: requestedMeasurements length %d", ErrInvalidECIDRequest, n)
+		}
 	}
 	return nil
 }
@@ -64,8 +88,28 @@ func EncodeRequestLocationInformation(w *uper.Writer, v RequestLocationInformati
 	if err := w.WriteExtensionPresent(false); err != nil {
 		return err
 	}
-	if err := w.WriteOptionalBitmap([]bool{false, false, false, v.ECID != nil, false}); err != nil {
+	if err := w.WriteOptionalBitmap([]bool{v.Common != nil, v.AGNSS != nil, v.OTDOA != nil, v.ECID != nil, false}); err != nil {
 		return err
+	}
+	if v.Common != nil {
+		if err := v.Common.EncodeUPER(w); err != nil {
+			return err
+		}
+	}
+	if v.AGNSS != nil {
+		if err := v.AGNSS.EncodeUPER(w); err != nil {
+			return err
+		}
+	}
+	if v.OTDOA != nil {
+		// OTDOA-RequestLocationInformation root has one mandatory BOOLEAN and
+		// no OPTIONAL members: extension-marker then the value, no bitmap.
+		if err := w.WriteExtensionPresent(false); err != nil {
+			return err
+		}
+		if err := w.WriteBoolean(v.OTDOA.AssistanceAvailability); err != nil {
+			return err
+		}
 	}
 	if v.ECID == nil {
 		return nil
@@ -104,19 +148,38 @@ func DecodeRequestLocationInformation(r *uper.Reader) (RequestLocationInformatio
 	if err != nil {
 		return RequestLocationInformationR9IEs{}, err
 	}
-	if bits[0] {
-		return RequestLocationInformationR9IEs{}, ErrUnsupportedCommon
-	}
-	if bits[1] {
-		return RequestLocationInformationR9IEs{}, ErrUnsupportedAGNSS
-	}
-	if bits[2] {
-		return RequestLocationInformationR9IEs{}, ErrUnsupportedOTDOA
-	}
 	if bits[4] {
 		return RequestLocationInformationR9IEs{}, ErrUnsupportedEPDU
 	}
 	v := RequestLocationInformationR9IEs{}
+	if bits[0] {
+		x, err := DecodeCommonRequestLocationInformation(r)
+		if err != nil {
+			return v, err
+		}
+		v.Common = &x
+	}
+	if bits[1] {
+		x, err := DecodeAGNSSRequestLocationInformation(r)
+		if err != nil {
+			return v, err
+		}
+		v.AGNSS = &x
+	}
+	if bits[2] {
+		ext, err = r.ReadExtensionPresent()
+		if err != nil {
+			return v, err
+		}
+		if err = uper.RequireNoExtension(ext); err != nil {
+			return v, fmt.Errorf("%w: OTDOA request: %w", ErrUnsupportedExtension, err)
+		}
+		assistance, err := r.ReadBoolean()
+		if err != nil {
+			return v, err
+		}
+		v.OTDOA = &OTDOARequestLocationInformation{AssistanceAvailability: assistance}
+	}
 	if !bits[3] {
 		return v, nil
 	}

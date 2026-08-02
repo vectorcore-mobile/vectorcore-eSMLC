@@ -1,9 +1,0 @@
-CellGlobalIdGERAN ::= SEQUENCE {
-plmn-IdentitySEQUENCE {
-mccSEQUENCE (SIZE (3))OF INTEGER (0..9),
-mncSEQUENCE (SIZE (2..3))OF INTEGER (0..9)
-},
-locationAreaCodeBIT STRING (SIZE (16)),
-cellIdentityBIT STRING (SIZE (16)),
-...
-}

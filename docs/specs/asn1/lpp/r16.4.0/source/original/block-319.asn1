@@ -1,9 +1,0 @@
-NR-ECID-ProvideCapabilities-r16 ::= SEQUENCE {
-nr-ECID-MeasSupported-r16BIT STRING {ssrsrpSup(0),
-ssrsrqSup(1),
-csirsrpSup(2),
-csirsrqSup(3)} (SIZE(1..8)),
-periodicalReporting-r16ENUMERATED { supported }OPTIONAL,
-triggeredReporting-r16ENUMERATED { supported }OPTIONAL,
-...
-}

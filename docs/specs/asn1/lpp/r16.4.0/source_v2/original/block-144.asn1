@@ -1,8 +1,0 @@
-UTC-ModelSet3 ::= SEQUENCE {
-	nA					INTEGER (1..1461),
-	tauC				INTEGER (-2147483648..2147483647),
-	b1					INTEGER (-1024..1023)					OPTIONAL,	-- Cond GLONASS-M
-	b2					INTEGER (-512..511)						OPTIONAL,	-- Cond GLONASS-M
-	kp					BIT STRING (SIZE(2))					OPTIONAL,	-- Cond GLONASS-M
-	...
-}

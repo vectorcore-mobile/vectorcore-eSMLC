@@ -1,0 +1,223 @@
+{
+  "compiler": "asn1tools",
+  "compiler_version": "0.167.0",
+  "encoding_rule": "uper",
+  "fixtures": [
+    {
+      "bit_length": 10,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "requestCapabilities-r9",
+            {
+              "otdoa-RequestCapabilities": {}
+            }
+          ]
+        ]
+      },
+      "hex": "0200",
+      "name": "request-capabilities-r9-otdoa-empty",
+      "purpose": "requests the OTDOA capability group; OTDOA-RequestCapabilities has no root fields",
+      "top_level_type": "RequestCapabilities",
+      "unused_trailing_bits": 6
+    },
+    {
+      "bit_length": 14,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideCapabilities-r9",
+            {
+              "otdoa-ProvideCapabilities": {
+                "otdoa-Mode": [
+                  {
+                    "hex": "80"
+                  },
+                  1
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "0204",
+      "name": "provide-capabilities-r9-otdoa",
+      "purpose": "target device supports ue-assisted OTDOA only (bit 0)",
+      "top_level_type": "ProvideCapabilities",
+      "unused_trailing_bits": 2
+    },
+    {
+      "bit_length": 11,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "requestLocationInformation-r9",
+            {
+              "otdoa-RequestLocationInformation": {
+                "assistanceAvailability": false
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "0200",
+      "name": "request-location-information-r9-otdoa-not-allowed",
+      "purpose": "server does not permit the target device to request further OTDOA assistance data",
+      "top_level_type": "RequestLocationInformation",
+      "unused_trailing_bits": 5
+    },
+    {
+      "bit_length": 203,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideLocationInformation-r9",
+            {
+              "otdoa-ProvideLocationInformation": {
+                "otdoaSignalMeasurementInformation": {
+                  "cellGlobalIdRef": {
+                    "cellidentity": [
+                      {
+                        "hex": "00000000"
+                      },
+                      28
+                    ],
+                    "mcc": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "mnc": [
+                      0,
+                      1
+                    ]
+                  },
+                  "earfcnRef": 100,
+                  "neighbourMeasurementList": [
+                    {
+                      "earfcnNeighbour": 100,
+                      "physCellIdNeighbour": 12,
+                      "rstd": 6356,
+                      "rstd-Quality": {
+                        "error-Resolution": [
+                          {
+                            "hex": "40"
+                          },
+                          2
+                        ],
+                        "error-Value": [
+                          {
+                            "hex": "00"
+                          },
+                          5
+                        ]
+                      }
+                    },
+                    {
+                      "physCellIdNeighbour": 300,
+                      "rstd": 2260,
+                      "rstd-Quality": {
+                        "error-NumSamples": [
+                          {
+                            "hex": "60"
+                          },
+                          3
+                        ],
+                        "error-Resolution": [
+                          {
+                            "hex": "40"
+                          },
+                          2
+                        ],
+                        "error-Value": [
+                          {
+                            "hex": "a0"
+                          },
+                          5
+                        ]
+                      }
+                    }
+                  ],
+                  "physCellIdRef": 5,
+                  "referenceQuality": {
+                    "error-Resolution": [
+                      {
+                        "hex": "40"
+                      },
+                      2
+                    ],
+                    "error-Value": [
+                      {
+                        "hex": "00"
+                      },
+                      5
+                    ]
+                  },
+                  "systemFrameNumber": [
+                    {
+                      "hex": "0000"
+                    },
+                    10
+                  ]
+                }
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "02270000a0020100000000064100483001918d41009611a8b460",
+      "name": "provide-location-information-r9-otdoa-two-neighbours",
+      "purpose": "reference cell plus two neighbour RSTD measurements; second neighbour omits earfcn and includes error-NumSamples",
+      "top_level_type": "ProvideLocationInformation",
+      "unused_trailing_bits": 5
+    },
+    {
+      "bit_length": 19,
+      "decoded_value": {
+        "criticalExtensions": [
+          "c1",
+          [
+            "provideLocationInformation-r9",
+            {
+              "otdoa-ProvideLocationInformation": {
+                "otdoa-Error": [
+                  "targetDeviceErrorCauses",
+                  {
+                    "cause": "assistance-data-missing"
+                  }
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "hex": "021420",
+      "name": "provide-location-information-r9-otdoa-error",
+      "purpose": "target device reports it has no OTDOA assistance data",
+      "top_level_type": "ProvideLocationInformation",
+      "unused_trailing_bits": 5
+    }
+  ],
+  "module": "docs/specs/asn1/lpp/r16.4.0/modules_v2/normalized/LPP-PDU-Definitions.asn1",
+  "module_sha256": "ef5f33c49cb69ba599db59776d7e58b71da5e00aa788ec57a1333f22e69e2724",
+  "negative_cases": [
+    {
+      "error": "ProvideLocationInformation.criticalExtensions.c1.provideLocationInformation-r9.otdoa-ProvideLocationInformation.otdoaSignalMeasurementInformation.neighbourMeasurementList: Expected a list of between 1 and 24 elements, but got 0.",
+      "error_type": "ConstraintsError",
+      "name": "otdoa-neighbour-list-empty",
+      "rejected": true
+    },
+    {
+      "error": "ProvideLocationInformation.criticalExtensions.c1.provideLocationInformation-r9.otdoa-ProvideLocationInformation.otdoaSignalMeasurementInformation.neighbourMeasurementList.rstd: Expected an integer between 0 and 12711, but got 12712.",
+      "error_type": "ConstraintsError",
+      "name": "otdoa-rstd-above-range",
+      "rejected": true
+    }
+  ],
+  "scope": "OTDOA root-only: RequestCapabilities/ProvideCapabilities/RequestLocationInformation/ProvideLocationInformation otdoa-* branches",
+  "specification": "3GPP TS 37.355 V16.4.0"
+}

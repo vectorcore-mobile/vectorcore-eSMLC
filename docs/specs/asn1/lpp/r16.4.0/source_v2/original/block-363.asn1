@@ -1,5 +1,0 @@
-OTDOA-UE-Assisted-r15 ::= SEQUENCE {
-	otdoa-ReferenceCellInfo-r15			OTDOA-ReferenceCellInfo,
-	otdoa-NeighbourCellInfo-r15			OTDOA-NeighbourCellInfoList,
-	...
-}

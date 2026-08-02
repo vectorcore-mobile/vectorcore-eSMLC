@@ -1,6 +1,0 @@
-NR-Multi-RTT-RequestAssistanceData-r16 ::= SEQUENCE {
-	nr-PhysCellID-r16				NR-PhysCellID-r16						OPTIONAL,
-	nr-AdType-r16					BIT STRING { 	dl-prs (0),
-													ul-srs (1) } (SIZE (1..8)),
-	...
-}

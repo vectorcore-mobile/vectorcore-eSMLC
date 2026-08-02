@@ -1,7 +1,0 @@
-PositioningModes ::= SEQUENCE {
-	posModes		BIT STRING {	standalone	(0),
-									ue-based	(1),
-									ue-assisted	(2)
-	} (SIZE (1..8)),
-	...
-}

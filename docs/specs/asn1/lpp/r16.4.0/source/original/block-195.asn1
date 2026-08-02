@@ -1,5 +1,0 @@
-GNSS-SSR-PhaseBiasReq-r16 ::= SEQUENCE {
-signal-and-tracking-mode-ID-Map-r16GNSS-SignalIDs,
-storedNavList-r16GNSS-NavListInfo-r15OPTIONAL,
-...
-}

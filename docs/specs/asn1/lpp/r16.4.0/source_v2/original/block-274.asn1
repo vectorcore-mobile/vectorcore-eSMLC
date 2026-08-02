@@ -1,5 +1,0 @@
-TBS-Error-r13 ::= CHOICE {
-	locationServerErrorCauses-r13		TBS-LocationServerErrorCauses-r13,
-	targetDeviceErrorCauses-r13			TBS-TargetDeviceErrorCauses-r13,
-	...
-}

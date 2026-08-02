@@ -1,7 +1,0 @@
-Sensor-TargetDeviceErrorCauses-r13 ::= SEQUENCE {
-	cause-r13			ENUMERATED		{	undefined,
-											...,
-											assistanceDataMissing-v1420
-										},
-	...
-}

@@ -1,4 +1,0 @@
-NR-UL-ProvideCapabilities-r16 ::= SEQUENCE {
-	nr-UL-SRS-Capability-r16		NR-UL-SRS-Capability-r16,
-	...
-}

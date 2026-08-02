@@ -1,5 +1,0 @@
-GNSS-AcquisitionAssistanceSupport ::=SEQUENCE {
-...,
-confidenceSupport-r10ENUMERATED { true }OPTIONAL,
-dopplerUncertaintyExtSupport-r10ENUMERATED { true }OPTIONAL
-}

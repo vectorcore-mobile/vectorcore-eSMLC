@@ -1,5 +1,0 @@
-GNSS-DifferentialCorrectionsReq ::=SEQUENCE {
-dgnss-SignalsReqGNSS-SignalIDs,
-dgnss-ValidityTimeReqBOOLEAN,
-...
-}

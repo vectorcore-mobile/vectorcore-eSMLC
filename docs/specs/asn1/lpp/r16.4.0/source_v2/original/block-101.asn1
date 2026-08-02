@@ -1,7 +1,0 @@
-GNSS-IonosphericModel ::= SEQUENCE {
-	klobucharModel			KlobucharModelParameter		OPTIONAL,	-- Need ON
-	neQuickModel			NeQuickModelParameter		OPTIONAL,	-- Need ON
-	...,
-	[[	klobucharModel2-r16		KlobucharModel2Parameter-r16	OPTIONAL	-- Need ON
-	]]
-}

@@ -1,4 +1,0 @@
-GNSS-RTK-ResidualsSupport-r15 ::= SEQUENCE {
-link-combinations-support-r15GNSS-Link-CombinationsList-r15,
-...
-}

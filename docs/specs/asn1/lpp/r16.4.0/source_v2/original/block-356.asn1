@@ -1,5 +1,0 @@
-NR-Multi-RTT-Error-r16 ::= CHOICE {
-	locationServerErrorCauses-r16		NR-Multi-RTT-LocationServerErrorCauses-r16,
-	targetDeviceErrorCauses-r16			NR-Multi-RTT-TargetDeviceErrorCauses-r16,
-	...
-}

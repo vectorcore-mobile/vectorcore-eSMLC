@@ -1,8 +1,0 @@
-ECID-RequestLocationInformation ::= SEQUENCE {
-	requestedMeasurements		BIT STRING {	rsrpReq		(0),
-												rsrqReq		(1),
-												ueRxTxReq	(2),
-												nrsrpReq-r14	(3),
-												nrsrqReq-r14	(4)} (SIZE(1..8)),
-	...
-}

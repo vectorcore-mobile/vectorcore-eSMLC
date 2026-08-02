@@ -1,9 +1,0 @@
-BDS-ClockModel2-r16 ::= SEQUENCE {
-	bdsToc-r16		INTEGER (0..2047),
-	bdsA0-r16		INTEGER (-16777216..16777215),
-	bdsA1-r16		INTEGER (-2097152..2097151),
-	bdsA2-r16		INTEGER (-1024..1023),
-	bdsTgdB1Cp-r16	INTEGER (-2048..2047),
-	bdsIscB1Cd-r16	INTEGER (-2048..2047),
-	...
-}

@@ -1,6 +1,0 @@
-GNSS-ReferenceTimeReq ::= SEQUENCE {
-	gnss-TimeReqPrefList	SEQUENCE (SIZE (1..8)) OF GNSS-ID,			
-	gps-TOW-assistReq		BOOLEAN								OPTIONAL, -- Cond gps
-	notOfLeapSecReq			BOOLEAN								OPTIONAL, -- Cond glonass
-	...
-}

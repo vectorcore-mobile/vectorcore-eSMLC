@@ -1,8 +1,0 @@
-NR-DL-TDOA-LocationInformation-r16 ::= SEQUENCE {
-measurementReferenceTime-r16CHOICE {
-systemFrameNumber-r16NR-TimeStamp-r16,
-utc-time-r16UTCTime,
-...
-}OPTIONAL,
-...
-}

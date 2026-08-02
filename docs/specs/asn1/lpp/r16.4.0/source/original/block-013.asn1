@@ -1,8 +1,0 @@
-AccessTypes ::= SEQUENCE {
-accessTypesBIT STRING {eutra(0),
-utra(1),
-gsm(2),
-nb-iot(3),
-nr-v1510(4) } (SIZE (1..8)),
-...
-}

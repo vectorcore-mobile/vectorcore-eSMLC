@@ -1,8 +1,0 @@
-TBS-TargetDeviceErrorCauses-r13 ::= SEQUENCE {
-	cause-r13		ENUMERATED {	undefined,
-									thereWereNotEnoughMBSBeaconsReceived,
-									...,
-									assistanceDataMissing-v1420
-								},
-	...
-}

@@ -1,4 +1,0 @@
-GNSS-UTC-ModelReq ::=	SEQUENCE {
-	modelID				INTEGER(1..8)	OPTIONAL,
-	...
-}

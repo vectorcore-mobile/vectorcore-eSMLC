@@ -15,6 +15,9 @@ func TestValidationRejectsUnsafeAndUnsupportedSettings(t *testing.T) {
 		func(c *Config) { c.Positioning.ECID.CellDataFile = "cells.yaml" },
 		func(c *Config) { c.Positioning.Simulation.ResponseDelay = time.Second },
 		func(c *Config) { c.Positioning.Simulation.Enabled = true; c.Positioning.Simulation.Latitude = 91 },
+		func(c *Config) { c.Observability.Enabled = true; c.Observability.ListenAddress = "not-an-ip" },
+		func(c *Config) { c.Observability.Enabled = true; c.Observability.Port = 0 },
+		func(c *Config) { c.Observability.Enabled = true; c.Observability.Port = c.SLs.Port },
 	}
 	for _, change := range cases {
 		c := Default()
@@ -22,5 +25,15 @@ func TestValidationRejectsUnsafeAndUnsupportedSettings(t *testing.T) {
 		if err := c.Validate(); err == nil {
 			t.Fatal("invalid configuration accepted")
 		}
+	}
+}
+
+func TestObservabilityDisabledBySLsSkipsPortCollisionCheck(t *testing.T) {
+	c := Default()
+	c.SLs.Enabled = false
+	c.Observability.Enabled = true
+	c.Observability.Port = c.SLs.Port // fine: SLs isn't listening on it
+	if err := c.Validate(); err != nil {
+		t.Fatalf("expected valid config, got %v", err)
 	}
 }

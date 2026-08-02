@@ -1,5 +1,0 @@
-NR-TimingQuality-r16 ::= SEQUENCE {
-	timingQualityValue-r16			INTEGER (0..31),
-	timingQualityResolution-r16		ENUMERATED {mdot1, m1, m10, m30, ...},
-	...
-}

@@ -8,10 +8,13 @@ import (
 )
 
 // ProvideLocationInformationR9IEs is the bounded Release 9 provide-location
-// payload. ECID is the only supported method branch; the common, A-GNSS,
-// OTDOA and EPDU branches fail closed.
+// payload. Common, A-GNSS, OTDOA, and ECID are the supported branches; EPDU
+// fails closed.
 type ProvideLocationInformationR9IEs struct {
-	ECID *ECIDProvideLocationInformation
+	Common *CommonProvideLocationInformation
+	AGNSS  *AGNSSProvideLocationInformation
+	OTDOA  *OTDOAProvideLocationInformation
+	ECID   *ECIDProvideLocationInformation
 }
 
 // ECIDProvideLocationInformation supports measurement information only.
@@ -93,6 +96,21 @@ func (v ECIDProvideLocationInformation) Validate() error {
 }
 
 func (v ProvideLocationInformationR9IEs) Validate() error {
+	if v.Common != nil {
+		if err := v.Common.Validate(); err != nil {
+			return err
+		}
+	}
+	if v.AGNSS != nil {
+		if err := v.AGNSS.Validate(); err != nil {
+			return err
+		}
+	}
+	if v.OTDOA != nil {
+		if err := v.OTDOA.Validate(); err != nil {
+			return err
+		}
+	}
 	if v.ECID != nil {
 		return v.ECID.Validate()
 	}
@@ -211,8 +229,23 @@ func EncodeProvideLocationInformation(w *uper.Writer, v ProvideLocationInformati
 	if err := w.WriteExtensionPresent(false); err != nil {
 		return err
 	}
-	if err := w.WriteOptionalBitmap([]bool{false, false, false, v.ECID != nil, false}); err != nil {
+	if err := w.WriteOptionalBitmap([]bool{v.Common != nil, v.AGNSS != nil, v.OTDOA != nil, v.ECID != nil, false}); err != nil {
 		return err
+	}
+	if v.Common != nil {
+		if err := v.Common.EncodeUPER(w); err != nil {
+			return err
+		}
+	}
+	if v.AGNSS != nil {
+		if err := v.AGNSS.EncodeUPER(w); err != nil {
+			return err
+		}
+	}
+	if v.OTDOA != nil {
+		if err := v.OTDOA.EncodeUPER(w); err != nil {
+			return err
+		}
 	}
 	if v.ECID != nil {
 		return v.ECID.EncodeUPER(w)
@@ -246,19 +279,31 @@ func DecodeProvideLocationInformation(r *uper.Reader) (ProvideLocationInformatio
 	if err != nil {
 		return ProvideLocationInformationR9IEs{}, err
 	}
-	if present[0] {
-		return ProvideLocationInformationR9IEs{}, ErrUnsupportedCommon
-	}
-	if present[1] {
-		return ProvideLocationInformationR9IEs{}, ErrUnsupportedAGNSS
-	}
-	if present[2] {
-		return ProvideLocationInformationR9IEs{}, ErrUnsupportedOTDOA
-	}
 	if present[4] {
 		return ProvideLocationInformationR9IEs{}, ErrUnsupportedEPDU
 	}
 	v := ProvideLocationInformationR9IEs{}
+	if present[0] {
+		x, err := DecodeCommonProvideLocationInformation(r)
+		if err != nil {
+			return v, err
+		}
+		v.Common = &x
+	}
+	if present[1] {
+		x, err := DecodeAGNSSProvideLocationInformation(r)
+		if err != nil {
+			return v, err
+		}
+		v.AGNSS = &x
+	}
+	if present[2] {
+		x, err := DecodeOTDOAProvideLocationInformation(r)
+		if err != nil {
+			return v, err
+		}
+		v.OTDOA = &x
+	}
 	if present[3] {
 		x, err := DecodeECIDProvideLocationInformation(r)
 		if err != nil {
@@ -282,6 +327,18 @@ func (v ECIDSignalMeasurementInformation) clone() ECIDSignalMeasurementInformati
 // values, so copying their elements is sufficient.
 func (v ProvideLocationInformationR9IEs) Clone() ProvideLocationInformationR9IEs {
 	out := v
+	if v.Common != nil {
+		x := v.Common.clone()
+		out.Common = &x
+	}
+	if v.AGNSS != nil {
+		x := v.AGNSS.clone()
+		out.AGNSS = &x
+	}
+	if v.OTDOA != nil {
+		x := v.OTDOA.clone()
+		out.OTDOA = &x
+	}
 	if v.ECID != nil {
 		x := *v.ECID
 		if v.ECID.signal != nil {

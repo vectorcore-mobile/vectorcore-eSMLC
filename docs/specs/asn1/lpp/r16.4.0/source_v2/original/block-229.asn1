@@ -1,4 +1,0 @@
-GNSS-RTK-MAC-CorrectionDifferencesSupport-r15 ::= 	SEQUENCE {
-	link-combinations-support-r15		GNSS-Link-CombinationsList-r15,
-	...
-}

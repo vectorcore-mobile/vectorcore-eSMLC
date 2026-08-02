@@ -1,8 +1,0 @@
-TBS-LocationServerErrorCauses-r13 ::= SEQUENCE {
-cause-r13ENUMERATED{undefined,
-...,
-assistanceDataNotSupportedByServer-v1420,
-assistanceDataSupportedButCurrentlyNotAvailableByServer-v1420
-},
-...
-}

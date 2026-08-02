@@ -1,1 +1,0 @@
-SegmentationInfo-r14 ::= ENUMERATED { noMoreMessages, moreMessagesOnTheWay }
