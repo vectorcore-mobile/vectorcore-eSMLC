@@ -130,8 +130,13 @@ Copy `config/esmlc.yaml.example` to `config/esmlc.yaml`, review it, then run:
 ```sh
 make build
 go test ./... -count=1
-./esmlc -config config/esmlc.yaml
+./esmlc -c config/esmlc.yaml
 ```
+
+Flags: `-c <path>` selects the YAML config file (default
+`config/esmlc.yaml`); `-d` forces DEBUG-level logging to the console
+regardless of `service.log_level`, for diagnosing SLs association and
+LCS-AP/LPP/LPPa message flow.
 
 The service requires kernel SCTP support for a live association. Unit tests do
 not require SCTP, an MME, UE, eNB, GMLC, or live positioning service.

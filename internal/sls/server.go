@@ -3,6 +3,7 @@ package sls
 
 import (
 	"context"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"github.com/ishidawataru/sctp"
@@ -23,6 +24,21 @@ import (
 	"sync"
 	"time"
 )
+
+// debugHexPreviewLimit bounds how many wire-format bytes -d debug logging
+// dumps per PDU. LCS-AP messages can carry GNSS assistance data payloads up
+// to sls.max_message_size (default 1MiB); logging the raw bytes unbounded
+// would make the console unusable during a live diagnostic session.
+const debugHexPreviewLimit = 2048
+
+// hexPreview renders b as hex, truncated to debugHexPreviewLimit with a
+// trailing byte count for anything cut off.
+func hexPreview(b []byte) string {
+	if len(b) <= debugHexPreviewLimit {
+		return hex.EncodeToString(b)
+	}
+	return hex.EncodeToString(b[:debugHexPreviewLimit]) + fmt.Sprintf("...(%d more bytes)", len(b)-debugHexPreviewLimit)
+}
 
 type Server struct {
 	cfg      config.Config
@@ -158,6 +174,11 @@ func (s *Server) registerMetrics() {
 // Metrics exposes the Prometheus-format observability registry for this
 // server. Callers typically mount it at an HTTP /metrics endpoint.
 func (s *Server) Metrics() *metrics.Registry { return s.metrics }
+
+// debugEnabled reports whether DEBUG-level logging is currently active, so
+// callers can skip building expensive attrs (hex dumps of raw PDUs) on the
+// hot path when they would just be discarded by the handler.
+func (s *Server) debugEnabled() bool { return s.log.Enabled(context.Background(), slog.LevelDebug) }
 
 // finalOutcomeLabel maps a FinalKind to its stable metric/log label. Every
 // currently-defined FinalKind is mapped explicitly; "unknown" is a safety
@@ -300,16 +321,35 @@ func (a *association) read() {
 			a.close(e)
 			return
 		}
+		ppid := uint32(0)
+		if info != nil {
+			ppid = info.PPID
+		}
+		a.server.log.Debug("esmlc.sls.pdu_read", "association", a.id, "bytes", n, "ppid", ppid)
 		if n < 1 || n > len(buf) || info == nil || info.PPID != a.server.cfg.SLs.ExpectedPPID {
-			a.server.log.Warn("esmlc.malformed_message", "reason", "ppid_or_size")
+			a.server.log.Warn("esmlc.malformed_message", "association", a.id, "reason", "ppid_or_size", "bytes", n, "ppid", ppid, "expected_ppid", a.server.cfg.SLs.ExpectedPPID)
 			continue
 		}
-		out, e := a.server.Handle(a.id, append([]byte(nil), buf[:n]...))
+		wire := append([]byte(nil), buf[:n]...)
+		if a.server.debugEnabled() {
+			a.server.log.Debug("esmlc.sls.pdu_hex_in", "association", a.id, "hex", hexPreview(wire))
+		}
+		out, e := a.server.Handle(a.id, wire)
 		if e != nil {
-			a.server.log.Warn("esmlc.lcsap.error", "association", a.id, "error", e)
+			attrs := []any{"association", a.id, "error", e}
+			if a.server.debugEnabled() {
+				attrs = append(attrs, "hex", hexPreview(wire))
+			}
+			a.server.log.Warn("esmlc.lcsap.error", attrs...)
 			continue
+		}
+		if len(out) == 0 {
+			a.server.log.Debug("esmlc.sls.no_outbound_pdu", "association", a.id, "reason", "handler produced no response for this inbound PDU")
 		}
 		for _, w := range out {
+			if a.server.debugEnabled() {
+				a.server.log.Debug("esmlc.sls.pdu_write", "association", a.id, "bytes", len(w), "hex", hexPreview(w))
+			}
 			if e = a.send(w); e != nil {
 				a.close(e)
 				return
@@ -364,8 +404,9 @@ func (s *Server) Close() error {
 func (s *Server) Handle(association string, wire []byte) ([][]byte, error) {
 	p, e := lcsap.Decode(wire)
 	if e != nil {
-		return nil, e
+		return nil, fmt.Errorf("lcsap: decode: %w", e)
 	}
+	s.log.Debug("esmlc.lcsap.dispatch", "association", association, "procedure", p.Procedure, "category", p.Category, "criticality", p.Criticality, "ie_count", len(p.IEs))
 	switch p.Procedure {
 	case lcsap.ProcedureLocationRequest:
 		return s.locationRequest(association, p)
@@ -395,7 +436,7 @@ func (s *Server) Handle(association string, wire []byte) ([][]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-		s.log.Info("esmlc.lcsap.connection_oriented_received", "association", association, "payload_type", v.PayloadType, "payload_length", len(v.Payload))
+		s.log.Info("esmlc.lcsap.connection_oriented_received", "association", association, "correlation", fmt.Sprintf("%x", v.Correlation), "payload_type", v.PayloadType, "payload_length", len(v.Payload))
 		switch v.PayloadType {
 		case 0:
 			return s.handleLPP(association, v)
@@ -419,16 +460,24 @@ func (s *Server) Handle(association string, wire []byte) ([][]byte, error) {
 // transport-neutral procedure, and wraps any resulting LPP actions back into
 // Connection-Oriented Information using the distinct LCS correlation ID.
 func (s *Server) handleLPP(association string, carrier lcsap.ConnectionOriented) ([][]byte, error) {
+	corr := fmt.Sprintf("%x", carrier.Correlation)
 	m, err := lpp.DecodeMessageOctets(carrier.Payload)
 	if err != nil {
+		s.log.Warn("esmlc.lpp.decode_failed", "association", association, "correlation", corr, "error", err)
 		return nil, fmt.Errorf("sls: decode LPP APDU: %w", err)
 	}
+	bodyKind := "none"
+	if m.Body != nil {
+		bodyKind = fmt.Sprintf("%v", m.Body.Kind)
+	}
+	s.log.Debug("esmlc.lpp.message_received", "association", association, "correlation", corr, "body_kind", bodyKind)
 	o, err := s.lppProcedure(session.ID{Association: association, Correlation: carrier.Correlation})
 	if err != nil {
 		return nil, err
 	}
 	r, err := o.HandleInbound(m, s.now())
 	if err != nil {
+		s.log.Warn("esmlc.lpp.procedure_apply_failed", "association", association, "correlation", corr, "body_kind", bodyKind, "error", err)
 		return nil, fmt.Errorf("sls: apply LPP procedure: %w", err)
 	}
 	actions := append([]procedure.Action(nil), r.Actions...)
@@ -438,7 +487,10 @@ func (s *Server) handleLPP(association string, carrier lcsap.ConnectionOriented)
 		actions = append(actions, jobResult.Actions...)
 		final = jobResult.Snapshot.Final
 	} else if jobErr != positioning.ErrNotActive {
+		s.log.Warn("esmlc.positioning.apply_failed", "association", association, "correlation", corr, "error", jobErr)
 		return nil, fmt.Errorf("sls: apply positioning job: %w", jobErr)
+	} else {
+		s.log.Debug("esmlc.positioning.apply_not_active", "association", association, "correlation", corr, "events", len(r.Events))
 	}
 	out, err := s.wrapLPPActions(carrier.Correlation, actions)
 	if err != nil {
@@ -453,8 +505,9 @@ func (s *Server) handleLPP(association string, carrier lcsap.ConnectionOriented)
 		out = append(out, response)
 	}
 	for _, event := range r.Events {
-		s.log.Info("esmlc.lpp.event", "association", association, "correlation", fmt.Sprintf("%x", carrier.Correlation), "kind", event.Kind)
+		s.log.Info("esmlc.lpp.event", "association", association, "correlation", corr, "kind", event.Kind)
 	}
+	s.log.Debug("esmlc.lpp.handled", "association", association, "correlation", corr, "actions", len(actions), "outbound_pdus", len(out))
 	return out, nil
 }
 
@@ -464,17 +517,21 @@ func (s *Server) handleLPP(association string, carrier lcsap.ConnectionOriented)
 // so this server owns the same decode/apply/wrap responsibility it already
 // owns for LPP, just against a different codec and Manager entry points.
 func (s *Server) handleLPPa(association string, carrier lcsap.ConnectionOriented) ([][]byte, error) {
+	corr := fmt.Sprintf("%x", carrier.Correlation)
 	p, err := lppa.Decode(carrier.Payload)
 	if err != nil {
+		s.log.Warn("esmlc.lppa.decode_failed", "association", association, "correlation", corr, "error", err)
 		return nil, fmt.Errorf("sls: decode LPPa APDU: %w", err)
 	}
+	s.log.Debug("esmlc.lppa.message_received", "association", association, "correlation", corr, "category", p.Category, "procedure", p.ProcedureCode)
 	scope := positioning.Scope{Association: association, Correlation: carrier.Correlation}
 	outcome, err := s.applyLPPaMessage(scope, p, s.now())
 	if err != nil {
 		if errors.Is(err, positioning.ErrNotActive) {
-			s.log.Warn("esmlc.lppa.no_active_job", "association", association, "correlation", fmt.Sprintf("%x", carrier.Correlation))
+			s.log.Warn("esmlc.lppa.no_active_job", "association", association, "correlation", corr)
 			return nil, nil
 		}
+		s.log.Warn("esmlc.lppa.apply_failed", "association", association, "correlation", corr, "error", err)
 		return nil, err
 	}
 	var out [][]byte
@@ -493,6 +550,7 @@ func (s *Server) handleLPPa(association string, carrier lcsap.ConnectionOriented
 		}
 		out = append(out, response)
 	}
+	s.log.Debug("esmlc.lppa.handled", "association", association, "correlation", corr, "outbound_pdus", len(out))
 	return out, nil
 }
 
@@ -661,27 +719,50 @@ func (s *Server) dropLPPAssociation(association string) {
 func (s *Server) locationRequest(association string, p lcsap.PDU) ([][]byte, error) {
 	id, e := lcsap.ValidateLocationRequest(p)
 	if e != nil {
+		s.log.Warn("esmlc.lcsap.location_request_invalid", "association", association, "error", e)
 		return nil, e
 	}
-	s.log.Info("esmlc.lcsap.location_request_received", "association", association)
+	s.log.Info("esmlc.lcsap.location_request_received", "association", association, "correlation", fmt.Sprintf("%x", id))
 	return s.startPositioningJob(association, id, p)
 }
 
 func (s *Server) startPositioningJob(association string, correlation [4]byte, p lcsap.PDU) ([][]byte, error) {
+	corr := fmt.Sprintf("%x", correlation)
 	request, err := lcsap.DecodeLocationRequest(p)
 	if err != nil {
+		s.log.Warn("esmlc.lcsap.location_request_decode_failed", "association", association, "correlation", corr, "error", err)
 		return nil, err
+	}
+	s.log.Debug("esmlc.lcsap.location_request_fields", "association", association, "correlation", corr,
+		"location_type", request.LocationType, "ecgi", fmt.Sprintf("%x", request.ECGI), "priority", request.Priority, "lpp_supported", request.LPPSupported, "client_type", request.ClientType)
+	if request.ClientType == nil {
+		s.log.Warn("esmlc.lcsap.location_request_no_client_type", "association", association, "correlation", corr,
+			"note", "LCS-Client-Type IE absent; cannot distinguish emergency-services from other LCS clients for this request")
+	} else if *request.ClientType != lcsap.ClientTypeEmergencyServices {
+		s.log.Info("esmlc.lcsap.location_request_client_type", "association", association, "correlation", corr, "client_type", *request.ClientType,
+			"note", "non-emergency LCS client; this service does not implement TS 23.271 privacy notification/verification, so the UE may decline")
 	}
 	scope := positioning.Scope{Association: association, Correlation: correlation}
 	o, err := s.lppProcedure(session.ID{Association: association, Correlation: correlation})
 	if err != nil {
+		s.log.Warn("esmlc.sls.lpp_procedure_unavailable", "association", association, "correlation", corr, "error", err, "consequence", "no LCS-AP response will be sent for this location request")
 		return nil, err
 	}
 	now := s.now()
-	result, err := s.jobs.Start(positioning.Request{Scope: scope, LocationType: request.LocationType, ServingECGI: request.ECGI, Priority: request.Priority, QoS: positioningQoS(request.QoS), LPPSupported: request.LPPSupported, Deadline: now.Add(s.cfg.SLs.SessionTimeout)}, o, now)
+	deadline := now.Add(s.cfg.SLs.SessionTimeout)
+	result, err := s.jobs.Start(positioning.Request{Scope: scope, LocationType: request.LocationType, ServingECGI: request.ECGI, Priority: request.Priority, QoS: positioningQoS(request.QoS), LPPSupported: request.LPPSupported, Deadline: deadline}, o, now)
 	if err != nil {
+		// A non-nil error here means the job could not even be scheduled
+		// (duplicate job, transaction-store exhaustion, malformed
+		// procedure options): the MME sent a Location Request and gets
+		// nothing back on the wire for it. Logged at Warn regardless of
+		// -d so this specific failure mode is always visible, not just
+		// when debug logging happens to be on.
+		s.log.Warn("esmlc.positioning.job_start_failed", "association", association, "correlation", corr, "error", err, "consequence", "no LCS-AP response will be sent for this location request")
 		return nil, fmt.Errorf("sls: start positioning job: %w", err)
 	}
+	s.log.Debug("esmlc.positioning.job_started", "association", association, "correlation", corr, "method", result.Snapshot.Method, "state", result.Snapshot.State, "actions", len(result.Actions), "lppa_action", result.LPPa != nil, "deadline", deadline,
+		"note", "deadline is only checked reactively on the next inbound LPP/LPPa event for this correlation; a UE/eNB that never replies again will not get a proactive LCS-AP failure response before this deadline")
 	s.recordFinalOutcome(association, result.Snapshot.Final)
 	if result.Snapshot.State == positioning.NoEligibleMethod {
 		w, err := lcsap.FailureWithCause(correlation, lcsap.CauseMiscUnspecified)
@@ -700,6 +781,9 @@ func (s *Server) startPositioningJob(association string, correlation [4]byte, p 
 			return nil, err
 		}
 		out = append(out, w)
+	}
+	if len(out) == 0 {
+		s.log.Warn("esmlc.positioning.job_started_no_wire_output", "association", association, "correlation", corr, "state", result.Snapshot.State, "consequence", "no LCS-AP response will be sent for this location request")
 	}
 	return out, nil
 }

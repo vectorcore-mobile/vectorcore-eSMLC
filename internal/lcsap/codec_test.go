@@ -57,6 +57,32 @@ func TestLocationRequestPreservesQoSAndLPPAbility(t *testing.T) {
 	}
 }
 
+func TestLocationRequestPreservesConditionalClientType(t *testing.T) {
+	for _, ct := range []ClientType{ClientTypeEmergencyServices, ClientTypeValueAddedServices, ClientTypePLMNOperatorTargetMSServiceSupport} {
+		wire, err := EncodeLCSClientType(ct)
+		if err != nil {
+			t.Fatal(err)
+		}
+		p := request()
+		p.IEs = append(p.IEs, IE{IELCSClientType, aper.Reject, wire})
+		v, err := DecodeLocationRequest(p)
+		if err != nil || v.ClientType == nil || *v.ClientType != ct {
+			t.Fatalf("client type %d: decoded %#v: %v", ct, v, err)
+		}
+	}
+	p := request()
+	if _, err := EncodeLCSClientType(ClientTypePLMNOperatorTargetMSServiceSupport + 1); err == nil {
+		t.Fatal("out-of-range client type accepted")
+	}
+	p.IEs = append(p.IEs, IE{IELCSClientType, aper.Reject, []byte{0x80}})
+	if _, err := DecodeLocationRequest(p); err == nil {
+		t.Fatal("extension-marked client type accepted")
+	}
+	if v, err := DecodeLocationRequest(request()); err != nil || v.ClientType != nil {
+		t.Fatalf("client type should be nil when IE absent: %#v: %v", v, err)
+	}
+}
+
 func TestSupportedLCSCauseEncodings(t *testing.T) {
 	for cause, wire := range map[Cause]byte{CauseRadioNetworkUnspecified: 0x00, CauseProtocolUnspecified: 0x94, CauseMiscUnspecified: 0xd8} {
 		encoded, err := FailureWithCause([4]byte{1}, cause)

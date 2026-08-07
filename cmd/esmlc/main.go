@@ -19,15 +19,20 @@ import (
 )
 
 func main() {
-	path := flag.String("config", "config/esmlc.yaml", "YAML configuration path")
+	path := flag.String("c", "config/esmlc.yaml", "YAML configuration path")
+	debugConsole := flag.Bool("d", false, "enable debug logging on the console")
 	flag.Parse()
 	cfg, e := config.Load(*path)
 	if e != nil {
 		slog.Error("esmlc.startup failed", "error", e)
 		os.Exit(1)
 	}
-	log := slog.New(slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{Level: level(cfg.Service.LogLevel)}))
-	log.Info("esmlc.startup", "service", cfg.Service.Name)
+	logLevel := level(cfg.Service.LogLevel)
+	if *debugConsole {
+		logLevel = slog.LevelDebug
+	}
+	log := slog.New(slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{Level: logLevel}))
+	log.Info("esmlc.startup", "service", cfg.Service.Name, "debug_console", *debugConsole)
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 

@@ -17,6 +17,7 @@ const (
 	IECorrelationID                        uint16 = 2
 	IEAccuracyFulfillmentIndicator         uint16 = 0
 	IEECGI                                 uint16 = 4
+	IELCSClientType                        uint16 = 8
 	IELCSPriority                          uint16 = 9
 	IELCSQoS                               uint16 = 10
 	IELCSCause                             uint16 = 11
@@ -54,6 +55,25 @@ const (
 	CauseMiscUnspecified
 )
 
+// ClientType is the root subset of the extensible LCS-Client-Type ENUMERATED
+// (lcs-ap-ies.asn1). Only EmergencyServices carries any standards-defined
+// exemption from privacy notification/verification (TS 23.271); every other
+// value is an ordinary third-party or operator LCS client and gets no
+// special handling here — this package only decodes and exposes the IE, it
+// does not itself implement privacy notification/verification.
+type ClientType uint8
+
+const (
+	ClientTypeEmergencyServices ClientType = iota
+	ClientTypeValueAddedServices
+	ClientTypePLMNOperatorServices
+	ClientTypeLawfulInterceptServices
+	ClientTypePLMNOperatorBroadcastServices
+	ClientTypePLMNOperatorOM
+	ClientTypePLMNOperatorAnonymousStatistics
+	ClientTypePLMNOperatorTargetMSServiceSupport
+)
+
 type PDU struct {
 	Category    Category
 	Procedure   uint8
@@ -62,7 +82,11 @@ type PDU struct {
 }
 
 // LocationRequest is the verified subset currently consumed by positioning
-// orchestration. Priority is nil when the conditional LCS-Priority IE is absent.
+// orchestration. Priority is nil when the conditional LCS-Priority IE is
+// absent; ClientType is nil when the conditional LCS-Client-Type IE is
+// absent. ClientType is decoded and exposed but not yet acted on: no caller
+// currently gates positioning behavior (e.g. privacy notification/
+// verification) on it — see ClientType's doc comment.
 type LocationRequest struct {
 	Correlation  [4]byte
 	LocationType uint8
@@ -70,6 +94,7 @@ type LocationRequest struct {
 	Priority     *uint8
 	QoS          *QoS
 	LPPSupported *bool
+	ClientType   *ClientType
 }
 
 // QoS is the root Release-16 LCS-QoS subset. Accuracy values are the
@@ -92,7 +117,7 @@ type ConnectionOriented struct {
 
 func known(id uint16) bool {
 	switch id {
-	case IECorrelationID, IEECGI, IELCSPriority, IELCSQoS, IELCSCause, IELocationEstimate, IELocationType, IEPayload, IEPayloadType, IEPositioningData, IEAccuracyFulfillmentIndicator, IEUEPositioningCapability:
+	case IECorrelationID, IEECGI, IELCSClientType, IELCSPriority, IELCSQoS, IELCSCause, IELocationEstimate, IELocationType, IEPayload, IEPayloadType, IEPositioningData, IEAccuracyFulfillmentIndicator, IEUEPositioningCapability:
 		return true
 	}
 	return false
@@ -273,6 +298,15 @@ func DecodeLocationRequest(p PDU) (LocationRequest, error) {
 			}
 			copy(out.ECGI[:], ie.Value)
 			hasECGI = true
+		case IELCSClientType:
+			if ie.Criticality != aper.Reject {
+				return out, fmt.Errorf("lcsap: invalid LCS client type criticality")
+			}
+			clientType, err := DecodeLCSClientType(ie.Value)
+			if err != nil {
+				return out, fmt.Errorf("lcsap: invalid LCS client type: %w", err)
+			}
+			out.ClientType = &clientType
 		case IELCSPriority:
 			if ie.Criticality != aper.Reject || len(ie.Value) != 1 {
 				return out, fmt.Errorf("lcsap: invalid LCS priority")
@@ -437,6 +471,44 @@ func EncodeUEPositioningCapability(lpp bool) ([]byte, error) {
 		return nil, err
 	}
 	if err := aper.PutConstrained(w, boolInt(lpp), 0, 1); err != nil {
+		return nil, err
+	}
+	return w.Bytes(), nil
+}
+
+// DecodeLCSClientType decodes the root subset of the extensible
+// LCS-Client-Type ENUMERATED (8 root values: 1-bit extension marker + 3-bit
+// index). Extension values are rejected fail-closed rather than mapped to a
+// root value, matching this package's handling of every other extensible
+// choice/enumerated IE.
+func DecodeLCSClientType(b []byte) (ClientType, error) {
+	r := aper.NewReader(b)
+	ext, err := aper.GetConstrained(r, 0, 1)
+	if err != nil {
+		return 0, err
+	}
+	if ext != 0 {
+		return 0, fmt.Errorf("lcsap: LCS-Client-Type extensions unsupported")
+	}
+	v, err := aper.GetConstrained(r, 0, 7)
+	if err != nil {
+		return 0, err
+	}
+	if r.Remaining() > 7 || !r.RemainingZero() {
+		return 0, fmt.Errorf("lcsap: trailing LCS-Client-Type data")
+	}
+	return ClientType(v), nil
+}
+
+func EncodeLCSClientType(v ClientType) ([]byte, error) {
+	if v > ClientTypePLMNOperatorTargetMSServiceSupport {
+		return nil, fmt.Errorf("lcsap: invalid LCS client type")
+	}
+	w := aper.NewWriter()
+	if err := aper.PutConstrained(w, 0, 0, 1); err != nil {
+		return nil, err
+	}
+	if err := aper.PutConstrained(w, int64(v), 0, 7); err != nil {
 		return nil, err
 	}
 	return w.Bytes(), nil

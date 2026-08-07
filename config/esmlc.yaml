@@ -1,0 +1,78 @@
+service:
+  name: vectorcore-esmlc
+  log_level: info
+sls:
+  enabled: true
+  listen_address: 127.0.0.5
+  port: 9083
+  expected_ppid: 29
+  max_associations: 32
+  max_sessions: 10000
+  session_timeout: 10s
+  max_message_size: 1048576
+positioning:
+  method: gnss
+  # Local operator policy only: actual UE ECID support is verified through
+  # LPP ProvideCapabilities before a location-information request is sent.
+  ecid:
+    enabled: false
+    request_rsrp: false
+    request_rsrq: false
+    request_ue_rxtx_time_diff: false
+    # Optional strict schema_version: 1 operator-maintained serving-cell
+    # catalog. A configured catalog is reloadable through
+    # POST /admin/reload-catalog (see observability below) or
+    # Server.ReloadCellCatalog directly; a failed reload preserves the
+    # active snapshot and never falls back to simulation. There is no
+    # automatic file watcher — reload is always explicit.
+    cell_data_file: ""
+    cell_data_max_age: 0s
+  # Local operator policy only: actual UE OTDOA support is verified through
+  # LPP ProvideCapabilities before a location-information request is sent.
+  # Requires ecid.cell_data_file above; the multilateration solver reuses
+  # that same operator-maintained catalog for reference/neighbour cell
+  # positions rather than a separate OTDOA catalog. There is no OTDOA
+  # assistance-data source, so a real UE may be unable to produce useful
+  # RSTD measurements without it — see docs/limitations.md.
+  otdoa:
+    enabled: false
+  # Local operator policy only: actual UE A-GNSS support is verified through
+  # LPP ProvideCapabilities before a location-information request is sent.
+  # This service only ever requests GPS in UE-based (MS-based) mode: the UE
+  # reports its own already-computed position, so unlike ecid/otdoa this
+  # needs no cell catalog. There is no assistance-data source, so a real UE
+  # may be unable to produce a position at all without one — see
+  # docs/limitations.md.
+  agnss:
+    enabled: true
+  # Unlike ecid/otdoa/agnss, this method needs no UE round trip at all: the
+  # E-SMLC asks the eNB directly, over LPPa (TS 36.455), for the serving
+  # cell's identity and (if the eNB has it) its own known antenna position.
+  # It rides the same SLs connection as LPP, not a separate transport. When
+  # enabled it takes priority over ecid/otdoa/agnss, since it is faster and
+  # does not depend on UE LPP support at all; when disabled (the default),
+  # behavior is unchanged from before this method existed. Falls back to
+  # ecid.cell_data_file when the eNB does not report its own antenna
+  # position — see docs/limitations.md.
+  lppa_ecid:
+    enabled: false
+  simulation:
+    # Development-only estimator, invoked only after a successful ECID
+    # measurement exchange; it is never treated as A-GNSS support.
+    enabled: false
+    latitude: 38.0
+    longitude: -90.0
+    uncertainty_meters: 50
+    response_delay: 0s
+# A small HTTP listener, entirely separate from the SCTP transport above,
+# exposing Prometheus-format /metrics, /healthz, /readyz, and
+# POST /admin/reload-catalog. Disabled by default: existing deployments are
+# unaffected until this is turned on. The default listen address is
+# loopback-only, not 0.0.0.0: unlike a read-only metrics endpoint, this
+# listener also carries a mutating admin action (catalog reload) with no
+# authentication of its own, so binding wider than localhost is an explicit
+# choice, not the default — restrict access at the network layer if you do.
+observability:
+  enabled: false
+  listen_address: 127.0.0.1
+  port: 9090
