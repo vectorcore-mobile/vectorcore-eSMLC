@@ -101,6 +101,54 @@ func TestJobDeadlineExpiresAndAbortsActiveProcedure(t *testing.T) {
 	}
 }
 
+// TestManagerPruneExpiresJobsWithoutTriggeringEvent is the regression case
+// for the leak this fixes: a job whose UE/eNB never sends another LPP/LPPa
+// event for its correlation was previously only ever expired reactively by
+// Apply, which nothing calls without a triggering event — so the job (and
+// its per-Scope LPP session/transaction state, owned by the caller) stayed
+// in m.jobs for the life of the process. Prune must expire it on its own,
+// with no Apply call involved at all.
+func TestManagerPruneExpiresJobsWithoutTriggeringEvent(t *testing.T) {
+	now := time.Unix(0, 0)
+	o := proc(t)
+	m := New(policy(t, true))
+	request := req()
+	request.Deadline = now.Add(time.Second)
+	if _, err := m.Start(request, o, now); err != nil {
+		t.Fatal(err)
+	}
+	if got := m.ActiveJobs(); got != 1 {
+		t.Fatalf("active jobs before deadline = %d, want 1", got)
+	}
+	// Before the deadline, Prune must leave the still-active job alone.
+	if results := m.Prune(now); len(results) != 0 {
+		t.Fatalf("prune before deadline = %#v, want none", results)
+	}
+	if got := m.ActiveJobs(); got != 1 {
+		t.Fatalf("active jobs after early prune = %d, want 1 (untouched)", got)
+	}
+	results := m.Prune(request.Deadline)
+	if len(results) != 1 {
+		t.Fatalf("prune at deadline = %#v, want exactly one expired job", results)
+	}
+	r := results[0]
+	if r.Scope != request.Scope {
+		t.Fatalf("expired scope = %#v, want %#v", r.Scope, request.Scope)
+	}
+	if r.Outcome.Snapshot.State != Expired || len(r.Outcome.Actions) != 1 {
+		t.Fatalf("expired outcome = %#v", r.Outcome)
+	}
+	if got := m.ActiveJobs(); got != 0 {
+		t.Fatalf("active jobs after prune = %d, want 0 (job must be removed from m.jobs)", got)
+	}
+	// A second sweep must find nothing left to expire — Prune deletes as it
+	// goes, matching finishLocked's own delete(m.jobs, ...) on every other
+	// terminal path.
+	if results := m.Prune(request.Deadline); len(results) != 0 {
+		t.Fatalf("second prune = %#v, want none (already removed)", results)
+	}
+}
+
 func TestECIDMeasurementsBecomeTypedEstimatorUnavailableOutcome(t *testing.T) {
 	now := time.Unix(0, 0)
 	o := proc(t)

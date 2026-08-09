@@ -277,6 +277,54 @@ func GetCriticality(r *Reader) (Criticality, error) {
 	}
 	return Criticality(v), nil
 }
+
+// PutEnumeratedExt writes an extensible ENUMERATED value per X.691 aligned
+// PER: a 1-bit extension marker (0 = root value) followed by the
+// root-constrained value. No extension-addition values are supported —
+// every IE this is currently used for (LCS-AP Payload-Type) only ever
+// carries root values, so a caller asking for v >= rootCount is a
+// programming error, not a wire condition to encode.
+//
+// Interop note: bit layout must match the peer's own extensible-ENUMERATED
+// encoder exactly. This was the root cause of a GMLC/MME/E-SMLC positioning
+// failure: this package previously encoded Payload-Type as a raw byte,
+// which the MME's APER-ENUMERATED decoder silently misread (it consumed the
+// byte's leading bit as the extension marker and the next bit as the value,
+// turning LPPa (1) into LPP (0) on the wire).
+func PutEnumeratedExt(w *Writer, v, rootCount int) error {
+	if v < 0 || v >= rootCount {
+		return fmt.Errorf("aper: enumerated extension additions are not supported")
+	}
+	if err := PutFixedBitString(w, 0, 1); err != nil {
+		return err
+	}
+	return PutConstrained(w, int64(v), 0, int64(rootCount-1))
+}
+
+// GetEnumeratedExt is PutEnumeratedExt's inverse. An extension-marker bit of
+// 1 (an extension addition) is rejected rather than decoded, matching
+// PutEnumeratedExt's own scope. Trailing bits after the value must be zero
+// padding (see RemainingZero) — this IE occupies a whole standalone octet
+// string, so any non-zero padding means the input wasn't actually produced
+// by PutEnumeratedExt.
+func GetEnumeratedExt(r *Reader, rootCount int) (int, error) {
+	ext, err := GetFixedBitString(r, 1)
+	if err != nil {
+		return 0, err
+	}
+	if ext != 0 {
+		return 0, fmt.Errorf("aper: enumerated extension additions are not supported")
+	}
+	v, err := GetConstrained(r, 0, int64(rootCount-1))
+	if err != nil {
+		return 0, err
+	}
+	if !r.RemainingZero() {
+		return 0, fmt.Errorf("aper: non-zero padding after enumerated value")
+	}
+	return int(v), nil
+}
+
 func PutOpenType(w *Writer, b []byte) error {
 	if len(b) > MaxOpenType {
 		return fmt.Errorf("aper: open type too large")

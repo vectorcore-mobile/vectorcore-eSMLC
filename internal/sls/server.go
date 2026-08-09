@@ -284,6 +284,8 @@ func (s *Server) Listen(ctx context.Context) error {
 	s.mu.Unlock()
 	s.log.Info("esmlc.sls.listening", "address", ln.Addr().String(), "ppid", lcsap.PPID)
 	go func() { <-ctx.Done(); _ = s.Close() }()
+	s.wg.Add(1)
+	go func() { defer s.wg.Done(); s.pruneLoop(ctx) }()
 	for {
 		c, e := ln.AcceptSCTP()
 		if e != nil {
@@ -446,10 +448,7 @@ func (s *Server) Handle(association string, wire []byte) ([][]byte, error) {
 			return nil, fmt.Errorf("lcsap: unsupported payload type %d", v.PayloadType)
 		}
 	case lcsap.ProcedureLocationAbort:
-		s.sessions.DropAssociation(association)
-		s.dropLPPAssociation(association)
-		s.jobs.DropAssociation(association)
-		return nil, nil
+		return s.locationAbort(association, p)
 	default:
 		return nil, fmt.Errorf("lcsap: unsupported procedure %d", p.Procedure)
 	}
@@ -625,8 +624,15 @@ func (s *Server) wrapLPPaAction(correlation [4]byte, action *positioning.LPPaAct
 func encodeFinalOutcome(correlation [4]byte, final positioning.FinalOutcome) ([]byte, error) {
 	if final.Kind == positioning.FinalEstimateAvailable && final.Estimate != nil {
 		var data *lcsap.PositioningData
-		if final.Estimate.Source == positioning.EstimateSourceAuthoritativeServingCell {
+		switch final.Estimate.Source {
+		case positioning.EstimateSourceAuthoritativeServingCell, positioning.EstimateSourceLPPaAccessPointPosition:
 			v := lcsap.NewECIDPositioningData()
+			data = &v
+		case positioning.EstimateSourceOTDOAMultilateration:
+			v := lcsap.NewOTDOAPositioningData()
+			data = &v
+		case positioning.EstimateSourceAGNSSUEReported:
+			v := lcsap.NewAGNSSPositioningData()
 			data = &v
 		}
 		var accuracy *lcsap.AccuracyFulfillmentIndicator
@@ -716,6 +722,89 @@ func (s *Server) dropLPPAssociation(association string) {
 		}
 	}
 }
+
+// dropLPPCorrelation removes only the one LPP procedure entry matching id,
+// unlike dropLPPAssociation's association-wide sweep — used by Location
+// Abort, which TS 29.171 scopes to a single Correlation-ID, not every
+// outstanding correlation on the association.
+func (s *Server) dropLPPCorrelation(id session.ID) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	delete(s.lpp, id)
+}
+// pruneLoop periodically expires positioning jobs whose deadline has passed
+// without a triggering inbound event (see positioning.Manager.Prune) until
+// ctx is done. It runs for the life of the SLs listener, tracked by s.wg
+// alongside the accept loop and every association's read loop, so Close
+// waits for it to stop cleanly.
+func (s *Server) pruneLoop(ctx context.Context) {
+	t := time.NewTicker(s.cfg.SLs.PruneInterval)
+	defer t.Stop()
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-t.C:
+			s.prune(s.now())
+		}
+	}
+}
+
+// prune expires every job positioning.Manager.Prune finds past its
+// deadline, sending the same wire actions (LPP actions to the UE, an LCS-AP
+// failure to the MME) Apply would have sent had a reactive event triggered
+// this same expiry, then drops the now-unneeded LPP session state for that
+// Scope (see dropLPPCorrelation) so it does not accumulate for the life of
+// the process.
+func (s *Server) prune(now time.Time) {
+	for _, r := range s.jobs.Prune(now) {
+		corr := fmt.Sprintf("%x", r.Scope.Correlation)
+		s.log.Info("esmlc.positioning.job_expired", "association", r.Scope.Association, "correlation", corr,
+			"note", "expired by periodic sweep; no further LPP/LPPa event ever arrived for this correlation")
+		out, err := s.wrapLPPActions(r.Scope.Correlation, r.Outcome.Actions)
+		if err != nil {
+			s.log.Warn("esmlc.positioning.prune_wrap_failed", "association", r.Scope.Association, "correlation", corr, "error", err)
+			out = nil
+		}
+		if r.Outcome.LPPa != nil {
+			w, err := s.wrapLPPaAction(r.Scope.Correlation, r.Outcome.LPPa)
+			if err != nil {
+				s.log.Warn("esmlc.positioning.prune_wrap_lppa_failed", "association", r.Scope.Association, "correlation", corr, "error", err)
+			} else {
+				out = append(out, w)
+			}
+		}
+		if final := r.Outcome.Snapshot.Final; final != nil {
+			s.recordFinalOutcome(r.Scope.Association, final)
+			response, err := encodeFinalOutcome(r.Scope.Correlation, *final)
+			if err != nil {
+				s.log.Warn("esmlc.positioning.prune_encode_failed", "association", r.Scope.Association, "correlation", corr, "error", err)
+			} else {
+				out = append(out, response)
+			}
+		}
+		s.dropLPPCorrelation(session.ID{Association: r.Scope.Association, Correlation: r.Scope.Correlation})
+		if len(out) == 0 {
+			continue
+		}
+		s.mu.Lock()
+		a := s.assocs[r.Scope.Association]
+		s.mu.Unlock()
+		if a == nil {
+			continue // association already gone; nothing to write to
+		}
+		for _, w := range out {
+			if s.debugEnabled() {
+				s.log.Debug("esmlc.sls.pdu_write", "association", r.Scope.Association, "bytes", len(w), "hex", hexPreview(w))
+			}
+			if e := a.send(w); e != nil {
+				a.close(e)
+				break
+			}
+		}
+	}
+}
+
 func (s *Server) locationRequest(association string, p lcsap.PDU) ([][]byte, error) {
 	id, e := lcsap.ValidateLocationRequest(p)
 	if e != nil {
@@ -785,6 +874,51 @@ func (s *Server) startPositioningJob(association string, correlation [4]byte, p 
 	if len(out) == 0 {
 		s.log.Warn("esmlc.positioning.job_started_no_wire_output", "association", association, "correlation", corr, "state", result.Snapshot.State, "consequence", "no LCS-AP response will be sent for this location request")
 	}
+	return out, nil
+}
+
+// locationAbort handles TS 29.171's Location Abort procedure, scoped to the
+// single Correlation-ID the request names (not the whole association, the
+// way Reset legitimately is). Canceling the job may itself produce an LPP
+// Abort to the UE and/or an LPPa Termination Command to the eNB (via
+// positioning.Manager.Cancel's shared terminalLocked/finishLocked path, the
+// same one every other terminal outcome uses) — both are sent alongside the
+// procedure's own Successful Outcome. Per the elementary procedure table
+// there is no Unsuccessful Outcome for this procedure, so the acknowledgment
+// is sent whether or not a matching job was found.
+func (s *Server) locationAbort(association string, p lcsap.PDU) ([][]byte, error) {
+	req, err := lcsap.DecodeLocationAbortRequest(p)
+	if err != nil {
+		s.log.Warn("esmlc.lcsap.location_abort_decode_failed", "association", association, "error", err)
+		return nil, err
+	}
+	corr := fmt.Sprintf("%x", req.Correlation)
+	scope := positioning.Scope{Association: association, Correlation: req.Correlation}
+	now := s.now()
+	outcome, found := s.jobs.Cancel(scope, now)
+	var out [][]byte
+	if found {
+		s.recordFinalOutcome(association, outcome.Snapshot.Final)
+		actions, err := s.wrapLPPActions(req.Correlation, outcome.Actions)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, actions...)
+		if outcome.LPPa != nil {
+			w, err := s.wrapLPPaAction(req.Correlation, outcome.LPPa)
+			if err != nil {
+				return nil, err
+			}
+			out = append(out, w)
+		}
+	}
+	s.dropLPPCorrelation(session.ID{Association: association, Correlation: req.Correlation})
+	ack, err := lcsap.AbortAcknowledge(req.Correlation)
+	if err != nil {
+		return nil, err
+	}
+	out = append(out, ack)
+	s.log.Info("esmlc.lcsap.location_abort", "association", association, "correlation", corr, "cause_branch", req.Cause.Branch, "cause_value", req.Cause.Value, "job_found", found)
 	return out, nil
 }
 

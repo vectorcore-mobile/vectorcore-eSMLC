@@ -153,6 +153,59 @@ func TestInboundAcknowledgementAction(t *testing.T) {
 		t.Fatalf("bad ack %#v", a)
 	}
 }
+// TestInboundAbortWithAcknowledgementRequested guards a real bug found
+// against a real UE: it responded to a RequestCapabilities with a legitimate
+// Abort that also requested an acknowledgement (Abort/Error have no
+// application-level response of their own, so acknowledgement is how a real
+// UE confirms receipt). HandleInbound's inbound Apply correctly moved the
+// record straight to Aborted, but then unconditionally tried a second Apply
+// to send the outbound ack against that now-terminal record, which always
+// failed — discarding the whole call (including the valid Abort event) and
+// leaving the UE's request permanently unanswered, so it kept retransmitting.
+// These are the real bytes captured from the live SLs association.
+func TestInboundAbortWithAcknowledgementRequested(t *testing.T) {
+	o := newOrch(t)
+	start, e := o.StartCapabilities(StartOptions{}, time.Time{})
+	if e != nil {
+		t.Fatal(e)
+	}
+	k := *start.Actions[0].Key
+	data, err := hex.DecodeString("f001004c10")
+	if err != nil {
+		t.Fatal(err)
+	}
+	m, err := lpp.DecodeMessageOctets(data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if m.Body == nil || m.Body.Kind != lpp.BodyAbort || m.Acknowledgement == nil || !m.Acknowledgement.Requested {
+		t.Fatalf("fixture no longer matches the real capture: %#v", m)
+	}
+	m.TransactionID = &lpp.TransactionID{Initiator: k.Initiator, TransactionNumber: k.Number}
+	r, e := o.HandleInbound(m, time.Time{})
+	if e != nil {
+		t.Fatalf("Abort with Acknowledgement.Requested must not fail the whole call: %v", e)
+	}
+	if !has(r.Events, ProcedureAborted) {
+		t.Fatalf("missing ProcedureAborted: %#v", r.Events)
+	}
+	if !has(r.Events, AcknowledgementRequested) {
+		t.Fatalf("missing AcknowledgementRequested: %#v", r.Events)
+	}
+	if len(r.Actions) != 1 || r.Actions[0].Kind != SendAcknowledgement {
+		t.Fatalf("expected exactly one SendAcknowledgement action: %#v", r.Actions)
+	}
+	// A byte-identical retransmit (the UE's own natural behavior when it
+	// never received an ack before this fix — moot once the first attempt is
+	// answered promptly, as it now is) is recognized as a duplicate and
+	// short-circuited before reaching the acknowledgement block at all; that
+	// pre-existing dedup behavior is unrelated to this bug and intentionally
+	// not re-verified here.
+	if _, e = o.HandleInbound(m, time.Time{}); e != nil {
+		t.Fatalf("retransmit after terminal must not fail: %v", e)
+	}
+}
+
 func TestAbortErrorAndPrune(t *testing.T) {
 	o := newOrch(t)
 	_, _ = o.HandleInbound(request(4, lpp.BodyRequestLocationInformation), time.Time{})

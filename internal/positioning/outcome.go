@@ -169,10 +169,20 @@ func (AGNSSEstimator) Estimate(_ Request, method MethodResult, now time.Time) Es
 	if err := reported.Validate(); err != nil {
 		return EstimationResult{Failure: InsufficientNetworkData}
 	}
+	// GeographicEstimate carries a single GAD uncertainty-code scalar; for the
+	// altitude/ellipsoid shape, report the larger of the two semi-axes so the
+	// value stays a conservative (never-too-small) bound.
+	horizontalUncertainty := reported.UncertaintyCircle
+	if reported.Shape == location.ShapePointWithAltitudeAndUncertaintyEllipsoid {
+		horizontalUncertainty = reported.UncertaintySemiMajor
+		if reported.UncertaintySemiMinor > horizontalUncertainty {
+			horizontalUncertainty = reported.UncertaintySemiMinor
+		}
+	}
 	estimate := GeographicEstimate{
 		Latitude:              reported.Point.Latitude,
 		Longitude:             reported.Point.Longitude,
-		HorizontalUncertainty: reported.UncertaintyCircle,
+		HorizontalUncertainty: horizontalUncertainty,
 		Source:                EstimateSourceAGNSSUEReported,
 		Timestamp:             now,
 	}

@@ -1,6 +1,7 @@
 package sls
 
 import (
+	"bytes"
 	"github.com/vectorcore/esmlc/internal/aper"
 	"github.com/vectorcore/esmlc/internal/config"
 	"github.com/vectorcore/esmlc/internal/lcsap"
@@ -8,6 +9,7 @@ import (
 	"github.com/vectorcore/esmlc/internal/lpp/capability"
 	"github.com/vectorcore/esmlc/internal/lpp/location"
 	"github.com/vectorcore/esmlc/internal/lpp/location/result"
+	"github.com/vectorcore/esmlc/internal/positioning"
 	"github.com/vectorcore/esmlc/internal/uper"
 	"testing"
 	"time"
@@ -326,6 +328,53 @@ func TestLocationRequestWithInsufficientECIDCapabilitiesFails(t *testing.T) {
 	}
 }
 
+// TestPruneExpiresSilentJobAndDropsSession is the regression test for the
+// leak that made a real E-SMLC process degrade the longer it stayed up: a
+// job whose UE never answers RequestLocationInformation was previously only
+// ever expired reactively (by Apply, triggered by a further inbound event
+// for that same correlation) — one that, by definition, a truly silent
+// UE/eNB never sends. Both the positioning job and its LPP session entry
+// (s.lpp, holding a whole per-correlation transaction.Store) would then
+// live for the rest of the process's uptime. Prune must clear both on its
+// own, with no further inbound message involved at all.
+func TestPruneExpiresSilentJobAndDropsSession(t *testing.T) {
+	c := config.Default()
+	c.Positioning.ECID.Enabled = true
+	c.Positioning.ECID.RequestRSRP = true
+	fixedNow := time.Date(2026, 8, 9, 0, 0, 0, 0, time.UTC)
+	s := newServer(c, nil, func() time.Time { return fixedNow })
+	if out, err := s.Handle("mme-a", locRequest()); err != nil || len(out) != 1 {
+		t.Fatalf("start %d %v", len(out), err)
+	}
+	if got := s.jobs.ActiveJobs(); got != 1 {
+		t.Fatalf("active jobs after start = %d, want 1", got)
+	}
+	if got := len(s.lpp); got != 1 {
+		t.Fatalf("LPP sessions after start = %d, want 1", got)
+	}
+	// Well before the deadline, prune must leave the still-active job and
+	// its session alone.
+	s.prune(fixedNow)
+	if got := s.jobs.ActiveJobs(); got != 1 {
+		t.Fatalf("active jobs before deadline = %d, want 1 (untouched)", got)
+	}
+	if got := len(s.lpp); got != 1 {
+		t.Fatalf("LPP sessions before deadline = %d, want 1 (untouched)", got)
+	}
+	// The UE never answers RequestLocationInformation; nothing else ever
+	// calls s.Handle again for this correlation. Once the deadline passes,
+	// prune must expire the job and drop its session without any further
+	// inbound event.
+	past := fixedNow.Add(c.SLs.SessionTimeout + time.Second)
+	s.prune(past)
+	if got := s.jobs.ActiveJobs(); got != 0 {
+		t.Fatalf("active jobs after prune = %d, want 0", got)
+	}
+	if got := len(s.lpp); got != 0 {
+		t.Fatalf("LPP sessions after prune = %d, want 0 (must not accumulate forever)", got)
+	}
+}
+
 func TestResetReleasesActivePositioningJob(t *testing.T) {
 	c := config.Default()
 	c.Positioning.ECID.Enabled = true
@@ -343,5 +392,155 @@ func TestResetReleasesActivePositioningJob(t *testing.T) {
 	}
 	if out, err := s.Handle("mme-a", locRequest()); err != nil || len(out) != 1 {
 		t.Fatalf("request after reset %d %v", len(out), err)
+	}
+}
+
+// locRequestCorrelation mirrors locRequest but with a caller-chosen
+// correlation, so a test can run two concurrent jobs on one association.
+func locRequestCorrelation(id [4]byte) []byte {
+	w, _ := lcsap.Encode(lcsap.PDU{Category: lcsap.Initiating, Procedure: lcsap.ProcedureLocationRequest, Criticality: aper.Reject, IEs: []lcsap.IE{{ID: lcsap.IECorrelationID, Criticality: aper.Reject, Value: id[:]}, {ID: lcsap.IELocationType, Criticality: aper.Reject, Value: []byte{0}}, {ID: lcsap.IEECGI, Criticality: aper.Ignore, Value: []byte{0, 0xf1, 0x10, 0, 0, 0, 1}}}})
+	return w
+}
+
+func abortRequestCorrelation(id [4]byte) []byte {
+	cause, _ := lcsap.EncodeLCSCause(lcsap.LCSCause{Branch: lcsap.LCSCauseMisc, Value: lcsap.MiscUnspecified})
+	w, _ := lcsap.Encode(lcsap.PDU{Category: lcsap.Initiating, Procedure: lcsap.ProcedureLocationAbort, Criticality: aper.Reject, IEs: []lcsap.IE{{ID: lcsap.IECorrelationID, Criticality: aper.Reject, Value: id[:]}, {ID: lcsap.IELCSCause, Criticality: aper.Ignore, Value: cause}}})
+	return w
+}
+
+// TestLocationAbortIsScopedToOneCorrelation is the regression test for the
+// bug found in docs/lcsap-spec-audit.md: Location Abort must cancel only
+// the one Correlation-ID it names, not every job on the association.
+func TestLocationAbortIsScopedToOneCorrelation(t *testing.T) {
+	c := config.Default()
+	c.Positioning.ECID.Enabled = true
+	c.Positioning.ECID.RequestRSRP = true
+	s := New(c, nil)
+	corrA, corrB := [4]byte{0, 0, 0, 7}, [4]byte{0, 0, 0, 8}
+	if out, err := s.Handle("mme-a", locRequestCorrelation(corrA)); err != nil || len(out) != 1 {
+		t.Fatalf("start job A: %d %v", len(out), err)
+	}
+	if out, err := s.Handle("mme-a", locRequestCorrelation(corrB)); err != nil || len(out) != 1 {
+		t.Fatalf("start job B: %d %v", len(out), err)
+	}
+
+	// Job A is still mid-capability-exchange, so canceling it also produces
+	// an LPP Abort action to the UE (wrapped as Connection-Oriented
+	// Information) ahead of the procedure's own Successful Outcome, which
+	// is always last.
+	out, err := s.Handle("mme-a", abortRequestCorrelation(corrA))
+	if err != nil || len(out) != 2 {
+		t.Fatalf("abort A: %d %v", len(out), err)
+	}
+	p, err := lcsap.Decode(out[len(out)-1])
+	if err != nil || p.Category != lcsap.Successful || p.Procedure != lcsap.ProcedureLocationAbort {
+		t.Fatalf("unexpected abort ack: %#v %v", p, err)
+	}
+	if id, err := lcsap.Correlation(p); err != nil || id != corrA {
+		t.Fatalf("abort ack correlation mismatch: %x %v", id, err)
+	}
+	lppAbort, err := lcsap.Decode(out[0])
+	if err != nil || lppAbort.Procedure != lcsap.ProcedureConnectionOrientedInformation {
+		t.Fatalf("expected LPP Abort action to the UE ahead of the ack: %#v %v", lppAbort, err)
+	}
+
+	// Job A must be gone: restarting it at the same scope must succeed
+	// (a still-active job would return ErrDuplicateJob instead).
+	if out, err := s.Handle("mme-a", locRequestCorrelation(corrA)); err != nil || len(out) != 1 {
+		t.Fatalf("job A should be cancelled, restart failed: %d %v", len(out), err)
+	}
+
+	// Job B must be untouched by aborting A: restarting it at the same
+	// scope must fail, since it's still active.
+	if _, err := s.Handle("mme-a", locRequestCorrelation(corrB)); err == nil {
+		t.Fatal("job B was incorrectly cancelled by aborting a different correlation")
+	}
+}
+
+// TestLocationAbortAcknowledgesEvenWithoutAnActiveJob covers the "no
+// Unsuccessful Outcome defined" case: an abort for a correlation with
+// nothing active still gets the Successful Outcome, not silence or an error.
+func TestLocationAbortAcknowledgesEvenWithoutAnActiveJob(t *testing.T) {
+	s := New(config.Default(), nil)
+	out, err := s.Handle("mme-a", abortRequestCorrelation([4]byte{9, 9, 9, 9}))
+	if err != nil || len(out) != 1 {
+		t.Fatalf("abort with no active job: %d %v", len(out), err)
+	}
+	p, err := lcsap.Decode(out[0])
+	if err != nil || p.Category != lcsap.Successful || p.Procedure != lcsap.ProcedureLocationAbort {
+		t.Fatalf("unexpected abort ack: %#v %v", p, err)
+	}
+}
+
+// TestEncodeFinalOutcomePairsPositioningDataWithEverySuccessSource covers
+// the TS 29.171 clause 6.2.1.2 "Positioning Data (C) — required if
+// available" gap: every EstimateSource that already produces a successful
+// GeographicEstimate must carry the matching Positioning-Data IE, not just
+// plain ECID's EstimateSourceAuthoritativeServingCell.
+func TestEncodeFinalOutcomePairsPositioningDataWithEverySuccessSource(t *testing.T) {
+	estimate := func(source positioning.EstimateSource) positioning.FinalOutcome {
+		return positioning.FinalOutcome{
+			Kind: positioning.FinalEstimateAvailable,
+			Estimate: &positioning.GeographicEstimate{
+				Latitude: 38, Longitude: -90, HorizontalUncertainty: 40,
+				Source: source, Timestamp: time.Now(),
+			},
+		}
+	}
+	cases := []struct {
+		name       string
+		source     positioning.EstimateSource
+		wantMethod []byte
+		wantGNSS   []byte
+	}{
+		{"ecid", positioning.EstimateSourceAuthoritativeServingCell, []byte{0x13}, nil},
+		{"lppa_ecid", positioning.EstimateSourceLPPaAccessPointPosition, []byte{0x13}, nil},
+		{"otdoa", positioning.EstimateSourceOTDOAMultilateration, []byte{0x23}, nil},
+		{"agnss", positioning.EstimateSourceAGNSSUEReported, nil, []byte{0x03}},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			wire, err := encodeFinalOutcome([4]byte{1, 2, 3, 4}, estimate(c.source))
+			if err != nil {
+				t.Fatal(err)
+			}
+			p, err := lcsap.Decode(wire)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var found bool
+			for _, ie := range p.IEs {
+				if ie.ID != lcsap.IEPositioningData {
+					continue
+				}
+				found = true
+				data, err := lcsap.DecodePositioningData(ie.Value)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if !bytes.Equal(data.Methods(), c.wantMethod) || !bytes.Equal(data.GNSSMethods(), c.wantGNSS) {
+					t.Fatalf("methods=%x gnssMethods=%x, want methods=%x gnssMethods=%x", data.Methods(), data.GNSSMethods(), c.wantMethod, c.wantGNSS)
+				}
+			}
+			if !found {
+				t.Fatal("no Positioning-Data IE in successful Location-Response")
+			}
+		})
+	}
+
+	// Simulation is intentionally never paired with a Positioning-Data IE —
+	// it isn't a real 3GPP method.
+	wire, err := encodeFinalOutcome([4]byte{1, 2, 3, 4}, estimate(positioning.EstimateSourceSimulation))
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := lcsap.Decode(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, ie := range p.IEs {
+		if ie.ID == lcsap.IEPositioningData {
+			t.Fatal("simulation estimate incorrectly carries a Positioning-Data IE")
+		}
 	}
 }

@@ -83,6 +83,58 @@ func TestLocationRequestPreservesConditionalClientType(t *testing.T) {
 	}
 }
 
+func abortRequest() PDU {
+	cause, err := EncodeLCSCause(LCSCause{Branch: LCSCauseMisc, Value: MiscUnspecified})
+	if err != nil {
+		panic(err)
+	}
+	return PDU{Category: Initiating, Procedure: ProcedureLocationAbort, Criticality: aper.Reject, IEs: []IE{{IECorrelationID, aper.Reject, []byte{0, 0, 0, 7}}, {IELCSCause, aper.Ignore, cause}}}
+}
+
+func TestLocationAbortRequestRoundTrip(t *testing.T) {
+	v, err := DecodeLocationAbortRequest(abortRequest())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if v.Correlation != [4]byte{0, 0, 0, 7} {
+		t.Fatalf("correlation mismatch: %x", v.Correlation)
+	}
+	if v.Cause.Branch != LCSCauseMisc || v.Cause.Value != MiscUnspecified {
+		t.Fatalf("cause mismatch: %#v", v.Cause)
+	}
+}
+
+func TestLocationAbortRequestRejectsMissingMandatoryIEs(t *testing.T) {
+	noCorrelation := abortRequest()
+	noCorrelation.IEs = noCorrelation.IEs[1:]
+	if _, err := DecodeLocationAbortRequest(noCorrelation); err == nil {
+		t.Fatal("missing correlation accepted")
+	}
+	noCause := abortRequest()
+	noCause.IEs = noCause.IEs[:1]
+	if _, err := DecodeLocationAbortRequest(noCause); err == nil {
+		t.Fatal("missing LCS cause accepted")
+	}
+}
+
+func TestAbortAcknowledgeWireShape(t *testing.T) {
+	id := [4]byte{0, 0, 0, 7}
+	wire, err := AbortAcknowledge(id)
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := Decode(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if p.Category != Successful || p.Procedure != ProcedureLocationAbort {
+		t.Fatalf("unexpected PDU shape: category=%v procedure=%d", p.Category, p.Procedure)
+	}
+	if len(p.IEs) != 1 || p.IEs[0].ID != IECorrelationID || !bytes.Equal(p.IEs[0].Value, id[:]) {
+		t.Fatalf("unexpected IEs: %#v", p.IEs)
+	}
+}
+
 func TestSupportedLCSCauseEncodings(t *testing.T) {
 	for cause, wire := range map[Cause]byte{CauseRadioNetworkUnspecified: 0x00, CauseProtocolUnspecified: 0x94, CauseMiscUnspecified: 0xd8} {
 		encoded, err := FailureWithCause([4]byte{1}, cause)
@@ -170,6 +222,54 @@ func TestIndependentRootResultMetadataFixtures(t *testing.T) {
 	}
 }
 
+func TestOTDOAAndAGNSSPositioningDataRoundTrip(t *testing.T) {
+	otdoa := NewOTDOAPositioningData()
+	encoded, err := otdoa.EncodeAPER()
+	if err != nil || !bytes.Equal(encoded, []byte{0x40, 0x23}) {
+		t.Fatalf("otdoa positioning data %x %v", encoded, err)
+	}
+	decoded, err := DecodePositioningData(encoded)
+	if err != nil || !bytes.Equal(decoded.Methods(), []byte{0x23}) || len(decoded.GNSSMethods()) != 0 {
+		t.Fatalf("otdoa positioning data decode %#v %v", decoded, err)
+	}
+
+	agnss := NewAGNSSPositioningData()
+	encoded, err = agnss.EncodeAPER()
+	if err != nil || !bytes.Equal(encoded, []byte{0x20, 0x03}) {
+		t.Fatalf("a-gnss positioning data %x %v", encoded, err)
+	}
+	decoded, err = DecodePositioningData(encoded)
+	if err != nil || !bytes.Equal(decoded.GNSSMethods(), []byte{0x03}) || len(decoded.Methods()) != 0 {
+		t.Fatalf("a-gnss positioning data decode %#v %v", decoded, err)
+	}
+
+	response, err := LocationResponseWithMetadata([4]byte{1}, 38, -90, 40, &agnss, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := Decode(response)
+	if err != nil || len(p.IEs) != 3 || p.IEs[2].ID != IEPositioningData {
+		t.Fatalf("a-gnss response %#v %v", p, err)
+	}
+}
+
+func TestPositioningDataRejectsInvalidMethods(t *testing.T) {
+	cases := []PositioningData{
+		{methods: []byte{0x08}},     // method 00001 (reserved), usage 000
+		{methods: []byte{0x15}},     // method 00010 (E-CID, valid), usage 101 (out of range)
+		{gnssMethods: []byte{0xc0}}, // GNSS method 11 (reserved)
+		{gnssMethods: []byte{0x38}}, // GNSS ID 111 (reserved)
+	}
+	for _, c := range cases {
+		if err := c.Validate(); err == nil {
+			t.Fatalf("accepted invalid positioning data %#v", c)
+		}
+	}
+	if err := (PositioningData{}).Validate(); err == nil {
+		t.Fatal("accepted empty positioning data")
+	}
+}
+
 func ptrAccuracy(v AccuracyFulfillmentIndicator) *AccuracyFulfillmentIndicator { return &v }
 func TestUnknownRejectAndDuplicateRejected(t *testing.T) {
 	p := request()
@@ -213,6 +313,48 @@ func TestMalformedLocationRequestRejectedBeforeDispatch(t *testing.T) {
 	for n := 0; n < len(valid); n++ {
 		if _, err := Decode(valid[:n]); err == nil {
 			t.Fatalf("accepted truncated Location Request at %d bytes", n)
+		}
+	}
+}
+
+// TestConnectionOrientedPayloadTypeWireBytesMatchMME locks in the exact
+// interop bug fix: Payload-Type is an extensible ENUMERATED (X.691 aligned
+// PER — 1-bit extension marker, then the root-constrained value), not a raw
+// byte. The MME peer decodes it that way; encoding PayloadType=1 (LPPa) as
+// the raw byte 0x01 previously collided on the wire with the correct
+// encoding of PayloadType=0 (LPP) once run through the MME's APER
+// ENUMERATED decoder (leading bit read as the extension marker, next bit as
+// the value — 0x01 = 00000001 decodes to ext=0,value=0), silently turning
+// every LPPa positioning attempt into a malformed LPP delivery to the UE.
+func TestConnectionOrientedPayloadTypeWireBytesMatchMME(t *testing.T) {
+	cases := []struct {
+		payloadType byte
+		wantIEByte  byte
+	}{
+		{0, 0x00}, // ext=0, value=0
+		{1, 0x40}, // ext=0, value=1 -> bits "01" then zero padding = 0x40
+	}
+	for _, c := range cases {
+		w, err := EncodeConnectionOriented(ConnectionOriented{Correlation: [4]byte{0, 0, 0, 1}, PayloadType: c.payloadType, Payload: []byte{0xaa}}, 32)
+		if err != nil {
+			t.Fatal(err)
+		}
+		p, err := Decode(w)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var got []byte
+		for _, ie := range p.IEs {
+			if ie.ID == IEPayloadType {
+				got = ie.Value
+			}
+		}
+		if len(got) != 1 || got[0] != c.wantIEByte {
+			t.Fatalf("payload_type=%d: IE bytes = %#v, want [%#02x]", c.payloadType, got, c.wantIEByte)
+		}
+		out, err := DecodeConnectionOriented(p, 32)
+		if err != nil || out.PayloadType != c.payloadType {
+			t.Fatalf("payload_type=%d: round trip = %+v, err=%v", c.payloadType, out, err)
 		}
 	}
 }

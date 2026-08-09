@@ -4,10 +4,12 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"math"
 	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/vectorcore/esmlc/internal/lpp/capability"
 	"github.com/vectorcore/esmlc/internal/lpp/location"
 	"github.com/vectorcore/esmlc/internal/uper"
 )
@@ -152,6 +154,307 @@ func TestMessageECIDRequestLocationPayload(t *testing.T) {
 	}
 	if !out.Body.RequestLocationInformation.ECID.RequestedMeasurements.Equal(requested) {
 		t.Fatal("requested measurements changed")
+	}
+}
+
+// TestAbortRealUEFixture guards the fix for a real bug found against a real
+// UE: a live iPhone declined an LPP RequestCapabilities with an Abort
+// message carrying commonIEs.abortCause, and this package's decodeBody
+// treated commonIEs being present at all as an unsupported IE ("malformed
+// encoding") instead of decoding it. These exact bytes were captured from
+// the live SLs association.
+func TestAbortRealUEFixture(t *testing.T) {
+	data, err := hex.DecodeString("d001003040")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := DecodeMessageOctets(data)
+	if err != nil {
+		t.Fatalf("real UE Abort response must decode, got: %v", err)
+	}
+	if out.Body == nil || out.Body.Kind != BodyAbort || out.Body.Abort == nil {
+		t.Fatalf("unexpected decoded message: %#v", out)
+	}
+	if out.Body.Abort.Cause == nil || *out.Body.Abort.Cause != AbortCauseUndefined {
+		t.Fatalf("cause = %v, want AbortCauseUndefined", out.Body.Abort.Cause)
+	}
+}
+
+// TestAbortWithCauseRoundTrip guards commonIEs.abortCause round-tripping
+// correctly on the encode side too — encodeBody had the same bug, encoding
+// zero bits for cause instead of a presence bit plus the enumerated value.
+func TestAbortWithCauseRoundTrip(t *testing.T) {
+	for _, cause := range []AbortCause{AbortCauseUndefined, AbortCauseStopPeriodicReporting, AbortCauseTargetDeviceAbort, AbortCauseNetworkAbort} {
+		c := cause
+		in := Message{Body: &Body{Kind: BodyAbort, Abort: &AbortIEs{Cause: &c}}}
+		encoded, err := EncodeMessage(in)
+		if err != nil {
+			t.Fatal(err)
+		}
+		out, err := DecodeMessage(encoded.Bytes, encoded.BitLength)
+		if err != nil {
+			t.Fatalf("cause=%d: %v", cause, err)
+		}
+		if out.Body == nil || out.Body.Kind != BodyAbort || out.Body.Abort == nil || out.Body.Abort.Cause == nil || *out.Body.Abort.Cause != cause {
+			t.Fatalf("cause=%d: round-trip mismatch: %#v", cause, out.Body)
+		}
+	}
+}
+
+// TestAbortEmptyFixture is the pre-existing minimum-Abort fixture
+// (tools/specs/lpp/fixtures/r16.4.0/abort-r9-empty.uper, commonIEs absent) —
+// already covered by TestFixtureOracle, but asserted directly here as an
+// explicit regression anchor for the absent-cause case alongside the
+// present-cause cases above.
+func TestAbortEmptyFixture(t *testing.T) {
+	data, err := hex.DecodeString("1980")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := DecodeMessage(data, 15)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if out.Body == nil || out.Body.Kind != BodyAbort || out.Body.Abort == nil || out.Body.Abort.Cause != nil {
+		t.Fatalf("unexpected decoded message: %#v", out)
+	}
+}
+
+// TestErrorRealUEFixture guards the fix for a real bug found against a real
+// UE: a live iPhone responded to a RequestLocationInformation with a
+// legitimate Error message carrying commonIEsError.errorCause, and this
+// package's decodeBody treated commonIEsError being present at all as an
+// unsupported IE ("malformed encoding") instead of decoding it — the same
+// bug, in the same shape, as the Abort case above. These exact bytes were
+// captured from the live SLs association.
+func TestErrorRealUEFixture(t *testing.T) {
+	data, err := hex.DecodeString("f003014e50")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := DecodeMessageOctets(data)
+	if err != nil {
+		t.Fatalf("real UE Error response must decode, got: %v", err)
+	}
+	if out.Body == nil || out.Body.Kind != BodyError || out.Body.Error == nil {
+		t.Fatalf("unexpected decoded message: %#v", out)
+	}
+	if out.Body.Error.Cause == nil || *out.Body.Error.Cause != ErrorCauseIncorrectDataValue {
+		t.Fatalf("cause = %v, want ErrorCauseIncorrectDataValue", out.Body.Error.Cause)
+	}
+}
+
+// TestErrorWithCauseRoundTrip guards commonIEsError.errorCause round-tripping
+// correctly on the encode side too — encodeBody had the same bug, encoding
+// zero bits for cause instead of a presence bit plus the enumerated value.
+func TestErrorWithCauseRoundTrip(t *testing.T) {
+	for _, cause := range []ErrorCause{ErrorCauseUndefined, ErrorCauseLPPMessageHeaderError, ErrorCauseLPPMessageBodyError, ErrorCauseEPDUError, ErrorCauseIncorrectDataValue} {
+		c := cause
+		in := Message{Body: &Body{Kind: BodyError, Error: &ErrorIEs{Cause: &c}}}
+		encoded, err := EncodeMessage(in)
+		if err != nil {
+			t.Fatal(err)
+		}
+		out, err := DecodeMessage(encoded.Bytes, encoded.BitLength)
+		if err != nil {
+			t.Fatalf("cause=%d: %v", cause, err)
+		}
+		if out.Body == nil || out.Body.Kind != BodyError || out.Body.Error == nil || out.Body.Error.Cause == nil || *out.Body.Error.Cause != cause {
+			t.Fatalf("cause=%d: round-trip mismatch: %#v", cause, out.Body)
+		}
+	}
+}
+
+// TestErrorEmptyFixture is the pre-existing minimum-Error fixture
+// (tools/specs/lpp/fixtures/r16.4.0/error-r9-empty.uper, commonIEsError
+// absent) — already covered by TestFixtureOracle, but asserted directly
+// here as an explicit regression anchor for the absent-cause case alongside
+// the present-cause cases above.
+func TestErrorEmptyFixture(t *testing.T) {
+	data, err := hex.DecodeString("19c0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := DecodeMessage(data, 13)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if out.Body == nil || out.Body.Kind != BodyError || out.Body.Error == nil || out.Body.Error.Cause != nil {
+		t.Fatalf("unexpected decoded message: %#v", out)
+	}
+}
+
+// TestProvideCapabilitiesAGNSSRealUEFixture guards the fix for a real bug
+// found against a real UE: an iPhone's A-GNSS ProvideCapabilities response
+// legitimately set assistanceDataSupportList, locationCoordinateTypes, and
+// velocityTypes (not just gnss-SupportList), and internal/lpp/capability
+// previously hard-rejected any of those three as unsupported, reporting a
+// genuine capability response as "malformed encoding". These are the exact
+// bytes captured from the live SLs association, including the outer LPP
+// envelope (TransactionID, EndTransaction, SequenceNumber, Acknowledgement)
+// the UE wrapped the ProvideCapabilities body in.
+func TestProvideCapabilitiesAGNSSRealUEFixture(t *testing.T) {
+	data, err := hex.DecodeString("f0010042087800174027008201b800002080")
+	if err != nil {
+		t.Fatal(err)
+	}
+	m, err := DecodeMessageOctets(data)
+	if err != nil {
+		t.Fatalf("real UE A-GNSS ProvideCapabilities must decode, got: %v", err)
+	}
+	if !m.EndTransaction {
+		t.Fatal("expected EndTransaction")
+	}
+	if m.Acknowledgement == nil || !m.Acknowledgement.Requested {
+		t.Fatalf("expected Acknowledgement.Requested: %#v", m.Acknowledgement)
+	}
+	if m.Body == nil || m.Body.Kind != BodyProvideCapabilities || m.Body.ProvideCapabilities == nil || m.Body.ProvideCapabilities.AGNSS == nil {
+		t.Fatalf("unexpected decoded message: %#v", m.Body)
+	}
+	a := m.Body.ProvideCapabilities.AGNSS
+	if len(a.GNSSSupportList) != 1 || a.GNSSSupportList[0].ID != capability.GNSSIDGPS || !a.GNSSSupportList[0].VelocityMeasurementSupport {
+		t.Fatalf("unexpected support list: %#v", a.GNSSSupportList)
+	}
+	if a.AssistanceData == nil {
+		t.Fatal("expected assistanceDataSupportList")
+	}
+	c := a.AssistanceData.Common
+	if c.ReferenceTime == nil || c.ReferenceLocation == nil || c.IonosphericModel == nil || c.EarthOrientation != nil {
+		t.Fatalf("unexpected common assistance data support: %#v", c)
+	}
+	if len(a.AssistanceData.Generic.Elements) != 1 {
+		t.Fatalf("unexpected generic assistance data support: %#v", a.AssistanceData.Generic.Elements)
+	}
+	g := a.AssistanceData.Generic.Elements[0]
+	if g.ID != capability.GNSSIDGPS || g.NavigationModelSupport == nil || g.RealTimeIntegritySupport == nil || g.AcquisitionAssistanceSupport == nil || g.AlmanacSupport == nil || g.UTCModelSupport == nil {
+		t.Fatalf("unexpected generic assistance data support element: %#v", g)
+	}
+	if g.SBASID != nil || g.TimeModelsSupport != nil || g.DifferentialCorrectionsSupport != nil || g.DataBitAssistanceSupport != nil || g.AuxiliaryInformationSupport != nil {
+		t.Fatalf("unexpected present field on generic assistance data support element: %#v", g)
+	}
+	if a.LocationCoordinateTypes == nil || !a.LocationCoordinateTypes.EllipsoidPointWithAltitudeAndUncertaintyEllipsoid {
+		t.Fatalf("unexpected locationCoordinateTypes: %#v", a.LocationCoordinateTypes)
+	}
+	if a.VelocityTypes == nil || !a.VelocityTypes.HorizontalWithVerticalVelocityAndUncertainty {
+		t.Fatalf("unexpected velocityTypes: %#v", a.VelocityTypes)
+	}
+}
+
+// TestRequestLocationInformationLocationInformationTypeExtensionBit guards a
+// real bug found live: CommonIEsRequestLocationInformation.locationInformationType
+// is itself an extensible ENUMERATED (TS 37.355's LocationInformationType has
+// a trailing "..."), so it carries its own extension-presence bit distinct
+// from the enclosing SEQUENCE's marker — the same shape already fixed for
+// AbortCause/ErrorCause. common.go's encode/decode omitted that bit entirely,
+// silently shifting every bit of the message after it left by one. A real UE
+// (IMSI ...070572) received the corrupted RequestLocationInformation E-SMLC
+// sent (decoding gnss-Methods as an all-zero, wrong-length GNSS-ID-Bitmap)
+// and correctly rejected it with Error(IncorrectDataValue). The expected
+// bytes below were independently produced by asn1tools compiled straight
+// from the normative TS 37.355 ASN.1 (tools/specs/lpp/reference-codec), not
+// derived from this package.
+func TestRequestLocationInformationLocationInformationTypeExtensionBit(t *testing.T) {
+	gpsOnly, err := uper.NewBitString([]byte{0x80}, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	in := Message{
+		TransactionID: &TransactionID{Initiator: InitiatorLocationServer, TransactionNumber: 1},
+		Body: &Body{
+			Kind: BodyRequestLocationInformation,
+			RequestLocationInformation: &location.RequestLocationInformationR9IEs{
+				Common: &location.CommonRequestLocationInformation{LocationInformationType: location.LocationEstimateRequired},
+				AGNSS:  &location.AGNSSRequestLocationInformation{GNSSMethods: gpsOnly},
+			},
+		},
+	}
+	encoded, err := EncodeMessage(in)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got, want := hex.EncodeToString(encoded.Bytes), "90022060000080"; got != want {
+		t.Fatalf("encode: got %s want %s (asn1tools reference)", got, want)
+	}
+	out, err := DecodeMessage(encoded.Bytes, encoded.BitLength)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if out.Body == nil || out.Body.RequestLocationInformation == nil {
+		t.Fatalf("unexpected decoded message: %#v", out)
+	}
+	got := out.Body.RequestLocationInformation
+	if got.Common == nil || got.Common.LocationInformationType != location.LocationEstimateRequired {
+		t.Fatalf("unexpected Common: %#v", got.Common)
+	}
+	if got.AGNSS == nil || got.AGNSS.GNSSMethods.BitLen() != 1 || got.AGNSS.GNSSMethods.Bytes()[0] != 0x80 {
+		t.Fatalf("unexpected AGNSS.GNSSMethods: %#v", got.AGNSS)
+	}
+}
+
+// TestProvideLocationInformationAGNSSRealUEFixture guards a scope gap found
+// live: after the LocationInformationType extension-bit fix above let a real
+// UE (IMSI ...070572) engage a full A-GNSS exchange, it replied with an
+// actual UE-computed GPS fix using the
+// ellipsoidPointWithAltitudeAndUncertaintyEllipsoid LocationCoordinates
+// shape (root CHOICE index 5) and MeasurementReferenceTime's optional
+// gnss-TOD-frac/gnss-TOD-unc fields — none of which this package decoded
+// before, so it failed closed as "malformed encoding" even though the
+// message was entirely spec-valid. These exact bytes were captured from the
+// live SLs association and independently confirmed against asn1tools
+// compiled from the normative TS 37.355 ASN.1
+// (tools/specs/lpp/reference-codec): latitude 32.6225N, longitude
+// -86.295257 (i.e. 86.295257W), altitude 65m height.
+func TestProvideLocationInformationAGNSSRealUEFixture(t *testing.T) {
+	data, err := hex.DecodeString("f003014a18452e657d42a26e00411e24a86da23220ad2001940080")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := DecodeMessageOctets(data)
+	if err != nil {
+		t.Fatalf("real UE ProvideLocationInformation must decode, got: %v", err)
+	}
+	if out.Body == nil || out.Body.Kind != BodyProvideLocationInformation || out.Body.ProvideLocationInformation == nil {
+		t.Fatalf("unexpected decoded message: %#v", out)
+	}
+	p := out.Body.ProvideLocationInformation
+	if p.Common == nil || p.Common.LocationEstimate == nil {
+		t.Fatalf("unexpected Common: %#v", p.Common)
+	}
+	le := p.Common.LocationEstimate
+	if le.Shape != location.ShapePointWithAltitudeAndUncertaintyEllipsoid {
+		t.Fatalf("shape = %d, want ShapePointWithAltitudeAndUncertaintyEllipsoid", le.Shape)
+	}
+	if math.Abs(le.Point.Latitude-32.6225) > 1e-4 || math.Abs(le.Point.Longitude-(-86.295257)) > 1e-4 {
+		t.Fatalf("unexpected coordinates: %#v", le.Point)
+	}
+	if le.AltitudeDirection != location.AltitudeHeight || le.Altitude != 65 {
+		t.Fatalf("unexpected altitude: dir=%d alt=%d", le.AltitudeDirection, le.Altitude)
+	}
+	if le.UncertaintySemiMajor != 15 || le.UncertaintySemiMinor != 9 || le.OrientationMajorAxis != 42 || le.UncertaintyAltitude != 13 || le.Confidence != 90 {
+		t.Fatalf("unexpected uncertainty ellipsoid: %#v", le)
+	}
+	if p.AGNSS == nil || p.AGNSS.GNSSLocationInformation == nil {
+		t.Fatalf("unexpected AGNSS: %#v", p.AGNSS)
+	}
+	m := p.AGNSS.GNSSLocationInformation.MeasurementReferenceTime
+	if m.GNSSTODMsec != 1115497 {
+		t.Fatalf("unexpected gnss-TOD-msec: %d", m.GNSSTODMsec)
+	}
+	if m.GNSSTODFrac == nil || *m.GNSSTODFrac != 0 {
+		t.Fatalf("unexpected gnss-TOD-frac: %v", m.GNSSTODFrac)
+	}
+	if m.GNSSTODUnc == nil || *m.GNSSTODUnc != 101 {
+		t.Fatalf("unexpected gnss-TOD-unc: %v", m.GNSSTODUnc)
+	}
+
+	// Round-trip: re-encoding the decoded value must reproduce the exact
+	// real-UE wire bytes.
+	encoded, err := EncodeMessage(out)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := hex.EncodeToString(encoded.Bytes); got != "f003014a18452e657d42a26e00411e24a86da23220ad2001940080" {
+		t.Fatalf("round-trip encode mismatch: got %s", got)
 	}
 }
 

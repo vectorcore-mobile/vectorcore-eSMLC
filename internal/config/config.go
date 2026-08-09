@@ -27,6 +27,13 @@ type SLs struct {
 	MaxSessions     int           `yaml:"max_sessions"`
 	SessionTimeout  time.Duration `yaml:"session_timeout"`
 	MaxMessageSize  int           `yaml:"max_message_size"`
+	// PruneInterval bounds how often positioning.Manager.Prune runs. Without
+	// this sweep, a job whose UE/eNB goes silent (no further LPP/LPPa event
+	// ever arrives for its correlation) is only ever expired reactively, on
+	// the next event for that same correlation — one that, by definition,
+	// never comes. Left unswept, such jobs (and the LPP session/transaction
+	// state keyed alongside them) accumulate for the life of the process.
+	PruneInterval time.Duration `yaml:"prune_interval"`
 }
 
 // Observability is a small HTTP listener separate from the SCTP transport,
@@ -109,7 +116,7 @@ type Simulation struct {
 func Default() Config {
 	return Config{
 		Service:       Service{Name: "vectorcore-esmlc", LogLevel: "info"},
-		SLs:           SLs{Enabled: true, ListenAddress: "0.0.0.0", Port: 9082, ExpectedPPID: 29, MaxAssociations: 32, MaxSessions: 10000, SessionTimeout: 10 * time.Second, MaxMessageSize: 1 << 20},
+		SLs:           SLs{Enabled: true, ListenAddress: "0.0.0.0", Port: 9082, ExpectedPPID: 29, MaxAssociations: 32, MaxSessions: 10000, SessionTimeout: 10 * time.Second, MaxMessageSize: 1 << 20, PruneInterval: 30 * time.Second},
 		Positioning:   Positioning{Method: "gnss", Simulation: Simulation{Enabled: false}},
 		Observability: Observability{Enabled: false, ListenAddress: "127.0.0.1", Port: 9090},
 	}
@@ -164,6 +171,9 @@ func (c Config) Validate() error {
 	}
 	if s.SessionTimeout <= 0 {
 		return fmt.Errorf("config: session timeout must be positive")
+	}
+	if s.PruneInterval <= 0 {
+		return fmt.Errorf("config: prune interval must be positive")
 	}
 	if s.MaxMessageSize < 1024 || s.MaxMessageSize > aperLimit {
 		return fmt.Errorf("config: max message size must be 1024..1048576")

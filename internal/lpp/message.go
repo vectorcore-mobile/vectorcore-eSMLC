@@ -44,6 +44,56 @@ type Body struct {
 	ProvideCapabilities        *capability.ProvideCapabilitiesR9IEs
 	RequestLocationInformation *location.RequestLocationInformationR9IEs
 	ProvideLocationInformation *location.ProvideLocationInformationR9IEs
+	Abort                      *AbortIEs
+	Error                      *ErrorIEs
+}
+
+// AbortCause ::= ENUMERATED { undefined, stopPeriodicReporting,
+// targetDeviceAbort, networkAbort, ..., stopPeriodicAssistanceDataDelivery-v1510 }.
+// The v1510 extension value is out of bounded scope: a set extension bit is
+// rejected fail-closed rather than decoded.
+type AbortCause uint8
+
+const (
+	AbortCauseUndefined AbortCause = iota
+	AbortCauseStopPeriodicReporting
+	AbortCauseTargetDeviceAbort
+	AbortCauseNetworkAbort
+)
+
+const abortCauseRootCount = 4
+
+// AbortIEs is Abort-r9-IEs ::= SEQUENCE { commonIEs CommonIEsAbort OPTIONAL,
+// ..., epdu-Abort EPDU-Sequence OPTIONAL }: epdu-Abort is an extension
+// addition (out of bounded scope, fail-closed rejected via the surrounding
+// SEQUENCE's own extension marker), not a root optional member alongside
+// commonIEs.
+type AbortIEs struct {
+	Cause *AbortCause
+}
+
+// ErrorCause ::= ENUMERATED { undefined, lppMessageHeaderError,
+// lppMessageBodyError, epduError, incorrectDataValue, ...,
+// lppSegmentationError-v1450 }. The v1450 extension value is out of bounded
+// scope: a set extension bit is rejected fail-closed rather than decoded.
+type ErrorCause uint8
+
+const (
+	ErrorCauseUndefined ErrorCause = iota
+	ErrorCauseLPPMessageHeaderError
+	ErrorCauseLPPMessageBodyError
+	ErrorCauseEPDUError
+	ErrorCauseIncorrectDataValue
+)
+
+const errorCauseRootCount = 5
+
+// ErrorIEs is Error-r9-IEs ::= SEQUENCE { commonIEsError CommonIEsError
+// OPTIONAL, ..., epdu-Error EPDU-Sequence OPTIONAL }: the same shape as
+// AbortIEs — epdu-Error is an extension addition, not a second root
+// optional member alongside commonIEsError.
+type ErrorIEs struct {
+	Cause *ErrorCause
 }
 type Message struct {
 	TransactionID   *TransactionID
@@ -72,6 +122,12 @@ func (m Message) Validate() error {
 		}
 		if m.Body.Kind != BodyProvideLocationInformation && m.Body.ProvideLocationInformation != nil {
 			return fmt.Errorf("%w: provide location payload on body %d", ErrInvalidMessage, m.Body.Kind)
+		}
+		if m.Body.Kind != BodyAbort && m.Body.Abort != nil {
+			return fmt.Errorf("%w: abort payload on body %d", ErrInvalidMessage, m.Body.Kind)
+		}
+		if m.Body.Kind != BodyError && m.Body.Error != nil {
+			return fmt.Errorf("%w: error payload on body %d", ErrInvalidMessage, m.Body.Kind)
 		}
 		if m.Body.RequestCapabilities != nil {
 			if err := m.Body.RequestCapabilities.Validate(); err != nil {
@@ -296,28 +352,72 @@ func encodeBody(w *uper.Writer, body *Body) error {
 		return location.EncodeProvideLocationInformation(w, v)
 	}
 	if kind == BodyError {
-		if err := w.WriteRootChoiceIndex(0, 2); err != nil {
+		if err := w.WriteRootChoiceIndex(0, 2); err != nil { // Error CHOICE: error-r9
 			return err
 		}
-		if err := w.WriteExtensionPresent(false); err != nil {
+		if err := w.WriteExtensionPresent(false); err != nil { // Error-r9-IEs extension marker
 			return err
 		}
-		return w.WriteOptionalBitmap([]bool{false})
+		var e ErrorIEs
+		if body.Error != nil {
+			e = *body.Error
+		}
+		if err := w.WriteOptionalBitmap([]bool{e.Cause != nil}); err != nil { // commonIEsError
+			return err
+		}
+		if e.Cause != nil {
+			// CommonIEsError ::= SEQUENCE { errorCause ENUMERATED {...} } is a
+			// plain non-extensible SEQUENCE with one mandatory field, so it
+			// carries no preamble bits of its own — go straight to errorCause.
+			if err := w.WriteExtensionPresent(false); err != nil { // errorCause extension marker
+				return err
+			}
+			if err := w.WriteRootEnumerated(uint64(*e.Cause), errorCauseRootCount); err != nil {
+				return err
+			}
+		}
+		return nil
 	}
-	if err := w.WriteRootChoiceIndex(0, 2); err != nil {
+	// kind == BodyAbort: the only remaining value supportedBody() allows.
+	// Abort ::= SEQUENCE { criticalExtensions CHOICE { c1 CHOICE {
+	// abort-r9 Abort-r9-IEs, spare3/2/1 NULL }, criticalExtensionsFuture
+	// SEQUENCE {} } }, Abort-r9-IEs ::= SEQUENCE { commonIEs CommonIEsAbort
+	// OPTIONAL, ..., epdu-Abort EPDU-Sequence OPTIONAL }: the "..." sits
+	// between the two fields, so epdu-Abort is an extension addition, not a
+	// second root optional member — Abort-r9-IEs has exactly one root
+	// optional member (commonIEs) and its own extension marker, matching the
+	// single WriteExtensionPresent + one-bit WriteOptionalBitmap below.
+	// epdu-Abort therefore never needs its own presence bit: it can only
+	// exist behind the extension marker this function always writes false
+	// (never encodes extension additions).
+	if err := w.WriteRootChoiceIndex(0, 2); err != nil { // criticalExtensions: c1
 		return err
 	}
-	if err := w.WriteRootChoiceIndex(0, 4); err != nil {
+	if err := w.WriteRootChoiceIndex(0, 4); err != nil { // c1: abort-r9
 		return err
 	}
-	if err := w.WriteExtensionPresent(false); err != nil {
+	if err := w.WriteExtensionPresent(false); err != nil { // Abort-r9-IEs extension marker
 		return err
 	}
-	count := 5
-	if kind == BodyAbort {
-		count = 1
+	var a AbortIEs
+	if body.Abort != nil {
+		a = *body.Abort
 	}
-	return w.WriteOptionalBitmap(make([]bool, count))
+	if err := w.WriteOptionalBitmap([]bool{a.Cause != nil}); err != nil { // commonIEs
+		return err
+	}
+	if a.Cause != nil {
+		// CommonIEsAbort ::= SEQUENCE { abortCause ENUMERATED {...} } is a
+		// plain non-extensible SEQUENCE with one mandatory field, so it
+		// carries no preamble bits of its own — go straight to abortCause.
+		if err := w.WriteExtensionPresent(false); err != nil { // abortCause extension marker
+			return err
+		}
+		if err := w.WriteRootEnumerated(uint64(*a.Cause), abortCauseRootCount); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 func decodeBody(r *uper.Reader) (*Body, error) {
 	outer, e := r.ReadRootChoiceIndex(2)
@@ -378,15 +478,43 @@ func decodeBody(r *uper.Reader) (*Body, error) {
 		if e = uper.RequireNoExtension(ext); e != nil {
 			return nil, ErrUnsupportedExtension
 		}
+		// Error-r9-IEs ::= SEQUENCE { commonIEsError CommonIEsError OPTIONAL,
+		// ..., epdu-Error EPDU-Sequence OPTIONAL }: the same shape as
+		// Abort-r9-IEs (see decodeBody's BodyAbort case) — epdu-Error is an
+		// extension addition, not a second root optional member, so the
+		// one-bit read here is correct; the actual bug was unconditionally
+		// treating "commonIEsError present" as unsupported instead of
+		// decoding it. Confirmed against a real UE: it responded to a
+		// RequestLocationInformation with a legitimate Error message
+		// carrying commonIEsError.errorCause, which this bug reported as
+		// "malformed encoding" rather than reading the cause.
 		bits, e := r.ReadOptionalBitmap(1)
 		if e != nil {
 			return nil, e
 		}
+		v := ErrorIEs{}
 		if bits[0] {
-			return nil, ErrUnsupportedBody
+			// CommonIEsError ::= SEQUENCE { errorCause ENUMERATED {...} } is
+			// a plain non-extensible SEQUENCE with one mandatory field, so
+			// it carries no preamble bits of its own — go straight to
+			// errorCause.
+			causeExt, e := r.ReadExtensionPresent()
+			if e != nil {
+				return nil, e
+			}
+			if e = uper.RequireNoExtension(causeExt); e != nil {
+				return nil, ErrUnsupportedExtension
+			}
+			cv, e := r.ReadRootEnumerated(errorCauseRootCount)
+			if e != nil {
+				return nil, e
+			}
+			cause := ErrorCause(cv)
+			v.Cause = &cause
 		}
-		return &Body{Kind: kind}, nil
+		return &Body{Kind: kind, Error: &v}, nil
 	}
+	// kind == BodyAbort: the only remaining value supportedBody() allows.
 	critical, e := r.ReadRootChoiceIndex(2)
 	if e != nil {
 		return nil, e
@@ -408,18 +536,38 @@ func decodeBody(r *uper.Reader) (*Body, error) {
 	if e = uper.RequireNoExtension(ext); e != nil {
 		return nil, ErrUnsupportedExtension
 	}
-	count := 5
-	if kind == BodyAbort {
-		count = 1
-	}
-	bits, e := r.ReadOptionalBitmap(count)
+	// Abort-r9-IEs ::= SEQUENCE { commonIEs CommonIEsAbort OPTIONAL, ...,
+	// epdu-Abort EPDU-Sequence OPTIONAL }: the "..." sits between the two
+	// fields, so epdu-Abort is an extension addition, not a second root
+	// optional member. Abort-r9-IEs therefore has exactly one root optional
+	// member (commonIEs) — the one-bit read below is correct as written; the
+	// actual bug was the code unconditionally treating "commonIEs present"
+	// as an unsupported/malformed body instead of decoding it. Confirmed
+	// against a real UE: it declined an LPP RequestCapabilities with a
+	// legitimate Abort message carrying commonIEs.abortCause, which this bug
+	// reported as "malformed encoding" rather than reading the cause.
+	bits, e := r.ReadOptionalBitmap(1)
 	if e != nil {
 		return nil, e
 	}
-	for _, b := range bits {
-		if b {
-			return nil, ErrUnsupportedBody
+	a := AbortIEs{}
+	if bits[0] {
+		// CommonIEsAbort ::= SEQUENCE { abortCause ENUMERATED {...} } is a
+		// plain non-extensible SEQUENCE with one mandatory field, so it
+		// carries no preamble bits of its own — go straight to abortCause.
+		causeExt, e := r.ReadExtensionPresent()
+		if e != nil {
+			return nil, e
 		}
+		if e = uper.RequireNoExtension(causeExt); e != nil {
+			return nil, ErrUnsupportedExtension
+		}
+		v, e := r.ReadRootEnumerated(abortCauseRootCount)
+		if e != nil {
+			return nil, e
+		}
+		cause := AbortCause(v)
+		a.Cause = &cause
 	}
-	return &Body{Kind: kind}, nil
+	return &Body{Kind: kind, Abort: &a}, nil
 }

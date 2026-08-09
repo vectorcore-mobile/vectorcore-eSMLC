@@ -54,16 +54,24 @@ func readGNSSIDRequireGPS(r *uper.Reader) error {
 }
 
 // MeasurementReferenceTime is the bounded root TS 37.355
-// MeasurementReferenceTime: gnss-TOD-msec and a required-GPS gnss-TimeID.
-// gnss-TOD-frac, gnss-TOD-unc, and networkTime are all OPTIONAL in the root
-// and are not represented here.
+// MeasurementReferenceTime: gnss-TOD-msec, the optional gnss-TOD-frac and
+// gnss-TOD-unc refinements, and a required-GPS gnss-TimeID. networkTime is
+// OPTIONAL in the root and is not represented here.
 type MeasurementReferenceTime struct {
-	GNSSTODMsec uint32 // 0..3599999
+	GNSSTODMsec uint32  // 0..3599999
+	GNSSTODFrac *uint16 // 0..3999, optional
+	GNSSTODUnc  *uint8  // 0..127, optional
 }
 
 func (v MeasurementReferenceTime) Validate() error {
 	if v.GNSSTODMsec > 3599999 {
 		return fmt.Errorf("%w: gnss-TOD-msec %d out of range", ErrInvalidAGNSSProvide, v.GNSSTODMsec)
+	}
+	if v.GNSSTODFrac != nil && *v.GNSSTODFrac > 3999 {
+		return fmt.Errorf("%w: gnss-TOD-frac %d out of range", ErrInvalidAGNSSProvide, *v.GNSSTODFrac)
+	}
+	if v.GNSSTODUnc != nil && *v.GNSSTODUnc > 127 {
+		return fmt.Errorf("%w: gnss-TOD-unc %d out of range", ErrInvalidAGNSSProvide, *v.GNSSTODUnc)
 	}
 	return nil
 }
@@ -74,11 +82,21 @@ func (v MeasurementReferenceTime) EncodeUPER(w *uper.Writer) error {
 	if err := w.WriteExtensionPresent(false); err != nil {
 		return err
 	}
-	if err := w.WriteOptionalBitmap([]bool{false, false, false}); err != nil {
+	if err := w.WriteOptionalBitmap([]bool{v.GNSSTODFrac != nil, v.GNSSTODUnc != nil, false}); err != nil {
 		return err
 	}
 	if err := w.WriteConstrainedWholeNumber(uint64(v.GNSSTODMsec), 0, 3599999); err != nil {
 		return err
+	}
+	if v.GNSSTODFrac != nil {
+		if err := w.WriteConstrainedWholeNumber(uint64(*v.GNSSTODFrac), 0, 3999); err != nil {
+			return err
+		}
+	}
+	if v.GNSSTODUnc != nil {
+		if err := w.WriteConstrainedWholeNumber(uint64(*v.GNSSTODUnc), 0, 127); err != nil {
+			return err
+		}
 	}
 	return writeGNSSIDGPSOnly(w)
 }
@@ -98,14 +116,22 @@ func DecodeMeasurementReferenceTime(r *uper.Reader) (MeasurementReferenceTime, e
 	if err != nil {
 		return MeasurementReferenceTime{}, err
 	}
+	v := MeasurementReferenceTime{GNSSTODMsec: uint32(msec)}
 	if present[0] {
-		if _, err := r.ReadConstrainedWholeNumber(0, 3999); err != nil {
+		frac, err := r.ReadConstrainedWholeNumber(0, 3999)
+		if err != nil {
 			return MeasurementReferenceTime{}, err
 		}
-		return MeasurementReferenceTime{}, fmt.Errorf("%w: gnss-TOD-frac unsupported", ErrInvalidAGNSSProvide)
+		f := uint16(frac)
+		v.GNSSTODFrac = &f
 	}
 	if present[1] {
-		return MeasurementReferenceTime{}, fmt.Errorf("%w: gnss-TOD-unc unsupported", ErrInvalidAGNSSProvide)
+		unc, err := r.ReadConstrainedWholeNumber(0, 127)
+		if err != nil {
+			return MeasurementReferenceTime{}, err
+		}
+		u := uint8(unc)
+		v.GNSSTODUnc = &u
 	}
 	if err := readGNSSIDRequireGPS(r); err != nil {
 		return MeasurementReferenceTime{}, err
@@ -113,7 +139,6 @@ func DecodeMeasurementReferenceTime(r *uper.Reader) (MeasurementReferenceTime, e
 	if present[2] {
 		return MeasurementReferenceTime{}, fmt.Errorf("%w: networkTime unsupported", ErrInvalidAGNSSProvide)
 	}
-	v := MeasurementReferenceTime{GNSSTODMsec: uint32(msec)}
 	return v, v.Validate()
 }
 

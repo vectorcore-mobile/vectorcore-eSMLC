@@ -52,6 +52,11 @@ func (v CommonRequestLocationInformation) EncodeUPER(w *uper.Writer) error {
 	if err := w.WriteOptionalBitmap([]bool{false, false, false, false, false, false, false}); err != nil {
 		return err
 	}
+	// LocationInformationType is itself an extensible ENUMERATED; its
+	// extension-presence bit is separate from the SEQUENCE's own marker above.
+	if err := w.WriteExtensionPresent(false); err != nil {
+		return err
+	}
 	return w.WriteRootEnumerated(uint64(v.LocationInformationType), 4)
 }
 func DecodeCommonRequestLocationInformation(r *uper.Reader) (CommonRequestLocationInformation, error) {
@@ -70,6 +75,13 @@ func DecodeCommonRequestLocationInformation(r *uper.Reader) (CommonRequestLocati
 		if p {
 			return CommonRequestLocationInformation{}, fmt.Errorf("%w: optional common request fields unsupported", ErrInvalidCommonRequest)
 		}
+	}
+	typeExt, err := r.ReadExtensionPresent()
+	if err != nil {
+		return CommonRequestLocationInformation{}, err
+	}
+	if typeExt {
+		return CommonRequestLocationInformation{}, ErrUnsupportedExtension
 	}
 	t, err := r.ReadRootEnumerated(4)
 	if err != nil {
@@ -129,28 +141,64 @@ type LocationCoordinatesShape uint8
 
 const (
 	// shapeEllipsoidPoint is root CHOICE index 0 (ellipsoidPoint). It is not
-	// implemented; the constant exists only to keep
-	// ShapePointWithUncertaintyCircle at its correct wire index (1).
+	// implemented; the constant exists only to keep the implemented shapes at
+	// their correct wire indices.
 	shapeEllipsoidPoint LocationCoordinatesShape = iota
 	ShapePointWithUncertaintyCircle
+	shapeEllipsoidPointWithUncertaintyEllipse // index 2, not implemented
+	shapePolygon                              // index 3, not implemented
+	shapeEllipsoidPointWithAltitude           // index 4, not implemented
+	ShapePointWithAltitudeAndUncertaintyEllipsoid
+	shapeEllipsoidArc // index 6, not implemented
+)
+
+// AltitudeDirection is TS 37.355's non-extensible root ENUMERATED
+// {height, depth} used by EllipsoidPointWithAltitudeAndUncertaintyEllipsoid.
+type AltitudeDirection uint8
+
+const (
+	AltitudeHeight AltitudeDirection = iota
+	AltitudeDepth
 )
 
 // LocationCoordinates is the bounded root TS 37.355 LocationCoordinates
-// CHOICE, restricted to the one shape this implementation produces and
-// accepts: a coordinate with a circular uncertainty, the same shape ECID's
-// authoritative serving-cell estimate already uses on the SLs side.
+// CHOICE, restricted to the two shapes this implementation produces and
+// accepts: a coordinate with a circular uncertainty (the same shape ECID's
+// authoritative serving-cell estimate already uses on the SLs side), and a
+// coordinate with altitude and an uncertainty ellipsoid (the shape real
+// UE-based A-GNSS fixes were observed to use on a live SLs association).
 type LocationCoordinates struct {
 	Shape             LocationCoordinatesShape
 	Point             Coordinates
-	UncertaintyCircle uint8 // Uncertainty-Code 0..127, GAD scale
+	UncertaintyCircle uint8 // Uncertainty-Code 0..127, GAD scale; ShapePointWithUncertaintyCircle only
+
+	// The following are ShapePointWithAltitudeAndUncertaintyEllipsoid only.
+	AltitudeDirection    AltitudeDirection
+	Altitude             uint16 // metres, 0..32767
+	UncertaintySemiMajor uint8  // Uncertainty-Code 0..127, GAD scale
+	UncertaintySemiMinor uint8  // Uncertainty-Code 0..127, GAD scale
+	OrientationMajorAxis uint8  // degrees from north, 0..179
+	UncertaintyAltitude  uint8  // Uncertainty-Code 0..127, GAD scale
+	Confidence           uint8  // percent, 0..100
 }
 
 func (v LocationCoordinates) Validate() error {
-	if v.Shape != ShapePointWithUncertaintyCircle {
+	if v.Shape != ShapePointWithUncertaintyCircle && v.Shape != ShapePointWithAltitudeAndUncertaintyEllipsoid {
 		return fmt.Errorf("%w: shape %d", ErrUnsupportedLocationCoordinateShape, v.Shape)
 	}
 	if v.Point.Latitude < -90 || v.Point.Latitude > 90 || v.Point.Longitude < -180 || v.Point.Longitude > 180 {
 		return fmt.Errorf("%w: coordinates out of range", ErrInvalidCommonProvide)
+	}
+	if v.Shape == ShapePointWithAltitudeAndUncertaintyEllipsoid {
+		if v.AltitudeDirection != AltitudeHeight && v.AltitudeDirection != AltitudeDepth {
+			return fmt.Errorf("%w: invalid altitudeDirection", ErrInvalidCommonProvide)
+		}
+		if v.OrientationMajorAxis > 179 {
+			return fmt.Errorf("%w: orientationMajorAxis %d out of range", ErrInvalidCommonProvide, v.OrientationMajorAxis)
+		}
+		if v.Confidence > 100 {
+			return fmt.Errorf("%w: confidence %d out of range", ErrInvalidCommonProvide, v.Confidence)
+		}
 	}
 	return nil
 }
@@ -167,8 +215,29 @@ func (v LocationCoordinates) EncodeUPER(w *uper.Writer) error {
 	if err := writeCoordinates(w, v.Point.Latitude, v.Point.Longitude); err != nil {
 		return err
 	}
-	if v.Shape == ShapePointWithUncertaintyCircle {
+	switch v.Shape {
+	case ShapePointWithUncertaintyCircle:
 		return w.WriteConstrainedWholeNumber(uint64(v.UncertaintyCircle), 0, 127)
+	case ShapePointWithAltitudeAndUncertaintyEllipsoid:
+		if err := w.WriteRootEnumerated(uint64(v.AltitudeDirection), 2); err != nil {
+			return err
+		}
+		if err := w.WriteConstrainedWholeNumber(uint64(v.Altitude), 0, 32767); err != nil {
+			return err
+		}
+		if err := w.WriteConstrainedWholeNumber(uint64(v.UncertaintySemiMajor), 0, 127); err != nil {
+			return err
+		}
+		if err := w.WriteConstrainedWholeNumber(uint64(v.UncertaintySemiMinor), 0, 127); err != nil {
+			return err
+		}
+		if err := w.WriteConstrainedWholeNumber(uint64(v.OrientationMajorAxis), 0, 179); err != nil {
+			return err
+		}
+		if err := w.WriteConstrainedWholeNumber(uint64(v.UncertaintyAltitude), 0, 127); err != nil {
+			return err
+		}
+		return w.WriteConstrainedWholeNumber(uint64(v.Confidence), 0, 100)
 	}
 	return nil
 }
@@ -184,7 +253,7 @@ func DecodeLocationCoordinates(r *uper.Reader) (LocationCoordinates, error) {
 	if err != nil {
 		return LocationCoordinates{}, err
 	}
-	if idx != uint64(ShapePointWithUncertaintyCircle) {
+	if idx != uint64(ShapePointWithUncertaintyCircle) && idx != uint64(ShapePointWithAltitudeAndUncertaintyEllipsoid) {
 		// Every other shape has a structurally different field layout past
 		// this point (Polygon is a SEQUENCE OF, EllipsoidArc has five
 		// further fields, etc.), so this must fail closed here rather than
@@ -209,12 +278,49 @@ func DecodeLocationCoordinates(r *uper.Reader) (LocationCoordinates, error) {
 	}
 	lon := float64(lo) * 180 / ((1 << 23) - 1)
 	v := LocationCoordinates{Shape: LocationCoordinatesShape(idx), Point: Coordinates{Latitude: lat, Longitude: lon}}
-	if v.Shape == ShapePointWithUncertaintyCircle {
+	switch v.Shape {
+	case ShapePointWithUncertaintyCircle:
 		u, err := r.ReadConstrainedWholeNumber(0, 127)
 		if err != nil {
 			return LocationCoordinates{}, err
 		}
 		v.UncertaintyCircle = uint8(u)
+	case ShapePointWithAltitudeAndUncertaintyEllipsoid:
+		dir, err := r.ReadRootEnumerated(2)
+		if err != nil {
+			return LocationCoordinates{}, err
+		}
+		v.AltitudeDirection = AltitudeDirection(dir)
+		alt, err := r.ReadConstrainedWholeNumber(0, 32767)
+		if err != nil {
+			return LocationCoordinates{}, err
+		}
+		v.Altitude = uint16(alt)
+		semiMajor, err := r.ReadConstrainedWholeNumber(0, 127)
+		if err != nil {
+			return LocationCoordinates{}, err
+		}
+		v.UncertaintySemiMajor = uint8(semiMajor)
+		semiMinor, err := r.ReadConstrainedWholeNumber(0, 127)
+		if err != nil {
+			return LocationCoordinates{}, err
+		}
+		v.UncertaintySemiMinor = uint8(semiMinor)
+		orientation, err := r.ReadConstrainedWholeNumber(0, 179)
+		if err != nil {
+			return LocationCoordinates{}, err
+		}
+		v.OrientationMajorAxis = uint8(orientation)
+		uncAlt, err := r.ReadConstrainedWholeNumber(0, 127)
+		if err != nil {
+			return LocationCoordinates{}, err
+		}
+		v.UncertaintyAltitude = uint8(uncAlt)
+		confidence, err := r.ReadConstrainedWholeNumber(0, 100)
+		if err != nil {
+			return LocationCoordinates{}, err
+		}
+		v.Confidence = uint8(confidence)
 	}
 	return v, v.Validate()
 }

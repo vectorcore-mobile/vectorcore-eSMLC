@@ -13,21 +13,29 @@ const (
 	ProcedureConnectionOrientedInformation uint8  = 1
 	ProcedureLocationAbort                 uint8  = 3
 	ProcedureReset                         uint8  = 4
-	ProcedureErrorIndication               uint8  = 5
-	IECorrelationID                        uint16 = 2
-	IEAccuracyFulfillmentIndicator         uint16 = 0
-	IEECGI                                 uint16 = 4
-	IELCSClientType                        uint16 = 8
-	IELCSPriority                          uint16 = 9
-	IELCSQoS                               uint16 = 10
-	IELCSCause                             uint16 = 11
-	IELocationEstimate                     uint16 = 12
-	IELocationType                         uint16 = 13
-	IEPayload                              uint16 = 1
-	IEPayloadType                          uint16 = 15
-	IEPositioningData                      uint16 = 16
-	IEUEPositioningCapability              uint16 = 20
-	IEVelocityEstimate                     uint16 = 21
+	// ProcedureCipheringKeyDataDelivery (TS 29.171 §6.2.3) is E-SMLC-initiated,
+	// not something an MME sends: the E-SMLC pushes ciphering keys for
+	// broadcast assistance data to the MME for distribution to subscribed
+	// UEs. It is explicitly optional ("the E-SMLC *may* provide broadcast
+	// assistance data... in ciphered or unciphered form", TS 23.271 clause 6)
+	// and depends on a broadcast/SIB assistance-data-ciphering feature this
+	// package has no other part of, so it is deliberately unimplemented — see
+	// docs/lcsap-spec-audit.md and docs/limitations.md.
+	ProcedureCipheringKeyDataDelivery uint8  = 5
+	IECorrelationID                   uint16 = 2
+	IEAccuracyFulfillmentIndicator    uint16 = 0
+	IEECGI                            uint16 = 4
+	IELCSClientType                   uint16 = 8
+	IELCSPriority                     uint16 = 9
+	IELCSQoS                          uint16 = 10
+	IELCSCause                        uint16 = 11
+	IELocationEstimate                uint16 = 12
+	IELocationType                    uint16 = 13
+	IEPayload                         uint16 = 1
+	IEPayloadType                     uint16 = 15
+	IEPositioningData                 uint16 = 16
+	IEUEPositioningCapability         uint16 = 20
+	IEVelocityEstimate                uint16 = 21
 )
 
 type Category uint8
@@ -95,6 +103,14 @@ type LocationRequest struct {
 	QoS          *QoS
 	LPPSupported *bool
 	ClientType   *ClientType
+}
+
+// LocationAbortRequest is the verified TS 29.171 Location-Abort-Request
+// subset: Correlation-ID and LCS-Cause are both mandatory (Table 7.3.3-1),
+// unlike LocationRequest's mostly-optional IE set.
+type LocationAbortRequest struct {
+	Correlation [4]byte
+	Cause       LCSCause
 }
 
 // QoS is the root Release-16 LCS-QoS subset. Accuracy values are the
@@ -337,6 +353,63 @@ func DecodeLocationRequest(p PDU) (LocationRequest, error) {
 		return out, fmt.Errorf("lcsap: missing mandatory IE")
 	}
 	return out, nil
+}
+
+// DecodeLocationAbortRequest validates and retains the mandatory
+// Location-Abort-Request fields. Unlike Location-Request, both its IEs are
+// mandatory (Table 7.3.3-1): a request missing either is rejected rather
+// than partially accepted.
+func DecodeLocationAbortRequest(p PDU) (LocationAbortRequest, error) {
+	var out LocationAbortRequest
+	id, e := Correlation(p)
+	out.Correlation = id
+	if e != nil {
+		return out, e
+	}
+	if p.Category != Initiating || p.Procedure != ProcedureLocationAbort || p.Criticality != aper.Reject {
+		return out, fmt.Errorf("lcsap: unsupported location abort request")
+	}
+	seen := map[uint16]bool{}
+	hasCause := false
+	for _, ie := range p.IEs {
+		if seen[ie.ID] {
+			return out, fmt.Errorf("lcsap: duplicate IE")
+		}
+		seen[ie.ID] = true
+		if !known(ie.ID) && ie.Criticality == aper.Reject {
+			return out, fmt.Errorf("lcsap: unknown reject IE")
+		}
+		switch ie.ID {
+		case IECorrelationID:
+			if ie.Criticality != aper.Reject || len(ie.Value) != 4 {
+				return out, fmt.Errorf("lcsap: invalid correlation")
+			}
+		case IELCSCause:
+			if ie.Criticality != aper.Ignore {
+				return out, fmt.Errorf("lcsap: invalid LCS cause criticality")
+			}
+			cause, err := DecodeLCSCause(ie.Value)
+			if err != nil {
+				return out, fmt.Errorf("lcsap: invalid LCS cause: %w", err)
+			}
+			out.Cause = cause
+			hasCause = true
+		}
+	}
+	if !hasCause {
+		return out, fmt.Errorf("lcsap: missing mandatory IE")
+	}
+	return out, nil
+}
+
+// AbortAcknowledge encodes location-Abort's Successful Outcome: a
+// Location-Response carrying only the Correlation-ID, tagged with the
+// Location-Abort procedure code. The elementary procedure table (TS 29.171
+// §9.1) defines no Unsuccessful Outcome for this procedure — the E-SMLC
+// always acknowledges once the abort has been processed, whether or not a
+// matching job was found.
+func AbortAcknowledge(id [4]byte) ([]byte, error) {
+	return Encode(PDU{Category: Successful, Procedure: ProcedureLocationAbort, Criticality: aper.Reject, IEs: []IE{{IECorrelationID, aper.Reject, id[:]}}})
 }
 
 // DecodeQoS decodes the non-extension root of LCS-QoS. Extension data is
@@ -617,6 +690,11 @@ func FailureWithDetailedCause(id [4]byte, cause LCSCause) ([]byte, error) {
 
 // EncodeConnectionOriented creates the Release-16 initiating PDU. TS 29.171
 // declares the elementary-procedure criticality as reject.
+// payloadTypeRootCount is the number of root values in the Payload-Type
+// ENUMERATED (lpp, lppa) — must match the peer MME's own root count exactly,
+// since it determines the constrained value's bit width.
+const payloadTypeRootCount = 2
+
 func EncodeConnectionOriented(v ConnectionOriented, maxPayload int) ([]byte, error) {
 	if len(v.Payload) == 0 || len(v.Payload) > maxPayload {
 		return nil, fmt.Errorf("lcsap: invalid connection-oriented payload length")
@@ -624,9 +702,13 @@ func EncodeConnectionOriented(v ConnectionOriented, maxPayload int) ([]byte, err
 	if v.PayloadType > 1 {
 		return nil, fmt.Errorf("lcsap: unsupported payload type")
 	}
+	pt := aper.NewWriter()
+	if err := aper.PutEnumeratedExt(pt, int(v.PayloadType), payloadTypeRootCount); err != nil {
+		return nil, fmt.Errorf("lcsap: encode payload type: %w", err)
+	}
 	return Encode(PDU{Category: Initiating, Procedure: ProcedureConnectionOrientedInformation, Criticality: aper.Reject, IEs: []IE{
 		{ID: IECorrelationID, Criticality: aper.Reject, Value: v.Correlation[:]},
-		{ID: IEPayloadType, Criticality: aper.Reject, Value: []byte{v.PayloadType}},
+		{ID: IEPayloadType, Criticality: aper.Reject, Value: pt.Bytes()},
 		{ID: IEPayload, Criticality: aper.Reject, Value: append([]byte(nil), v.Payload...)},
 	}})
 }
@@ -654,10 +736,14 @@ func DecodeConnectionOriented(p PDU, maxPayload int) (ConnectionOriented, error)
 			copy(out.Correlation[:], ie.Value)
 			haveID = true
 		case IEPayloadType:
-			if ie.Criticality != aper.Reject || len(ie.Value) != 1 || ie.Value[0] > 1 {
+			if ie.Criticality != aper.Reject {
 				return out, fmt.Errorf("lcsap: invalid connection-oriented payload type")
 			}
-			out.PayloadType = ie.Value[0]
+			pt, e := aper.GetEnumeratedExt(aper.NewReader(ie.Value), payloadTypeRootCount)
+			if e != nil {
+				return out, fmt.Errorf("lcsap: invalid connection-oriented payload type: %w", e)
+			}
+			out.PayloadType = uint8(pt)
 			haveType = true
 		case IEPayload:
 			if ie.Criticality != aper.Reject || len(ie.Value) == 0 || len(ie.Value) > maxPayload {

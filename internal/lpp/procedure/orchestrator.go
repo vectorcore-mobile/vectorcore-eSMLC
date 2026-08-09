@@ -221,9 +221,22 @@ func (o *Orchestrator) HandleInbound(m lpp.Message, now time.Time) (Result, erro
 	if a := m.Acknowledgement; a != nil && a.Requested {
 		ind := uint8(0)
 		ack := lpp.Message{TransactionID: &lpp.TransactionID{Initiator: key.Initiator, TransactionNumber: key.Number}, Acknowledgement: &lpp.Acknowledgement{Indicator: &ind}, SequenceNumber: m.SequenceNumber}
-		_, e := o.tx.Apply(transaction.Outbound, ownership, ack, now)
-		if e != nil {
-			return Result{}, e
+		// Abort/Error have no application-level response message of their
+		// own, so acknowledgement is the mechanism a real UE uses to confirm
+		// receipt of one — and the inbound Apply above already moved this
+		// record straight to a terminal state (Aborted/Failed) to reflect
+		// that. A second Apply for the outbound ack against an
+		// already-terminal record always fails (every record.state.terminal()
+		// check rejects it, transaction.ErrAborted/ErrFailed), which used to
+		// discard the whole HandleInbound call — including the already-valid
+		// inbound event — turning a legitimate acknowledged Abort/Error into
+		// an opaque failure. The record has nothing further to track once
+		// terminal (any later message on this key hits the same terminal
+		// guard regardless), so the ack only needs to go out on the wire.
+		if !tr.Aborted && !tr.Completed && !tr.Failed {
+			if _, e := o.tx.Apply(transaction.Outbound, ownership, ack, now); e != nil {
+				return Result{}, e
+			}
 		}
 		r.Events = append(r.Events, Event{Kind: AcknowledgementRequested, Key: keyPtr(key)})
 		r.Actions = append(r.Actions, Action{Kind: SendAcknowledgement, Message: ack, Key: keyPtr(key)})

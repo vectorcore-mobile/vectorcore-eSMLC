@@ -232,12 +232,16 @@ func readGNSSSignalIDs(r *uper.Reader) (uper.BitString, error) {
 	return r.ReadBitString(8, 8)
 }
 
-// AGNSSProvideCapabilities is the bounded root TS 37.355
-// A-GNSS-ProvideCapabilities: only gnss-SupportList. assistanceDataSupportList,
-// locationCoordinateTypes, and velocityTypes are all OPTIONAL in the root
-// and are not represented; a UE that includes any of them is rejected.
+// AGNSSProvideCapabilities is the full TS 37.355 A-GNSS-ProvideCapabilities
+// root: all four OPTIONAL members (gnss-SupportList,
+// assistanceDataSupportList, locationCoordinateTypes, velocityTypes), in
+// declaration order. The Release 14/15 extension addition group
+// (periodicalReportingNotSupported-r14, ...) is out of bounded scope.
 type AGNSSProvideCapabilities struct {
-	GNSSSupportList []GNSSSupportElement // 1..16
+	GNSSSupportList         []GNSSSupportElement // 1..16
+	AssistanceData          *AssistanceDataSupportList
+	LocationCoordinateTypes *LocationCoordinateTypes
+	VelocityTypes           *VelocityTypes
 }
 
 // SupportsGPSUEBased reports whether the list contains a GPS entry
@@ -252,12 +256,19 @@ func (v AGNSSProvideCapabilities) SupportsGPSUEBased() bool {
 	return false
 }
 func (v AGNSSProvideCapabilities) Validate() error {
-	if len(v.GNSSSupportList) < 1 || len(v.GNSSSupportList) > 16 {
-		return fmt.Errorf("%w: gnss-SupportList count %d", ErrInvalidAGNSS, len(v.GNSSSupportList))
+	if v.GNSSSupportList != nil {
+		if len(v.GNSSSupportList) < 1 || len(v.GNSSSupportList) > 16 {
+			return fmt.Errorf("%w: gnss-SupportList count %d", ErrInvalidAGNSS, len(v.GNSSSupportList))
+		}
+		for i := range v.GNSSSupportList {
+			if err := v.GNSSSupportList[i].Validate(); err != nil {
+				return fmt.Errorf("%w: element %d: %w", ErrInvalidAGNSS, i, err)
+			}
+		}
 	}
-	for i := range v.GNSSSupportList {
-		if err := v.GNSSSupportList[i].Validate(); err != nil {
-			return fmt.Errorf("%w: element %d: %w", ErrInvalidAGNSS, i, err)
+	if v.AssistanceData != nil {
+		if err := v.AssistanceData.Generic.Validate(); err != nil {
+			return err
 		}
 	}
 	return nil
@@ -269,12 +280,30 @@ func (v AGNSSProvideCapabilities) EncodeUPER(w *uper.Writer) error {
 	if err := w.WriteExtensionPresent(false); err != nil {
 		return err
 	}
-	if err := w.WriteOptionalBitmap([]bool{true, false, false, false}); err != nil {
+	if err := w.WriteOptionalBitmap([]bool{v.GNSSSupportList != nil, v.AssistanceData != nil, v.LocationCoordinateTypes != nil, v.VelocityTypes != nil}); err != nil {
 		return err
 	}
-	return w.WriteSequenceOf(len(v.GNSSSupportList), 1, 16, func(index int, writer *uper.Writer) error {
-		return v.GNSSSupportList[index].EncodeUPER(writer)
-	})
+	if v.GNSSSupportList != nil {
+		if err := w.WriteSequenceOf(len(v.GNSSSupportList), 1, 16, func(index int, writer *uper.Writer) error {
+			return v.GNSSSupportList[index].EncodeUPER(writer)
+		}); err != nil {
+			return err
+		}
+	}
+	if v.AssistanceData != nil {
+		if err := v.AssistanceData.EncodeUPER(w); err != nil {
+			return err
+		}
+	}
+	if v.LocationCoordinateTypes != nil {
+		if err := v.LocationCoordinateTypes.EncodeUPER(w); err != nil {
+			return err
+		}
+	}
+	if v.VelocityTypes != nil {
+		return v.VelocityTypes.EncodeUPER(w)
+	}
+	return nil
 }
 func DecodeAGNSSProvideCapabilities(r *uper.Reader) (AGNSSProvideCapabilities, error) {
 	ext, err := r.ReadExtensionPresent()
@@ -288,25 +317,42 @@ func DecodeAGNSSProvideCapabilities(r *uper.Reader) (AGNSSProvideCapabilities, e
 	if err != nil {
 		return AGNSSProvideCapabilities{}, err
 	}
-	if present[1] || present[2] || present[3] {
-		return AGNSSProvideCapabilities{}, fmt.Errorf("%w: assistanceDataSupportList/locationCoordinateTypes/velocityTypes unsupported", ErrInvalidAGNSS)
-	}
 	v := AGNSSProvideCapabilities{}
-	if !present[0] {
-		return v, nil
-	}
-	list := make([]GNSSSupportElement, 0, 16)
-	_, err = r.ReadSequenceOf(1, 16, func(index int, reader *uper.Reader) error {
-		x, err := DecodeGNSSSupportElement(reader)
+	if present[0] {
+		list := make([]GNSSSupportElement, 0, 16)
+		_, err = r.ReadSequenceOf(1, 16, func(index int, reader *uper.Reader) error {
+			x, err := DecodeGNSSSupportElement(reader)
+			if err != nil {
+				return err
+			}
+			list = append(list, x)
+			return nil
+		})
 		if err != nil {
-			return err
+			return AGNSSProvideCapabilities{}, err
 		}
-		list = append(list, x)
-		return nil
-	})
-	if err != nil {
-		return AGNSSProvideCapabilities{}, err
+		v.GNSSSupportList = list
 	}
-	v.GNSSSupportList = list
+	if present[1] {
+		x, err := DecodeAssistanceDataSupportList(r)
+		if err != nil {
+			return AGNSSProvideCapabilities{}, err
+		}
+		v.AssistanceData = &x
+	}
+	if present[2] {
+		x, err := DecodeLocationCoordinateTypes(r)
+		if err != nil {
+			return AGNSSProvideCapabilities{}, err
+		}
+		v.LocationCoordinateTypes = &x
+	}
+	if present[3] {
+		x, err := DecodeVelocityTypes(r)
+		if err != nil {
+			return AGNSSProvideCapabilities{}, err
+		}
+		v.VelocityTypes = &x
+	}
 	return v, v.Validate()
 }

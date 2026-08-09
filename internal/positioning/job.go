@@ -316,6 +316,43 @@ func (m *Manager) ActiveJobs() int {
 	defer m.mu.Unlock()
 	return len(m.jobs)
 }
+
+// PruneResult pairs an expired job's Scope with the Outcome its expiry
+// produced, so the caller (which owns the SLs association and the LPP
+// procedure/transaction-store keyed by the same Scope) can send any
+// resulting wire actions and drop its own per-Scope state.
+type PruneResult struct {
+	Scope   Scope
+	Outcome Outcome
+}
+
+// Prune proactively expires every active job whose Deadline has passed.
+// Apply already expires a job past its deadline, but only when a new event
+// for that exact Scope arrives (see Apply's own deadline check) — a UE/eNB
+// that goes silent after the job's last action never sends one, so without
+// Prune such a job (and, via job.procedure, its associated LPP transaction
+// store and the caller's per-Scope session state) would remain live
+// forever. Call this periodically (e.g. from a ticker); it is not part of
+// the per-request path.
+func (m *Manager) Prune(now time.Time) []PruneResult {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	var scopes []Scope
+	for scope, j := range m.jobs {
+		if active(j.State) && !now.Before(j.Request.Deadline) {
+			scopes = append(scopes, scope)
+		}
+	}
+	if len(scopes) == 0 {
+		return nil
+	}
+	out := make([]PruneResult, 0, len(scopes))
+	for _, scope := range scopes {
+		j := m.jobs[scope]
+		out = append(out, PruneResult{Scope: scope, Outcome: m.terminalLocked(j, Expired, now)})
+	}
+	return out
+}
 func active(s State) bool { return s == AwaitingCapabilities || s == AwaitingLocationInformation }
 func matches(j *job, key *transaction.Key) bool {
 	return key != nil && ((j.CapabilityTransaction != nil && *key == *j.CapabilityTransaction) || (j.LocationTransaction != nil && *key == *j.LocationTransaction))
