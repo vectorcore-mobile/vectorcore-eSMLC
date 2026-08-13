@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"flag"
+	"fmt"
 	"net"
 	"net/http"
 	"os"
@@ -13,12 +14,14 @@ import (
 	"time"
 
 	"github.com/vectorcore/esmlc/internal/config"
+	"github.com/vectorcore/esmlc/internal/logging"
 	"github.com/vectorcore/esmlc/internal/observability"
 	"github.com/vectorcore/esmlc/internal/sls"
 	"log/slog"
 )
 
 func main() {
+	fmt.Println("Starting VectoreCore ESMLC")
 	path := flag.String("c", "config/esmlc.yaml", "YAML configuration path")
 	debugConsole := flag.Bool("d", false, "enable debug logging on the console")
 	flag.Parse()
@@ -27,11 +30,12 @@ func main() {
 		slog.Error("esmlc.startup failed", "error", e)
 		os.Exit(1)
 	}
-	logLevel := level(cfg.Service.LogLevel)
-	if *debugConsole {
-		logLevel = slog.LevelDebug
+	log, logFile, e := logging.New(cfg.Service, *debugConsole)
+	if e != nil {
+		slog.Error("esmlc.startup failed", "error", e)
+		os.Exit(1)
 	}
-	log := slog.New(slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{Level: logLevel}))
+	defer func() { _ = logFile.Close() }()
 	log.Info("esmlc.startup", "service", cfg.Service.Name, "debug_console", *debugConsole)
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
@@ -66,15 +70,3 @@ func startObservabilityServer(ctx context.Context, cfg config.Config, log *slog.
 	}()
 }
 
-func level(v string) slog.Level {
-	switch v {
-	case "debug":
-		return slog.LevelDebug
-	case "warn":
-		return slog.LevelWarn
-	case "error":
-		return slog.LevelError
-	default:
-		return slog.LevelInfo
-	}
-}

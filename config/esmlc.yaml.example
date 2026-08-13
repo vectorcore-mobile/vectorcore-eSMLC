@@ -1,6 +1,10 @@
 service:
   name: vectorcore-esmlc
   log_level: info
+  # All logging always goes here, at this level. The -d console flag is
+  # additive: it makes logging also show up on stderr, always at debug
+  # level, and has no effect on log_level or what gets written here.
+  log_file: esmlc.log
 sls:
   enabled: true
   listen_address: 0.0.0.0

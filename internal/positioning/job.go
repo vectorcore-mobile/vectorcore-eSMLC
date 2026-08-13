@@ -157,7 +157,7 @@ func (m *Manager) Start(request Request, p *procedure.Orchestrator, now time.Tim
 	}
 	if request.LPPSupported != nil && !*request.LPPSupported {
 		j.State = NoEligibleMethod
-		j.Final = &FinalOutcome{Kind: FinalNoEligibleMethod}
+		j.Final = &FinalOutcome{Kind: FinalLPPUnsupported}
 		return m.finishLocked(j), nil
 	}
 	method, capOptions, ok := m.selectMethodLocked()

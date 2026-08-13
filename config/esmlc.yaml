@@ -1,6 +1,7 @@
 service:
   name: vectorcore-esmlc
   log_level: info
+  log_file: esmlc.log
 sls:
   enabled: true
   listen_address: 127.0.0.5

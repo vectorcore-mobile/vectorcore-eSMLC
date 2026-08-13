@@ -19,6 +19,16 @@ func locRequest() []byte {
 	w, _ := lcsap.Encode(lcsap.PDU{Category: lcsap.Initiating, Procedure: lcsap.ProcedureLocationRequest, Criticality: aper.Reject, IEs: []lcsap.IE{{ID: lcsap.IECorrelationID, Criticality: aper.Reject, Value: []byte{0, 0, 0, 7}}, {ID: lcsap.IELocationType, Criticality: aper.Reject, Value: []byte{0}}, {ID: lcsap.IEECGI, Criticality: aper.Ignore, Value: []byte{0, 0xf1, 0x10, 0, 0, 0, 1}}}})
 	return w
 }
+
+// locRequestWithLPPUnsupported mirrors locRequest but carries an explicit
+// UE-Positioning-Capability IE reporting no LPP support — the case
+// TestPositioningOutcomeDistinguishesLPPUnsupportedFromNoEligibleMethod
+// exercises end to end.
+func locRequestWithLPPUnsupported() []byte {
+	capability, _ := lcsap.EncodeUEPositioningCapability(false)
+	w, _ := lcsap.Encode(lcsap.PDU{Category: lcsap.Initiating, Procedure: lcsap.ProcedureLocationRequest, Criticality: aper.Reject, IEs: []lcsap.IE{{ID: lcsap.IECorrelationID, Criticality: aper.Reject, Value: []byte{0, 0, 0, 7}}, {ID: lcsap.IELocationType, Criticality: aper.Reject, Value: []byte{0}}, {ID: lcsap.IEECGI, Criticality: aper.Ignore, Value: []byte{0, 0xf1, 0x10, 0, 0, 0, 1}}, {ID: lcsap.IEUEPositioningCapability, Criticality: aper.Reject, Value: capability}}})
+	return w
+}
 func TestSimulationResponseAndReset(t *testing.T) {
 	c := config.Default()
 	c.Positioning.ECID.Enabled = true

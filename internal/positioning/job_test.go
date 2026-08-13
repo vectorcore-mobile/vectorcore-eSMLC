@@ -196,7 +196,7 @@ func TestRequestConstraintsExcludeLPPAndRejectUnsuitableEstimate(t *testing.T) {
 	request := req()
 	request.LPPSupported = &supported
 	r, err := New(policy(t, true)).Start(request, proc(t), now)
-	if err != nil || r.Snapshot.Final == nil || r.Snapshot.Final.Kind != FinalNoEligibleMethod || len(r.Actions) != 0 {
+	if err != nil || r.Snapshot.State != NoEligibleMethod || r.Snapshot.Final == nil || r.Snapshot.Final.Kind != FinalLPPUnsupported || len(r.Actions) != 0 {
 		t.Fatalf("LPP exclusion %#v %v", r, err)
 	}
 	accuracy := uint8(3)

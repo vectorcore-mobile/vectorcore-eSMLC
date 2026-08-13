@@ -17,6 +17,10 @@ type Config struct {
 type Service struct {
 	Name     string `yaml:"name"`
 	LogLevel string `yaml:"log_level"`
+	// LogFile is where all logging is written, regardless of the -d console
+	// debug flag; console output is a separate, additive concern (see
+	// internal/logging).
+	LogFile string `yaml:"log_file"`
 }
 type SLs struct {
 	Enabled         bool          `yaml:"enabled"`
@@ -115,7 +119,7 @@ type Simulation struct {
 
 func Default() Config {
 	return Config{
-		Service:       Service{Name: "vectorcore-esmlc", LogLevel: "info"},
+		Service:       Service{Name: "vectorcore-esmlc", LogLevel: "info", LogFile: "esmlc.log"},
 		SLs:           SLs{Enabled: true, ListenAddress: "0.0.0.0", Port: 9082, ExpectedPPID: 29, MaxAssociations: 32, MaxSessions: 10000, SessionTimeout: 10 * time.Second, MaxMessageSize: 1 << 20, PruneInterval: 30 * time.Second},
 		Positioning:   Positioning{Method: "gnss", Simulation: Simulation{Enabled: false}},
 		Observability: Observability{Enabled: false, ListenAddress: "127.0.0.1", Port: 9090},
@@ -138,6 +142,9 @@ func (c Config) Validate() error {
 	}
 	if c.Service.LogLevel != "" && c.Service.LogLevel != "debug" && c.Service.LogLevel != "info" && c.Service.LogLevel != "warn" && c.Service.LogLevel != "error" {
 		return fmt.Errorf("config: invalid log level")
+	}
+	if c.Service.LogFile == "" {
+		return fmt.Errorf("config: service.log_file is required")
 	}
 	// Validated regardless of sls.enabled: observability is an independent
 	// HTTP listener, not part of the SCTP transport.

@@ -18,6 +18,7 @@ func TestValidationRejectsUnsafeAndUnsupportedSettings(t *testing.T) {
 		func(c *Config) { c.Observability.Enabled = true; c.Observability.ListenAddress = "not-an-ip" },
 		func(c *Config) { c.Observability.Enabled = true; c.Observability.Port = 0 },
 		func(c *Config) { c.Observability.Enabled = true; c.Observability.Port = c.SLs.Port },
+		func(c *Config) { c.Service.LogFile = "" },
 	}
 	for _, change := range cases {
 		c := Default()

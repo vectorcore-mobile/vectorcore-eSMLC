@@ -148,7 +148,7 @@ func (s *Server) registerMetrics() {
 		return int64(s.jobs.ActiveJobs())
 	})
 	s.outcomes = s.metrics.NewCounterVec("esmlc_positioning_job_outcomes_total", "Completed positioning jobs by terminal outcome kind.", "outcome",
-		[]string{"estimate_available", "measurements_without_estimator", "estimation_failed", "quality_not_met", "no_eligible_method", "procedure_failure", "deadline_expired", "cancelled", "unknown"})
+		[]string{"estimate_available", "measurements_without_estimator", "estimation_failed", "quality_not_met", "no_eligible_method", "lpp_unsupported", "procedure_failure", "deadline_expired", "cancelled", "unknown"})
 	if s.catalog != nil {
 		s.metrics.NewGaugeFunc("esmlc_catalog_records", "Records in the active cell catalog snapshot (0 if none loaded).", func() int64 {
 			return int64(s.catalog.Status().RecordCount)
@@ -196,6 +196,8 @@ func finalOutcomeLabel(kind positioning.FinalKind) string {
 		return "quality_not_met"
 	case positioning.FinalNoEligibleMethod:
 		return "no_eligible_method"
+	case positioning.FinalLPPUnsupported:
+		return "lpp_unsupported"
 	case positioning.FinalProcedureFailure:
 		return "procedure_failure"
 	case positioning.FinalDeadlineExpired:
@@ -283,9 +285,32 @@ func (s *Server) Listen(ctx context.Context) error {
 	s.listener = ln
 	s.mu.Unlock()
 	s.log.Info("esmlc.sls.listening", "address", ln.Addr().String(), "ppid", lcsap.PPID)
-	go func() { <-ctx.Done(); _ = s.Close() }()
 	s.wg.Add(1)
 	go func() { defer s.wg.Done(); s.pruneLoop(ctx) }()
+
+	// AcceptSCTP (github.com/ishidawataru/sctp) issues a raw blocking
+	// Accept4 syscall that is never registered with Go's runtime netpoller
+	// and exposes no deadline on the listener, so closing the listener fd
+	// during shutdown is not guaranteed to unblock a goroutine parked in
+	// it — in practice this showed up as the process hanging forever right
+	// after logging "esmlc.shutdown", needing a kill -9. Running the
+	// accept loop on its own goroutine lets Listen return as soon as ctx
+	// is done and Close() has finished draining existing associations,
+	// rather than staying blocked on that goroutine (which may never
+	// return) for the life of the process.
+	acceptDone := make(chan error, 1)
+	go func() { acceptDone <- s.acceptLoop(ln) }()
+
+	select {
+	case <-ctx.Done():
+		_ = s.Close()
+		return nil
+	case e := <-acceptDone:
+		return e
+	}
+}
+
+func (s *Server) acceptLoop(ln *sctp.SCTPListener) error {
 	for {
 		c, e := ln.AcceptSCTP()
 		if e != nil {

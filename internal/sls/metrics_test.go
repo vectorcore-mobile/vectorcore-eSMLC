@@ -37,6 +37,34 @@ func TestMetricsExposesAssociationAndOutcomeCounters(t *testing.T) {
 	}
 }
 
+// TestPositioningOutcomeDistinguishesLPPUnsupportedFromNoEligibleMethod is
+// the regression test for the observability gap found this session: a
+// Location Request whose UE-Positioning-Capability IE reports no LPP
+// support must be counted and logged as its own "lpp_unsupported" outcome,
+// not folded into the generic "no_eligible_method" outcome shared by "no
+// policy method enabled" and "UE capabilities don't match after exchange" —
+// those three causes were previously indistinguishable from the metrics/log
+// alone.
+func TestPositioningOutcomeDistinguishesLPPUnsupportedFromNoEligibleMethod(t *testing.T) {
+	c := config.Default()
+	c.Positioning.ECID.Enabled = true
+	c.Positioning.ECID.RequestRSRP = true
+	s := New(c, nil)
+	if out, err := s.Handle("mme-a", locRequestWithLPPUnsupported()); err != nil || len(out) != 1 {
+		t.Fatalf("start %d %v", len(out), err)
+	}
+	var got strings.Builder
+	if _, err := s.Metrics().WriteTo(&got); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(got.String(), `esmlc_positioning_job_outcomes_total{outcome="lpp_unsupported"} 1`) {
+		t.Fatalf("expected lpp_unsupported outcome counted:\n%s", got.String())
+	}
+	if strings.Contains(got.String(), `outcome="no_eligible_method"} 1`) {
+		t.Fatalf("LPP-unsupported job must not also be counted as no_eligible_method:\n%s", got.String())
+	}
+}
+
 func TestMetricsExposesCatalogCountersWhenConfigured(t *testing.T) {
 	c := config.Default()
 	c.Positioning.ECID.Enabled = true

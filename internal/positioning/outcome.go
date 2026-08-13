@@ -219,6 +219,17 @@ const (
 	FinalEstimationFailed
 	FinalQualityNotMet
 	FinalNoEligibleMethod
+	// FinalLPPUnsupported is distinct from FinalNoEligibleMethod: it means the
+	// UE-Positioning-Capability IE on the Location Request itself said the UE
+	// has no LPP support at all, so the job never even attempts a capability
+	// exchange — as opposed to FinalNoEligibleMethod, which covers both "no
+	// positioning method is enabled in local policy" and "the UE's actually
+	// reported capabilities don't support the policy-selected method" (a
+	// mismatch only discoverable after a capability exchange). Kept separate
+	// so an operator can distinguish "this UE can't do LPP" from those other
+	// causes directly from the outcome, without inferring it from the
+	// absence of capability-exchange log lines.
+	FinalLPPUnsupported
 	FinalProcedureFailure
 	FinalDeadlineExpired
 	FinalCancelled
